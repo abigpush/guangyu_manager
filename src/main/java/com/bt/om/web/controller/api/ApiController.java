@@ -292,11 +292,15 @@ public class ApiController extends BasicController {
 
 		List<ProductInfo> productInfoList = productInfoService.getByProductIds(productIdsMap);
 
+		int productListSize = 0;
 		if (productInfoList == null || productInfoList.size() <= 0) {
-			result.setCode(ResultCode.RESULT_FAILURE.getCode());
-			result.setResultDes("商品信息不存在！");
-			model.addAttribute(SysConst.RESULT_KEY, result);
-			return model;
+			// result.setCode(ResultCode.RESULT_FAILURE.getCode());
+			// result.setResultDes("商品信息不存在！");
+			// model.addAttribute(SysConst.RESULT_KEY, result);
+			// return model;
+
+		} else {
+			productListSize = productInfoList.size();
 		}
 		System.out.println(productInfoList.size());
 
@@ -304,15 +308,19 @@ public class ApiController extends BasicController {
 		List<Float> commissionList = new ArrayList<>();
 		for (String productId : num_iids_list) {
 			int size = 0;
-			for (ProductInfo productInfo : productInfoList) {
-				if (productId.equals(productInfo.getProductId())) {
-					commissionList.add(productInfo.getCommission());
-					break;
-				} else {
-					size = size + 1;
+			if (productListSize > 0) {
+				for (ProductInfo productInfo : productInfoList) {
+					if (productId.equals(productInfo.getProductId())) {
+						commissionList.add(productInfo.getCommission());
+						break;
+					} else {
+						size = size + 1;
+					}
 				}
-			}
-			if (size == productInfoList.size()) {
+				if (size == productInfoList.size()) {
+					commissionList.add(0f);
+				}
+			} else {
 				commissionList.add(0f);
 			}
 		}
