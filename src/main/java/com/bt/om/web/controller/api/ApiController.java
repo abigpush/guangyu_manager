@@ -8,6 +8,7 @@ import com.bt.om.enums.ResultCode;
 import com.bt.om.enums.SessionKey;
 import com.bt.om.service.IProductInfoService;
 import com.bt.om.service.IUserService;
+import com.bt.om.util.ConfigUtil;
 import com.bt.om.util.StringUtil;
 import com.bt.om.util.TaobaoSmsUtil;
 import com.bt.om.vo.api.GetSmsCodeVo;
@@ -97,7 +98,9 @@ public class ApiController extends BasicController {
 		jedisPool.getResource().setex(mobile, 60, vcode);
 
 		// 发送短信验证码
-//		TaobaoSmsUtil.sendSms("逛鱼返利", "SMS_125955002", vcode, mobile);
+		if("on".equals(ConfigUtil.getString("is.sms.send"))){
+			TaobaoSmsUtil.sendSms("逛鱼返利", "SMS_125955002", vcode, mobile);
+		}		
 
 		// System.out.println(jedisPool.getResource().get("vcode"));
 
@@ -152,6 +155,12 @@ public class ApiController extends BasicController {
 		
 		String inVcode=jedisPool.getResource().get(mobile);		
 		System.out.println(inVcode);
+		if(inVcode==null){
+			result.setCode(ResultCode.RESULT_FAILURE.getCode());
+			result.setResultDes("验证码已失效！");
+			model.addAttribute(SysConst.RESULT_KEY, result);
+			return model;
+		}
 		User user =null;
 		if(vcode.equals(inVcode)){
 			user = userService.getByMobile(mobile);

@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 
 import com.bt.om.entity.ProductInfo;
 import com.bt.om.service.IProductInfoService;
+import com.bt.om.util.ConfigUtil;
 import com.bt.om.util.DateUtil;
 import com.bt.om.util.GsonUtil;
 import com.bt.om.util.HttpClientHelper;
@@ -33,11 +34,11 @@ public class CommissionTask {
 	private String commissionUrl;
 
 	// 每隔一段时间获取一次佣金信息
-//	@Scheduled(cron = "0/30 * * * * ?")
+	@Scheduled(cron = "0/30 * * * * ?")
 	public void getCommission() {
 		//获取前一日的商品数据
 		ProductInfo searchProductInfo=new ProductInfo();
-		searchProductInfo.setSize(48);
+		searchProductInfo.setSize(ConfigUtil.getInt("commission.product.size",48));
 		searchProductInfo.setUpdateTime(DateUtil.getPrevDate(new Date()));
 		List<ProductInfo> productInfoList = productInfoService.getList(searchProductInfo);		
 		if(productInfoList==null || productInfoList.size()<=0){
