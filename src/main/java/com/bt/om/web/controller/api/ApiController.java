@@ -153,7 +153,7 @@ public class ApiController extends BasicController {
 		String inVcode=jedisPool.getResource().get(mobile);		
 		System.out.println(inVcode);
 		User user =null;
-		if(inVcode.equals(vcode)){
+		if(vcode.equals(inVcode)){
 			user = userService.getByMobile(mobile);
 			String md5Mobile = new Md5Hash(mobile).toString();
 			if(user==null){				
