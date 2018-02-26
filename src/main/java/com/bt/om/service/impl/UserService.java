@@ -16,4 +16,9 @@ public class UserService implements IUserService {
     public User getByMobile(String mobile) {
         return userMapper.selectByMobile(mobile);
     }
+    
+    @Override
+    public int insert(User user){
+    	return userMapper.insert(user);
+    }
 }

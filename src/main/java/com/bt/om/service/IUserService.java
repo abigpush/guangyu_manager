@@ -4,4 +4,6 @@ import com.bt.om.entity.User;
 
 public interface IUserService {
     public User getByMobile(String mobile);
+    
+    public int insert(User User);
 }

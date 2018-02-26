@@ -69,6 +69,7 @@
 			   enableUpdateByExample="false">
 		</table>-->
 		
+		<!-- 
 		<table schema="guangyu" tableName="product_info"
 			   domainObjectName="ProductInfo" enableCountByExample="false"
 			   enableDeleteByExample="false" enableSelectByExample="false"
@@ -80,6 +81,7 @@
 			   enableDeleteByExample="false" enableSelectByExample="false"
 			   enableUpdateByExample="false">
 		</table>
+		-->
 		
 		<table schema="guangyu" tableName="user"
 			   domainObjectName="User" enableCountByExample="false"
@@ -87,12 +89,20 @@
 			   enableUpdateByExample="false">
 		</table>
 		
+		<!--
 		<table schema="guangyu" tableName="user_order"
 			   domainObjectName="UserOrder" enableCountByExample="false"
 			   enableDeleteByExample="false" enableSelectByExample="false"
 			   enableUpdateByExample="false">
 		</table>
-
-
+        -->
+        <!--  
+        <table schema="guangyu" tableName="product_from_tkapi"
+			   domainObjectName="ProductFromTkapi" enableCountByExample="false"
+			   enableDeleteByExample="false" enableSelectByExample="false"
+			   enableUpdateByExample="false">
+		</table>
+		-->
+		
 	</context>
 </generatorConfiguration>

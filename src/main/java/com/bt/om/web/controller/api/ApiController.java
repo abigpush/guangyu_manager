@@ -83,24 +83,25 @@ public class ApiController extends BasicController {
 			return model;
 		}
 
-		User user = userService.getByMobile(mobile);
-		if (user != null) {
-			result.setCode(ResultCode.RESULT_FAILURE.getCode());
-			result.setResultDes("该手机号已注册！");
-			model.addAttribute(SysConst.RESULT_KEY, result);
-			return model;
-		}
+//		User user = userService.getByMobile(mobile);
+//		if (user != null) {
+//			result.setCode(ResultCode.RESULT_FAILURE.getCode());
+//			result.setResultDes("该手机号已注册！");
+//			model.addAttribute(SysConst.RESULT_KEY, result);
+//			return model;
+//		}
 
 		String vcode = getVcode(5);
+		System.out.println(vcode);
 		// jedisService.putInCache("gy", "vcode", vcode, 60);
-		jedisPool.getResource().setex("vcode", 60, vcode);
+		jedisPool.getResource().setex(mobile, 60, vcode);
 
 		// 发送短信验证码
-		TaobaoSmsUtil.sendSms("逛鱼返利", "SMS_125955002", vcode, mobile);
+//		TaobaoSmsUtil.sendSms("逛鱼返利", "SMS_125955002", vcode, mobile);
 
 		// System.out.println(jedisPool.getResource().get("vcode"));
 
-		result.setResult(new GetSmsCodeVo(1, "", vcode));
+		result.setResult(new GetSmsCodeVo(vcode));
 		model.addAttribute(SysConst.RESULT_KEY, result);
 		// response.getHeaders().add("Access-Control-Allow-Credentials","true");
 		response.setHeader("Access-Control-Allow-Origin", request.getHeader("origin"));
@@ -118,7 +119,6 @@ public class ApiController extends BasicController {
 		result.setResultDes("登录成功");
 		model = new ExtendedModelMap();
 		String mobile = null;
-		String password = null;
 		String vcode = null;
 
 		try {
@@ -126,7 +126,6 @@ public class ApiController extends BasicController {
 			Gson gson = new Gson();
 			JsonObject obj = gson.fromJson(new InputStreamReader(is), JsonObject.class);
 			mobile = obj.get("mobile").getAsString();
-			password = obj.get("password").getAsString();
 			vcode = obj.get("vcode").getAsString();
 		} catch (IOException e) {
 			result.setCode(ResultCode.RESULT_FAILURE.getCode());
@@ -143,14 +142,6 @@ public class ApiController extends BasicController {
 			return model;
 		}
 
-		// 密码必须验证
-		if (StringUtils.isEmpty(password)) {
-			result.setCode(ResultCode.RESULT_FAILURE.getCode());
-			result.setResultDes("密码为必填！");
-			model.addAttribute(SysConst.RESULT_KEY, result);
-			return model;
-		}
-
 		// 验证码必须验证
 		if (StringUtils.isEmpty(vcode)) {
 			result.setCode(ResultCode.RESULT_FAILURE.getCode());
@@ -158,29 +149,26 @@ public class ApiController extends BasicController {
 			model.addAttribute(SysConst.RESULT_KEY, result);
 			return model;
 		}
-		HttpSession session = request.getSession();
-		String sessionCode = session.getAttribute(SessionKey.SESSION_CODE.toString()) == null ? ""
-				: session.getAttribute(SessionKey.SESSION_CODE.toString()).toString();
-
-		// 验证码有效验证
-		if (!vcode.equalsIgnoreCase(sessionCode)) {
+		
+		String inVcode=jedisPool.getResource().get(mobile);		
+		System.out.println(inVcode);
+		User user =null;
+		if(inVcode.equals(vcode)){
+			user = userService.getByMobile(mobile);
+			String md5Mobile = new Md5Hash(mobile).toString();
+			if(user==null){				
+				user=new User();
+				user.setMobile(mobile);
+				user.setUserId(md5Mobile);
+				int userId=userService.insert(user);
+				user.setId(userId);
+			}
+		}else{
 			result.setCode(ResultCode.RESULT_FAILURE.getCode());
-			result.setResultDes("验证码错误！");
+			result.setResultDes("手机号或验证码有误！");
 			model.addAttribute(SysConst.RESULT_KEY, result);
 			return model;
 		}
-
-		String md5Pwd = new Md5Hash(password, mobile).toString();
-
-		User user = userService.getByMobile(mobile);
-		if (user == null || !md5Pwd.equals(user.getPassword())) {
-			result.setCode(ResultCode.RESULT_FAILURE.getCode());
-			result.setResultDes("用户名或密码有误！");
-			model.addAttribute(SysConst.RESULT_KEY, result);
-			return model;
-		}
-
-		session.setAttribute(SessionKey.SESSION_LOGIN_USER.toString(), user);
 
 		result.setResult(new UserVo(user));
 		model.addAttribute(SysConst.RESULT_KEY, result);
@@ -241,7 +229,7 @@ public class ApiController extends BasicController {
 			return model;
 		}
 
-		result.setResult(new ProductInfoVo(productInfo.getTkLink()));
+		result.setResult(new ProductInfoVo(productInfo.getTkLink(),"领券",productInfo.getCouponLink()));
 		model.addAttribute(SysConst.RESULT_KEY, result);
 		// response.getHeaders().add("Access-Control-Allow-Credentials","true");
 		response.setHeader("Access-Control-Allow-Origin", request.getHeader("origin"));

@@ -125,6 +125,8 @@
 		
 		<!-- taobao sms api-->
 		<dependency org="com.taobao" name="taobao-sdk-java-auto" rev="1.0" changing="true" conf="compile,test->default(*)" />
+		<!-- taobao api -->
+		<dependency org="taobao" name="taobao-sdk-java" rev="20180202" changing="true" conf="compile,test->default(*)" />
 
 	</dependencies>	
 </ivy-module>
