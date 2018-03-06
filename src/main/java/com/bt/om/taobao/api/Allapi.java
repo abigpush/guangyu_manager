@@ -58,7 +58,7 @@ public class Allapi {
 		}
 	}
 	
-	private static String getItemList(String key,long page,long size) {
+	private static String getItemList(String key,long page,long size){
 		String retStr="";
 		TaobaoClient client = new DefaultTaobaoClient(serverUrl, appKey,
 				appSecret);
@@ -83,7 +83,8 @@ public class Allapi {
 			rsp = client.execute(req);
 			retStr=rsp.getBody();			
 		} catch (ApiException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
+			System.out.println("获取数据异常");
 		}	
 		return retStr;
 	}
@@ -91,6 +92,14 @@ public class Allapi {
 	private static long getPage(String key,int size){
 		long page=0;
 		String retStr=getItemList(key,1,2);
+		while(true){
+			if(!"".equals(retStr)){
+				break;
+			}else{
+				retStr=getItemList(key,1,2);
+				System.out.println("重新连接");
+			}
+		}
 		Gson gson = new Gson();
 		JsonObject obj = gson.fromJson(retStr, JsonObject.class);		
 		JsonObject obj1=obj.getAsJsonObject("tbk_item_get_response");
@@ -105,12 +114,24 @@ public class Allapi {
 	}
 	
 	private static void parserJson(){
-		List<String> keyList=new ArrayList<>(Arrays.asList("配件","童装","玩具"));
+		List<String> keyList=new ArrayList<>(Arrays.asList("手机"));
 		for(String key:keyList){
 			long page=getPage(key,100);
+			if(page>=100){
+				page=100;
+			}
+			System.out.println(key+"共"+page+"页");
 			for(long i=0;i<page;i++){
-//				System.out.println(i+1);
+				System.out.println("第"+(i+1)+"页");
 				String retStr=getItemList(key,i+1,100);
+				while(true){
+					if(!"".equals(retStr)){
+						break;
+					}else{
+						retStr=getItemList(key,i+1,100);
+						System.out.println("重新连接");
+					}
+				}
 //				System.out.println(retStr);
 				Gson gson = new Gson();
 				JsonObject obj = gson.fromJson(retStr, JsonObject.class);		
