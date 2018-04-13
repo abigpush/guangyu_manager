@@ -239,19 +239,24 @@ public class ApiController extends BasicController {
 		// }
 		if (productInfo == null) {
 			productInfo = new ProductInfo();
-			CrawlTask crawlTask=new CrawlTask();
+			CrawlTask crawlTask = new CrawlTask();
 			TaskBean taskBean = crawlTask.getProduct(product_url);
-			if (StringUtils.isNotEmpty(taskBean.getMap().get("goodUrl1"))) {
+			if (StringUtils.isNotEmpty(taskBean.getMap().get("goodUrl1"))
+					|| StringUtils.isNotEmpty(taskBean.getMap().get("goodUrl2"))) {
+				String goodUrl = StringUtils.isEmpty(taskBean.getMap().get("goodUrl1"))
+						? taskBean.getMap().get("goodUrl2") : taskBean.getMap().get("goodUrl1");
 				productInfo.setProductId(urlMap.get("id"));
-				productInfo.setProductImgUrl("http://"+taskBean.getMap().get("img"));
+				productInfo.setProductImgUrl("http://" + taskBean.getMap().get("img"));
 				productInfo.setProductInfoUrl(taskBean.getMap().get("url"));
-				productInfo.setTkLink(taskBean.getMap().get("goodUrl1"));
+				productInfo.setShopName(taskBean.getMap().get("shop"));
+				productInfo.setProductName(taskBean.getMap().get("title"));
+				productInfo.setTkLink(goodUrl);
 				productInfo.setPrice(Double.valueOf(taskBean.getMap().get("price").replace("￥", "")));
 				productInfo.setIncomeRate(Float.valueOf(taskBean.getMap().get("per").replace("%", "")));
 				productInfo.setCommission(Float.valueOf(taskBean.getMap().get("money").replace("￥", "")));
 				productInfo.setCouponLink(taskBean.getMap().get("quanUrl"));
 				productInfoService.insertProductInfo(productInfo);
-			}else{
+			} else {
 				return model;
 			}
 		}
