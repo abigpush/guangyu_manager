@@ -84,13 +84,13 @@ public class ApiController extends BasicController {
 			return model;
 		}
 
-//		User user = userService.getByMobile(mobile);
-//		if (user != null) {
-//			result.setCode(ResultCode.RESULT_FAILURE.getCode());
-//			result.setResultDes("该手机号已注册！");
-//			model.addAttribute(SysConst.RESULT_KEY, result);
-//			return model;
-//		}
+		// User user = userService.getByMobile(mobile);
+		// if (user != null) {
+		// result.setCode(ResultCode.RESULT_FAILURE.getCode());
+		// result.setResultDes("该手机号已注册！");
+		// model.addAttribute(SysConst.RESULT_KEY, result);
+		// return model;
+		// }
 
 		String vcode = getVcode(5);
 		System.out.println(vcode);
@@ -98,9 +98,9 @@ public class ApiController extends BasicController {
 		jedisPool.getResource().setex(mobile, 60, vcode);
 
 		// 发送短信验证码
-		if("on".equals(ConfigUtil.getString("is.sms.send"))){
+		if ("on".equals(ConfigUtil.getString("is.sms.send"))) {
 			TaobaoSmsUtil.sendSms("逛鱼返利", "SMS_125955002", vcode, mobile);
-		}		
+		}
 
 		// System.out.println(jedisPool.getResource().get("vcode"));
 
@@ -152,27 +152,27 @@ public class ApiController extends BasicController {
 			model.addAttribute(SysConst.RESULT_KEY, result);
 			return model;
 		}
-		
-		String inVcode=jedisPool.getResource().get(mobile);		
+
+		String inVcode = jedisPool.getResource().get(mobile);
 		System.out.println(inVcode);
-		if(inVcode==null){
+		if (inVcode == null) {
 			result.setCode(ResultCode.RESULT_FAILURE.getCode());
 			result.setResultDes("验证码已失效！");
 			model.addAttribute(SysConst.RESULT_KEY, result);
 			return model;
 		}
-		User user =null;
-		if(vcode.equals(inVcode)){
+		User user = null;
+		if (vcode.equals(inVcode)) {
 			user = userService.getByMobile(mobile);
 			String md5Mobile = new Md5Hash(mobile).toString();
-			if(user==null){				
-				user=new User();
+			if (user == null) {
+				user = new User();
 				user.setMobile(mobile);
 				user.setUserId(md5Mobile);
-				int userId=userService.insert(user);
+				int userId = userService.insert(user);
 				user.setId(userId);
 			}
-		}else{
+		} else {
 			result.setCode(ResultCode.RESULT_FAILURE.getCode());
 			result.setResultDes("手机号或验证码有误！");
 			model.addAttribute(SysConst.RESULT_KEY, result);
@@ -224,27 +224,38 @@ public class ApiController extends BasicController {
 
 		// 判断链接中是否有ID
 		if (StringUtils.isEmpty(urlMap.get("id"))) {
-			result.setCode(ResultCode.RESULT_FAILURE.getCode()); 
+			result.setCode(ResultCode.RESULT_FAILURE.getCode());
 			result.setResultDes("商品ID为空！");
 			model.addAttribute(SysConst.RESULT_KEY, result);
 			return model;
 		}
 
 		ProductInfo productInfo = productInfoService.getByProductId(urlMap.get("id"));
-//		if (productInfo == null) {
-//			result.setCode(ResultCode.RESULT_FAILURE.getCode());
-//			result.setResultDes("商品信息不存在！");
-//			model.addAttribute(SysConst.RESULT_KEY, result);
-//			return model;
-//		}
+		// if (productInfo == null) {
+		// result.setCode(ResultCode.RESULT_FAILURE.getCode());
+		// result.setResultDes("商品信息不存在！");
+		// model.addAttribute(SysConst.RESULT_KEY, result);
+		// return model;
+		// }
 		if (productInfo == null) {
-			productInfo=new ProductInfo();
-			TaskBean taskBean=CrawlTask.getProduct(product_url);
-			productInfo.setCouponLink(taskBean.getMap().get("quanUrl"));
-			productInfo.setTkLink(taskBean.getMap().get("goodUrl1"));
+			productInfo = new ProductInfo();
+			TaskBean taskBean = CrawlTask.getProduct(product_url);
+			if (StringUtils.isNotEmpty(taskBean.getMap().get("goodUrl1"))) {
+				productInfo.setProductId(urlMap.get("id"));
+				productInfo.setProductImgUrl(taskBean.getMap().get("img"));
+				productInfo.setProductInfoUrl(product_url);
+				productInfo.setTkLink(taskBean.getMap().get("goodUrl1"));
+				productInfo.setPrice(Double.valueOf(taskBean.getMap().get("price").replace("￥", "")));
+				productInfo.setIncomeRate(Float.valueOf(taskBean.getMap().get("per").replace("%", "")));
+				productInfo.setCommission(Float.valueOf(taskBean.getMap().get("money").replace("￥", "")));
+				productInfo.setCouponLink(taskBean.getMap().get("quanUrl"));
+				productInfoService.insertProductInfo(productInfo);
+			}else{
+				return model;
+			}
 		}
 
-		result.setResult(new ProductInfoVo(productInfo.getTkLink(),"领券",productInfo.getCouponLink()));
+		result.setResult(new ProductInfoVo(productInfo.getTkLink(), "领券", productInfo.getCouponLink()));
 		model.addAttribute(SysConst.RESULT_KEY, result);
 		// response.getHeaders().add("Access-Control-Allow-Credentials","true");
 		response.setHeader("Access-Control-Allow-Origin", request.getHeader("origin"));

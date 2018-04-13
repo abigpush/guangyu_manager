@@ -34,4 +34,9 @@ public class ProductInfoService implements IProductInfoService {
 	public void updateCommission(ProductInfo productInfo){
 		productInfoMapper.updateByProductId(productInfo);
 	}
+	
+	@Override
+	public void insertProductInfo(ProductInfo productInfo){
+		productInfoMapper.insert(productInfo);
+	}
 }

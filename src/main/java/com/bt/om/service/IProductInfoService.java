@@ -13,4 +13,6 @@ public interface IProductInfoService {
     public List<ProductInfo> getList(ProductInfo productInfo);
     
     public void updateCommission(ProductInfo productInfo);
+    
+    public void insertProductInfo(ProductInfo productInfo);
 }
