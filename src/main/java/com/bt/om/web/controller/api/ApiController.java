@@ -242,8 +242,8 @@ public class ApiController extends BasicController {
 			TaskBean taskBean = CrawlTask.getProduct(product_url);
 			if (StringUtils.isNotEmpty(taskBean.getMap().get("goodUrl1"))) {
 				productInfo.setProductId(urlMap.get("id"));
-				productInfo.setProductImgUrl(taskBean.getMap().get("img"));
-				productInfo.setProductInfoUrl(product_url);
+				productInfo.setProductImgUrl("http://"+taskBean.getMap().get("img"));
+				productInfo.setProductInfoUrl(taskBean.getMap().get("url"));
 				productInfo.setTkLink(taskBean.getMap().get("goodUrl1"));
 				productInfo.setPrice(Double.valueOf(taskBean.getMap().get("price").replace("￥", "")));
 				productInfo.setIncomeRate(Float.valueOf(taskBean.getMap().get("per").replace("%", "")));
