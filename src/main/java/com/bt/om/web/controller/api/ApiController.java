@@ -224,7 +224,7 @@ public class ApiController extends BasicController {
 
 		// 判断链接中是否有ID
 		if (StringUtils.isEmpty(urlMap.get("id"))) {
-			result.setCode(ResultCode.RESULT_FAILURE.getCode());
+			result.setCode(ResultCode.RESULT_FAILURE.getCode()); 
 			result.setResultDes("商品ID为空！");
 			model.addAttribute(SysConst.RESULT_KEY, result);
 			return model;
