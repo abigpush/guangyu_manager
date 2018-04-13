@@ -239,7 +239,8 @@ public class ApiController extends BasicController {
 		// }
 		if (productInfo == null) {
 			productInfo = new ProductInfo();
-			TaskBean taskBean = CrawlTask.getProduct(product_url);
+			CrawlTask crawlTask=new CrawlTask();
+			TaskBean taskBean = crawlTask.getProduct(product_url);
 			if (StringUtils.isNotEmpty(taskBean.getMap().get("goodUrl1"))) {
 				productInfo.setProductId(urlMap.get("id"));
 				productInfo.setProductImgUrl("http://"+taskBean.getMap().get("img"));

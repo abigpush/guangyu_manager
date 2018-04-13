@@ -15,7 +15,7 @@ public class CrawlTask {
 	private static String loadDataUrl = "https://www.gxzhservice.com/crawl/loadData";
 	private static int sleepTime = 6000;
 
-	private static String sendTask(String url) {
+	private String sendTask(String url) {
 		List<NameValuePair> nvpList = new ArrayList<>();
 		nvpList.add(new BasicNameValuePair("url", url));
 		String retStr = "";
@@ -31,7 +31,7 @@ public class CrawlTask {
 		return retStr;
 	}
 
-	private static String loadData(String params) {
+	private String loadData(String params) {
 		List<NameValuePair> nvpList = new ArrayList<>();
 		nvpList.add(new BasicNameValuePair("sign", params.split(";")[0]));
 		nvpList.add(new BasicNameValuePair("type", params.split(";")[1]));
@@ -42,15 +42,19 @@ public class CrawlTask {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return ret; 
+		return ret;
 	}
 
-	public static TaskBean getProduct(String url) {
+	public TaskBean getProduct(String url) {
 		String params = sendTask(url);
 
 		String productInfo = loadData(params);
 		TaskBean taskBean = GsonUtil.GsonToBean(productInfo, TaskBean.class);
+		int i=0;
 		while (true) {
+			if(i>=30){
+				break;
+			}
 			if (taskBean.getSucc() == true) {
 				break;
 			} else {
@@ -62,21 +66,14 @@ public class CrawlTask {
 				productInfo = loadData(params);
 				taskBean = GsonUtil.GsonToBean(productInfo, TaskBean.class);
 			}
+			i++;
 		}
 		return taskBean;
 	}
 
 	public static void main(String[] args) {
-		// String params =
-		// sendTask("http://item.taobao.com/item.htm?id=537886896296");
-		// try {
-		// Thread.sleep(sleepTime);
-		// } catch (Exception e) {
-		// e.printStackTrace();
-		// }
-		// loadData(params);
-
-		TaskBean taskBean = getProduct("http://item.taobao.com/item.htm?id=546479931448");
+		CrawlTask crawlTask = new CrawlTask();
+		TaskBean taskBean = crawlTask.getProduct("http://item.taobao.com/item.htm?id=546479931448");
 		System.out.println(taskBean.getMsg());
 	}
 
