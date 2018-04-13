@@ -3,7 +3,7 @@ package com.bt.om.web.controller.api;
 import java.util.Map;
 
 public class TaskBean {
-	private boolean succ;
+	private boolean succ; 
 	private String msg;
 	private Map<String, String> map;
 

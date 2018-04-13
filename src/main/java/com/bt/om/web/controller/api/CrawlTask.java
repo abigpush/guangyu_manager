@@ -42,7 +42,7 @@ public class CrawlTask {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return ret;
+		return ret; 
 	}
 
 	public static TaskBean getProduct(String url) {
