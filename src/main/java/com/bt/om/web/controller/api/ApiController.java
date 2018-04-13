@@ -251,7 +251,7 @@ public class ApiController extends BasicController {
 				productInfo.setShopName(taskBean.getMap().get("shop"));
 				productInfo.setProductName(taskBean.getMap().get("title"));
 				productInfo.setTkLink(goodUrl);
-				productInfo.setPrice(Double.valueOf(taskBean.getMap().get("price").replace("￥", "")));
+				productInfo.setPrice(Double.valueOf(taskBean.getMap().get("price").replace("￥", "").replace(",", "")));
 				productInfo.setIncomeRate(Float.valueOf(taskBean.getMap().get("per").replace("%", "")));
 				productInfo.setCommission(Float.valueOf(taskBean.getMap().get("money").replace("￥", "")));
 				productInfo.setCouponLink(taskBean.getMap().get("quanUrl"));
