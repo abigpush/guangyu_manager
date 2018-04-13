@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -255,6 +256,8 @@ public class ApiController extends BasicController {
 				productInfo.setIncomeRate(Float.valueOf(taskBean.getMap().get("per").replace("%", "")));
 				productInfo.setCommission(Float.valueOf(taskBean.getMap().get("money").replace("￥", "")));
 				productInfo.setCouponLink(taskBean.getMap().get("quanUrl"));
+				productInfo.setCreateTime(new Date());
+				productInfo.setUpdateTime(new Date());
 				productInfoService.insertProductInfo(productInfo);
 			} else {
 				return model;
