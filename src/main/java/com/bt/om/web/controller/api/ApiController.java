@@ -231,11 +231,17 @@ public class ApiController extends BasicController {
 		}
 
 		ProductInfo productInfo = productInfoService.getByProductId(urlMap.get("id"));
+//		if (productInfo == null) {
+//			result.setCode(ResultCode.RESULT_FAILURE.getCode());
+//			result.setResultDes("商品信息不存在！");
+//			model.addAttribute(SysConst.RESULT_KEY, result);
+//			return model;
+//		}
 		if (productInfo == null) {
-			result.setCode(ResultCode.RESULT_FAILURE.getCode());
-			result.setResultDes("商品信息不存在！");
-			model.addAttribute(SysConst.RESULT_KEY, result);
-			return model;
+			productInfo=new ProductInfo();
+			TaskBean taskBean=CrawlTask.getProduct(product_url);
+			productInfo.setCouponLink(taskBean.getMap().get("quanUrl"));
+			productInfo.setTkLink(taskBean.getMap().get("goodUrl1"));
 		}
 
 		result.setResult(new ProductInfoVo(productInfo.getTkLink(),"领券",productInfo.getCouponLink()));
