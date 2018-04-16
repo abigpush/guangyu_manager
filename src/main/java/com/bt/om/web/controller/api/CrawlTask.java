@@ -5,15 +5,16 @@ import java.util.List;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
-
+import org.apache.log4j.Logger;
 import com.bt.om.util.GsonUtil;
 import com.bt.om.util.HttpcomponentsUtil;
 
 public class CrawlTask {
+	private static final Logger logger = Logger.getLogger(CrawlTask.class);
 
 	private static String taskUrl = "https://www.gxzhservice.com/crawl/addTask";
 	private static String loadDataUrl = "https://www.gxzhservice.com/crawl/loadData";
-	private static int sleepTime = 6000;
+	private static int sleepTime = 500;
 
 	private String sendTask(String url) {
 		List<NameValuePair> nvpList = new ArrayList<>();
@@ -38,7 +39,7 @@ public class CrawlTask {
 		String ret = "";
 		try {
 			ret = HttpcomponentsUtil.postReq(nvpList, loadDataUrl);
-			System.out.println(ret);
+			logger.info(ret);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -50,16 +51,16 @@ public class CrawlTask {
 
 		String productInfo = loadData(params);
 		TaskBean taskBean = GsonUtil.GsonToBean(productInfo, TaskBean.class);
-		int i=0;
+		int i = 0;
 		while (true) {
-			if(i>=30){
+			if (i >= 30) {
 				break;
 			}
 			if (taskBean.getSucc() == true) {
 				break;
 			} else {
 				try {
-					Thread.sleep(500);
+					Thread.sleep(sleepTime);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
