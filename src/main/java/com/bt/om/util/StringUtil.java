@@ -9,6 +9,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.validator.routines.EmailValidator;
@@ -1131,4 +1132,12 @@ public class StringUtil {
 		}
 		return mapRequest;
 	}
+	
+	/**  
+     * 自动生成32位的UUid，对应数据库的主键id进行插入用。  
+     * @return  
+     */  
+    public static String getUUID() {         
+        return UUID.randomUUID().toString().replace("-", "");  
+    }
 }

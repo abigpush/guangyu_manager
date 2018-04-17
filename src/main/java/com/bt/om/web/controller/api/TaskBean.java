@@ -1,9 +1,12 @@
 package com.bt.om.web.controller.api;
 
+import java.io.Serializable;
 import java.util.Map;
 
-public class TaskBean {
-	private boolean succ; 
+public class TaskBean implements Serializable {
+	private static final long serialVersionUID = -6752081149963716760L;
+	
+	private boolean succ;
 	private String msg;
 	private Map<String, String> map;
 

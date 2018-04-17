@@ -3,10 +3,13 @@ package com.bt.om.web.controller.api;
 import com.bt.om.cache.JedisPool;
 import com.bt.om.common.SysConst;
 import com.bt.om.entity.ProductInfo;
+import com.bt.om.entity.TkInfoTask;
 import com.bt.om.entity.User;
 import com.bt.om.enums.ResultCode;
 import com.bt.om.enums.SessionKey;
+import com.bt.om.selenium.ProductUrlTrans;
 import com.bt.om.service.IProductInfoService;
+import com.bt.om.service.ITkInfoTaskService;
 import com.bt.om.service.IUserService;
 import com.bt.om.util.ConfigUtil;
 import com.bt.om.util.StringUtil;
@@ -49,6 +52,9 @@ public class ApiController extends BasicController {
 
 	@Autowired
 	private IProductInfoService productInfoService;
+
+	@Autowired
+	private ITkInfoTaskService tkInfoTaskService;
 
 	// @Autowired
 	// private JedisService jedisService;
@@ -354,6 +360,92 @@ public class ApiController extends BasicController {
 		System.out.println(commissions);
 
 		result.setResult(new ProductCommissionVo(commissions));
+		model.addAttribute(SysConst.RESULT_KEY, result);
+		// response.getHeaders().add("Access-Control-Allow-Credentials","true");
+		response.setHeader("Access-Control-Allow-Origin", request.getHeader("origin"));
+		response.setHeader("Access-Control-Allow-Credentials", "true");
+
+		return model;
+	}
+
+	// 发送爬虫任务
+	@RequestMapping(value = "/crawl/addtask", method = RequestMethod.POST)
+	@ResponseBody
+	public Model addTask(Model model, HttpServletRequest request, HttpServletResponse response) {
+		TaskBean result = new TaskBean();
+		result.setSucc(true);
+		result.setMsg("");
+		model = new ExtendedModelMap();
+		String url = "";
+		url = request.getParameter("url");
+		if (StringUtils.isEmpty(url)) {
+			return model;
+		}
+		Map<String, String> map = new HashMap<>();
+		String sign = StringUtil.getUUID();
+		map.put("sign", sign);
+		map.put("type", "1");
+		map.put("status", "0");
+
+		TkInfoTask tkInfoTask = new TkInfoTask();
+		tkInfoTask.setProductUrl(url);
+		tkInfoTask.setSign(sign);
+		tkInfoTask.setType(1);
+		tkInfoTask.setStatus(0);
+		tkInfoTask.setCreateTime(new Date());
+		tkInfoTask.setUpdateTime(new Date());
+
+		ProductUrlTrans.put(tkInfoTask);
+
+		result.setMap(map);
+		model.addAttribute(SysConst.RESULT_KEY, result);
+		// response.getHeaders().add("Access-Control-Allow-Credentials","true");
+		response.setHeader("Access-Control-Allow-Origin", request.getHeader("origin"));
+		response.setHeader("Access-Control-Allow-Credentials", "true");
+
+		return model;
+	}
+
+	// 获取爬虫任务结果
+	@RequestMapping(value = "/crawl/fetchtask", method = RequestMethod.POST)
+	@ResponseBody
+	public Model fetchTask(Model model, HttpServletRequest request, HttpServletResponse response) {
+		TaskBean result = new TaskBean();
+		result.setSucc(true);
+		result.setMsg("");
+		model = new ExtendedModelMap();
+		String sign = "";
+		String type = "";
+		sign = request.getParameter("sign");
+		type = request.getParameter("type");
+		if (StringUtils.isEmpty(sign) || StringUtils.isEmpty(type)) {
+			return model;
+		}
+		Map<String, String> map = new HashMap<>();
+
+		TkInfoTask tkInfoTask = tkInfoTaskService.selectBySign(sign);
+		if (tkInfoTask == null) {
+			result.setSucc(false);
+			result.setMsg("");
+		} else {
+			map.put("img", tkInfoTask.getProductImgUrl());
+			map.put("shop", "");
+			map.put("sign", sign);
+			map.put("tkl1", tkInfoTask.getTcode());
+			map.put("title", "");
+			map.put("url", tkInfoTask.getProductUrl());
+			map.put("quanUrl", tkInfoTask.getQuanUrl());
+			map.put("money", "￥" + tkInfoTask.getCommision());
+			map.put("tagNum", "");
+			map.put("price", "￥" + tkInfoTask.getPrice());
+			map.put("tklquan", tkInfoTask.getQuanCode());
+			map.put("tag", "");
+			map.put("per", tkInfoTask.getRate() + "%");
+			map.put("sellNum", tkInfoTask.getSales() + "");
+			map.put("goodUrl1", tkInfoTask.getTkurl());
+		}
+		result.setMap(map);
+
 		model.addAttribute(SysConst.RESULT_KEY, result);
 		// response.getHeaders().add("Access-Control-Allow-Credentials","true");
 		response.setHeader("Access-Control-Allow-Origin", request.getHeader("origin"));

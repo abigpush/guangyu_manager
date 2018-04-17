@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ivysettings>
-	<property name="repo.urlbase" value="http://repo.taiyiplus.com/nexus/content" />
+	<!--<property name="repo.urlbase" value="http://repo.taiyiplus.com/nexus/content" />-->
+	<property name="repo.urlbase" value="http://nexus.guangfish.com/nexus/content" />
 	<settings defaultResolver="default" defaultConflictManager="latest-revision" />
 	<!-- <properties file="private/ivysettings-file.properties" /> -->
-	<credentials host="repo.taiyiplus.com" realm="Sonatype Nexus Repository Manager"
+	<credentials host="nexus.guangfish.com" realm="Sonatype Nexus Repository Manager"
 		username="admin" passwd="J10elsrkVqLk67TqsTl7" />
 	<resolvers>
 		<chain name="default" returnFirst="false">

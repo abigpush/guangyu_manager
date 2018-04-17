@@ -9,11 +9,11 @@ import org.apache.log4j.Logger;
 import com.bt.om.util.GsonUtil;
 import com.bt.om.util.HttpcomponentsUtil;
 
-public class CrawlTask {
-	private static final Logger logger = Logger.getLogger(CrawlTask.class);
+public class CrawlTask2 {
+	private static final Logger logger = Logger.getLogger(CrawlTask2.class);
 
-	private static String taskUrl = "http://localhost:8082/api/crawl/addtask";
-	private static String loadDataUrl = "http://localhost:8082/api/crawl/fetchtask";
+	private static String taskUrl = "https://www.gxzhservice.com/crawl/addTask";
+	private static String loadDataUrl = "https://www.gxzhservice.com/crawl/loadData";
 	private static int sleepTime = 500;
 
 	private String sendTask(String url) {
@@ -23,9 +23,9 @@ public class CrawlTask {
 		try {
 			String ret = HttpcomponentsUtil.postReq(nvpList, taskUrl);
 			// System.out.println(ret);
-			TaskBeanRet taskBeanRet = GsonUtil.GsonToBean(ret, TaskBeanRet.class);
+			TaskBean taskBean = GsonUtil.GsonToBean(ret, TaskBean.class);
 			// System.out.println(taskBean.getMap().get("sign"));
-			retStr = taskBeanRet.getRet().getMap().get("sign") + ";" + taskBeanRet.getRet().getMap().get("type");
+			retStr = taskBean.getMap().get("sign") + ";" + taskBean.getMap().get("type");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -50,13 +50,13 @@ public class CrawlTask {
 		String params = sendTask(url);
 
 		String productInfo = loadData(params);
-		TaskBeanRet taskBeanRet = GsonUtil.GsonToBean(productInfo, TaskBeanRet.class);
+		TaskBean taskBean = GsonUtil.GsonToBean(productInfo, TaskBean.class);
 		int i = 0;
 		while (true) {
 			if (i >= 30) {
 				break;
 			}
-			if (taskBeanRet.getRet().getSucc() == true) {
+			if (taskBean.getSucc() == true) {
 				break;
 			} else {
 				try {
@@ -65,17 +65,17 @@ public class CrawlTask {
 					e.printStackTrace();
 				}
 				productInfo = loadData(params);
-				taskBeanRet = GsonUtil.GsonToBean(productInfo, TaskBeanRet.class);
+				taskBean = GsonUtil.GsonToBean(productInfo, TaskBean.class);
 			}
 			i++;
 		}
-		return taskBeanRet.getRet();
+		return taskBean;
 	}
 
 	public static void main(String[] args) {
-		CrawlTask crawlTask = new CrawlTask();
-		TaskBean taskBean = crawlTask.getProduct("https://detail.tmall.com/item.htm?id=565344963620");
-		System.out.println(taskBean.getSucc());
+		CrawlTask2 crawlTask = new CrawlTask2();
+		TaskBean taskBean = crawlTask.getProduct("http://item.taobao.com/item.htm?id=546479931448");
+		System.out.println(taskBean.getMsg());
 	}
 
 }
