@@ -131,9 +131,6 @@
         <!-- selenium -->
 		<dependency org="org.seleniumhq.selenium" name="selenium-java" rev="3.11.0" changing="true" conf="compile,test->default(*)" />
 		
-		<!-- TestNG -->
-		<dependency org="org.testng" name="testng" rev="6.14.2" changing="true" conf="compile,test->default(*)" />
-		
 		<!--LMAX高性能队列-->
 		<dependency org="com.lmax" name="disruptor" rev="3.2.1"   conf="compile,test->default(*)"/>
 	</dependencies>	
