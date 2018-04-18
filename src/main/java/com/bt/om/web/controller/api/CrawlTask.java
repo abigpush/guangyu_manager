@@ -55,7 +55,8 @@ public class CrawlTask {
 		TaskBeanRet taskBeanRet = GsonUtil.GsonToBean(productInfo, TaskBeanRet.class);
 		int i = 0;
 		while (true) {
-			if (i >= 30) {
+			//连续多少次查询后仍然查不到数据就退出
+			if (i >= ConfigUtil.getInt("task.info.check.num", 30)) {
 				break;
 			}
 			if (taskBeanRet.getRet().getSucc() == true) {
