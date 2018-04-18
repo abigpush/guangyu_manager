@@ -15,7 +15,8 @@ else
 		mkdir -p $SERVER_HOME/tmp/run.log
 	fi
 	echo "Starting ${MODULE}..."
-
+	
+	export DISPLAY=:1
 	export CLASSPATH=$CLASSPATH
 	nohup $JAVA_HOME/bin/java -server $JAVA_OPTS ${main} ${COMMAND} > $SERVER_HOME/logs/catalina.log 2>&1 &
 	echo $!> $SERVER_HOME/logs/pids.log/run.pid

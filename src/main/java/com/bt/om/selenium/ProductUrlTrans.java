@@ -40,7 +40,7 @@ public class ProductUrlTrans {
 	private static String baseUrl = "https://pub.alimama.com/promo/search/index.htm";
 
 	private static int sleepTimeBegin = 1000;
-	private static int sleepTimeEnd = 2000;
+	private static int sleepTimeEnd = 1500;
 
 	final static DisruptorQueueImpl queue = new DisruptorQueueImpl("name", ProducerType.SINGLE, 1024,
 			new BlockingWaitStrategy());
@@ -87,7 +87,11 @@ public class ProductUrlTrans {
 		driver.findElement(By.id("q")).sendKeys(tkInfoTask.getProductUrl());
 		driver.findElement(By.xpath("//div[@id='magix_vf_header']/div/div/div[2]/div[2]/button")).click();
         //点击搜索按钮后sleep
-		Thread.sleep(NumberUtil.getRandomNumber(sleepTimeEnd, sleepTimeEnd));
+		Thread.sleep(NumberUtil.getRandomNumber(sleepTimeBegin, sleepTimeEnd));
+		
+		//滚动到图片元素
+		WebElement element0 = driver.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[1]/a/img"));
+		PageUtils.scrollToElementAndPick(element0, driver);
 		
 		String productImgUrl = driver.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[1]/a/img"))
 				.getAttribute("src");
@@ -114,7 +118,7 @@ public class ProductUrlTrans {
 						.getText();
 
 		tkInfoTask.setProductImgUrl(productImgUrl);
-		tkInfoTask.setPrice(Double.valueOf(price));
+		tkInfoTask.setPrice(Double.valueOf(price.replace(",", "")));
 		tkInfoTask.setSales(Integer.parseInt(sales));
 		tkInfoTask.setCommision(Double.valueOf(commision));
 		tkInfoTask.setRate(Double.valueOf(rate));
