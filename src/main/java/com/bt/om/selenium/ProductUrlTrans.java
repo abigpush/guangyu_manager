@@ -87,7 +87,7 @@ public class ProductUrlTrans {
 		driver.findElement(By.id("q")).sendKeys(tkInfoTask.getProductUrl());
 		driver.findElement(By.xpath("//div[@id='magix_vf_header']/div/div/div[2]/div[2]/button")).click();
         //点击搜索按钮后sleep
-		Thread.sleep(NumberUtil.getRandomNumber(sleepTimeBegin, sleepTimeEnd));
+		Thread.sleep(NumberUtil.getRandomNumber(sleepTimeEnd, sleepTimeEnd));
 		
 		String productImgUrl = driver.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[1]/a/img"))
 				.getAttribute("src");
