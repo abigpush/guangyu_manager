@@ -26,21 +26,20 @@ import com.lmax.disruptor.dsl.ProducerType;
 
 public class ProductUrlTrans {
 	private static final Logger logger = Logger.getLogger(ProductUrlTrans.class);
-	
-	private static final ScheduledExecutorService scheduler = Executors
-			.newScheduledThreadPool(1);
+
+	private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
 	private static ITkInfoTaskService tkInfoTaskService = ServiceLocator.getService(TkInfoTaskService.class);
 
-//	private static String key = "webdriver.chrome.driver";
-//	private static String value = ".\\conf\\tools\\chromedriver.exe";
+	// private static String key = "webdriver.chrome.driver";
+	// private static String value = ".\\conf\\tools\\chromedriver.exe";
 	private static String key = ConfigUtil.getString("selenium.drive.name");
 	private static String value = ConfigUtil.getString("selenium.drive.path");
 	private static WebDriver driver;
 	private static String baseUrl = "https://pub.alimama.com/promo/search/index.htm";
 
-	private static int sleepTimeBegin = 1000;
-	private static int sleepTimeEnd = 1500;
+	private static int sleepTimeBegin = 500;
+	private static int sleepTimeEnd = 1000;
 
 	final static DisruptorQueueImpl queue = new DisruptorQueueImpl("name", ProducerType.SINGLE, 1024,
 			new BlockingWaitStrategy());
@@ -49,7 +48,7 @@ public class ProductUrlTrans {
 		init();
 		schedule();
 		System.setProperty(key, value);
-//		driver = new ChromeDriver();
+		// driver = new ChromeDriver();
 		driver = new FirefoxDriver();
 		driver.get(baseUrl);
 		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
@@ -66,6 +65,7 @@ public class ProductUrlTrans {
 						getTKUrl(tkInfoTask);
 					} catch (Exception e) {
 						e.printStackTrace();
+						// 做数据库任务状态更新操作，待补充
 					}
 				}
 			}
@@ -86,37 +86,62 @@ public class ProductUrlTrans {
 		driver.findElement(By.id("q")).clear();
 		driver.findElement(By.id("q")).sendKeys(tkInfoTask.getProductUrl());
 		driver.findElement(By.xpath("//div[@id='magix_vf_header']/div/div/div[2]/div[2]/button")).click();
-        //点击搜索按钮后sleep
+		// 点击搜索按钮后sleep
 		Thread.sleep(NumberUtil.getRandomNumber(sleepTimeBegin, sleepTimeEnd));
-		
-		//滚动到图片元素
+
+		// 滚动到图片元素
 		WebElement element0 = driver.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[1]/a/img"));
 		PageUtils.scrollToElementAndPick(element0, driver);
-		
+
 		String productImgUrl = driver.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[1]/a/img"))
 				.getAttribute("src");
-//		String price = driver.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[3]/span[1]/span[2]"))
-//				.getText() + "."
-//				+ driver.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[3]/span[1]/span[4]"))
-//						.getText();
-		String price="123";
-		String sales = driver
-				.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[3]/span[2]/span[2]/span"))
-				.getText();
-		String commision = driver
-				.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[4]/span[2]/span[2]/span[2]"))
-				.getText()
-				+ "."
-				+ driver.findElement(
-						By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[4]/span[2]/span[2]/span[4]"))
-						.getText();
-		String rate = driver
-				.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[4]/span[1]/span[2]/span[1]"))
-				.getText()
-				+ "."
-				+ driver.findElement(
-						By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[4]/span[1]/span[2]/span[3]"))
-						.getText();
+		String price = "0";
+		String sales = "0";
+		String commision ="0";
+		String rate ="0";
+		try {
+			price = driver.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[3]/span[1]/span[2]"))
+					.getText() + "."
+					+ driver.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[3]/span[1]/span[4]"))
+							.getText();
+			sales=driver.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[3]/span[2]/span[2]/span"))
+			.getText();
+			commision = driver
+					.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[4]/span[2]/span[2]/span[2]"))
+					.getText()
+					+ "."
+					+ driver.findElement(
+							By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[4]/span[2]/span[2]/span[4]"))
+							.getText();
+			rate = driver
+					.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[4]/span[1]/span[2]/span[1]"))
+					.getText()
+					+ "."
+					+ driver.findElement(
+							By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[4]/span[1]/span[2]/span[3]"))
+							.getText();
+		} catch (Exception e) {
+			price = driver.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[2]/span[1]/span[2]"))
+					.getText() + "."
+					+ driver.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[2]/span[1]/span[4]"))
+							.getText();
+			sales=driver.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[2]/span[2]/span[2]/span"))
+			.getText();
+			commision = driver
+					.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[3]/span[2]/span[2]/span[2]"))
+					.getText()
+					+ "."
+					+ driver.findElement(
+							By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[3]/span[2]/span[2]/span[4]"))
+							.getText();
+			rate = driver
+					.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[3]/span[1]/span[2]/span[1]"))
+					.getText()
+					+ "."
+					+ driver.findElement(
+							By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[3]/span[1]/span[2]/span[3]"))
+							.getText();
+		}		
 
 		tkInfoTask.setProductImgUrl(productImgUrl);
 		tkInfoTask.setPrice(Double.valueOf(price.replace(",", "")));
@@ -124,7 +149,7 @@ public class ProductUrlTrans {
 		tkInfoTask.setCommision(Double.valueOf(commision));
 		tkInfoTask.setRate(Double.valueOf(rate));
 
-		// 点击立即推广按钮		
+		// 点击立即推广按钮
 		WebElement element1 = driver.findElement(By.linkText("立即推广"));
 		PageUtils.scrollToElementAndClick(element1, driver);
 
@@ -180,14 +205,14 @@ public class ProductUrlTrans {
 
 		tkInfoTaskService.insertTkInfoTask(tkInfoTask);
 	}
-	
+
 	private static void schedule() {
 		// 延迟3-5分钟，间隔3-5分钟执行
 		scheduler.scheduleAtFixedRate(new Runnable() {
 			@Override
 			public void run() {
 				try {
-					logger.info("refresh...");		
+					logger.info("refresh...");
 					driver.navigate().refresh();
 				} catch (Exception e) {
 					logger.error("refresh error:[{}]", e);
