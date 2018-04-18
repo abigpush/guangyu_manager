@@ -6,14 +6,16 @@ import java.util.List;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.log4j.Logger;
+
+import com.bt.om.util.ConfigUtil;
 import com.bt.om.util.GsonUtil;
 import com.bt.om.util.HttpcomponentsUtil;
 
 public class CrawlTask {
 	private static final Logger logger = Logger.getLogger(CrawlTask.class);
 
-	private static String taskUrl = "http://localhost:8082/api/crawl/addtask";
-	private static String loadDataUrl = "http://localhost:8082/api/crawl/fetchtask";
+	private static String taskUrl = ConfigUtil.getString("crawl.task.send.url");
+	private static String loadDataUrl = ConfigUtil.getString("crawl.task.fetch.url");
 	private static int sleepTime = 500;
 
 	private String sendTask(String url) {
