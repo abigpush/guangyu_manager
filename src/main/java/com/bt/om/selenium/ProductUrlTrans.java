@@ -19,6 +19,7 @@ import com.bt.om.queue.disruptor.DisruptorQueueImpl;
 import com.bt.om.selenium.util.PageUtils;
 import com.bt.om.service.ITkInfoTaskService;
 import com.bt.om.service.impl.TkInfoTaskService;
+import com.bt.om.util.ConfigUtil;
 import com.bt.om.util.NumberUtil;
 import com.lmax.disruptor.BlockingWaitStrategy;
 import com.lmax.disruptor.dsl.ProducerType;
@@ -33,11 +34,8 @@ public class ProductUrlTrans {
 
 //	private static String key = "webdriver.chrome.driver";
 //	private static String value = ".\\conf\\tools\\chromedriver.exe";
-	private static String key = "webdriver.gecko.driver";
-	//windows
-//	private static String value = ".\\conf\\tools\\geckodriver.exe";
-	//linux
-	private static String value = "/conf/tools/geckodriver";
+	private static String key = ConfigUtil.getString("selenium.drive.name");
+	private static String value = ConfigUtil.getString("selenium.drive.path");
 	private static WebDriver driver;
 	private static String baseUrl = "https://pub.alimama.com/promo/search/index.htm";
 
