@@ -9,6 +9,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
@@ -30,8 +31,13 @@ public class ProductUrlTrans {
 
 	private static ITkInfoTaskService tkInfoTaskService = ServiceLocator.getService(TkInfoTaskService.class);
 
-	private static String key = "webdriver.chrome.driver";
-	private static String value = ".\\conf\\tools\\chromedriver.exe";
+//	private static String key = "webdriver.chrome.driver";
+//	private static String value = ".\\conf\\tools\\chromedriver.exe";
+	private static String key = "webdriver.gecko.driver";
+	//windows
+//	private static String value = ".\\conf\\tools\\geckodriver.exe";
+	//linux
+	private static String value = "./conf/tools/geckodriver";
 	private static WebDriver driver;
 	private static String baseUrl = "https://pub.alimama.com/promo/search/index.htm";
 
@@ -45,7 +51,8 @@ public class ProductUrlTrans {
 		init();
 		schedule();
 		System.setProperty(key, value);
-		driver = new ChromeDriver();
+//		driver = new ChromeDriver();
+		driver = new FirefoxDriver();
 		driver.get(baseUrl);
 		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 	}
