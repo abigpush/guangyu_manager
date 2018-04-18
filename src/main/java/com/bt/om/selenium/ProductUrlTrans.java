@@ -37,7 +37,7 @@ public class ProductUrlTrans {
 	//windows
 //	private static String value = ".\\conf\\tools\\geckodriver.exe";
 	//linux
-	private static String value = "./conf/tools/geckodriver";
+	private static String value = "/conf/tools/geckodriver";
 	private static WebDriver driver;
 	private static String baseUrl = "https://pub.alimama.com/promo/search/index.htm";
 
