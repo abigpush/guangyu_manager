@@ -128,6 +128,17 @@ public class PageUtils {
         executor.executeScript("window.scroll(" + xScrollPosition + ", " + yScrollPosition + ");");
         element.click();
     }
+    
+    public static void scrollToElementAndPick(WebElement element, WebDriver driver) {
+        //得到传入元素的y轴坐标
+        int yScrollPosition = element.getLocation().getY() - 100;
+        //得到传入元素的x轴坐标
+        int xScrollPosition = element.getLocation().getX();
+        //将浏览器对象强制转为可以执行js的对象
+        JavascriptExecutor executor = (JavascriptExecutor) driver;
+        //页面上执行js代码，用来操控页面，该js代码为：window.scroll(xScrollPosition ,  yScrollPosition );  意思是窗口跳转到x，y的位置，可以防止窗口没到那里点击不到的情况
+        executor.executeScript("window.scroll(" + xScrollPosition + ", " + yScrollPosition + ");");
+    }
 
 
 //    /**
