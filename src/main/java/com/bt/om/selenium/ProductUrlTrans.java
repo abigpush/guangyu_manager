@@ -38,8 +38,8 @@ public class ProductUrlTrans {
 	private static WebDriver driver;
 	private static String baseUrl = "https://pub.alimama.com/promo/search/index.htm";
 
-	private static int sleepTimeBegin = 500;
-	private static int sleepTimeEnd = 1000;
+	private static int sleepTimeBegin = 100;
+	private static int sleepTimeEnd = 500;
 
 	final static DisruptorQueueImpl queue = new DisruptorQueueImpl("name", ProducerType.SINGLE, 1024,
 			new BlockingWaitStrategy());
@@ -51,7 +51,7 @@ public class ProductUrlTrans {
 		// driver = new ChromeDriver();
 		driver = new FirefoxDriver();
 		driver.get(baseUrl);
-		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(1500, TimeUnit.MILLISECONDS);
 	}
 
 	public static void init() {
@@ -59,13 +59,17 @@ public class ProductUrlTrans {
 			@Override
 			public void run() {
 				while (true) {
+					TkInfoTask tkInfoTask=null;
 					try {
-						TkInfoTask tkInfoTask = (TkInfoTask) queue.take();
+						tkInfoTask = (TkInfoTask) queue.take();
 						logger.info("consumer..");
 						getTKUrl(tkInfoTask);
 					} catch (Exception e) {
-						e.printStackTrace();
-						// 做数据库任务状态更新操作，待补充
+						logger.info(e.getMessage());
+//						e.printStackTrace();
+						// 做数据库任务状态更新操作
+						tkInfoTask.setStatus(1);
+						tkInfoTaskService.insertTkInfoTask(tkInfoTask);
 					}
 				}
 			}

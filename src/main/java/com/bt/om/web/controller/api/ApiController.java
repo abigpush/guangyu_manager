@@ -428,21 +428,26 @@ public class ApiController extends BasicController {
 			result.setSucc(false);
 			result.setMsg("");
 		} else {
-			map.put("img", tkInfoTask.getProductImgUrl());
-			map.put("shop", "");
-			map.put("sign", sign);
-			map.put("tkl1", tkInfoTask.getTcode());
-			map.put("title", "");
-			map.put("url", tkInfoTask.getProductUrl());
-			map.put("quanUrl", tkInfoTask.getQuanUrl());
-			map.put("money", "￥" + tkInfoTask.getCommision());
-			map.put("tagNum", "");
-			map.put("price", "￥" + tkInfoTask.getPrice());
-			map.put("tklquan", tkInfoTask.getQuanCode());
-			map.put("tag", "");
-			map.put("per", tkInfoTask.getRate() + "%");
-			map.put("sellNum", tkInfoTask.getSales() + "");
-			map.put("goodUrl1", tkInfoTask.getTkurl());
+			if (tkInfoTask.getStatus() == 1) {
+				result.setSucc(false);
+				result.setMsg("");
+			} else {
+				map.put("img", tkInfoTask.getProductImgUrl());
+				map.put("shop", "");
+				map.put("sign", sign);
+				map.put("tkl1", tkInfoTask.getTcode());
+				map.put("title", "");
+				map.put("url", tkInfoTask.getProductUrl());
+				map.put("quanUrl", tkInfoTask.getQuanUrl());
+				map.put("money", "￥" + tkInfoTask.getCommision());
+				map.put("tagNum", "");
+				map.put("price", "￥" + tkInfoTask.getPrice());
+				map.put("tklquan", tkInfoTask.getQuanCode());
+				map.put("tag", "");
+				map.put("per", tkInfoTask.getRate() + "%");
+				map.put("sellNum", tkInfoTask.getSales() + "");
+				map.put("goodUrl1", tkInfoTask.getTkurl());
+			}
 		}
 		result.setMap(map);
 
