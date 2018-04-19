@@ -59,17 +59,17 @@ public class ProductUrlTrans {
 			@Override
 			public void run() {
 				while (true) {
-					TkInfoTask tkInfoTask=null;
+					TkInfoTask tkInfoTask = null;
 					try {
 						tkInfoTask = (TkInfoTask) queue.take();
 						logger.info("consumer..");
 						getTKUrl(tkInfoTask);
 					} catch (Exception e) {
 						logger.info(e.getMessage());
-//						e.printStackTrace();
+						// e.printStackTrace();
 						// 做数据库任务状态更新操作
 						tkInfoTask.setStatus(1);
-						tkInfoTaskService.insertTkInfoTask(tkInfoTask); 
+						tkInfoTaskService.insertTkInfoTask(tkInfoTask);
 					}
 				}
 			}
@@ -98,18 +98,22 @@ public class ProductUrlTrans {
 		PageUtils.scrollToElementAndPick(element0, driver);
 
 		String productImgUrl = driver.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[1]/a/img"))
-				.getAttribute("src");
+				.getAttribute("src");		
+		String productName = driver.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[1]/p/a/span"))
+				.getText();
 		String price = "0";
 		String sales = "0";
-		String commision ="0";
-		String rate ="0";
+		String commision = "0";
+		String rate = "0";
 		try {
+			//存在优惠券的处理方式
 			price = driver.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[3]/span[1]/span[2]"))
 					.getText() + "."
 					+ driver.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[3]/span[1]/span[4]"))
 							.getText();
-			sales=driver.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[3]/span[2]/span[2]/span"))
-			.getText();
+			sales = driver
+					.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[3]/span[2]/span[2]/span"))
+					.getText();
 			commision = driver
 					.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[4]/span[2]/span[2]/span[2]"))
 					.getText()
@@ -125,12 +129,14 @@ public class ProductUrlTrans {
 							By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[4]/span[1]/span[2]/span[3]"))
 							.getText();
 		} catch (Exception e) {
+			//不存在优惠券的处理方式
 			price = driver.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[2]/span[1]/span[2]"))
 					.getText() + "."
 					+ driver.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[2]/span[1]/span[4]"))
 							.getText();
-			sales=driver.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[2]/span[2]/span[2]/span"))
-			.getText();
+			sales = driver
+					.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[2]/span[2]/span[2]/span"))
+					.getText();
 			commision = driver
 					.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[3]/span[2]/span[2]/span[2]"))
 					.getText()
@@ -145,8 +151,9 @@ public class ProductUrlTrans {
 					+ driver.findElement(
 							By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[3]/span[1]/span[2]/span[3]"))
 							.getText();
-		}		
+		}
 
+		tkInfoTask.setProductName(productName);
 		tkInfoTask.setProductImgUrl(productImgUrl);
 		tkInfoTask.setPrice(Double.valueOf(price.replace(",", "")));
 		tkInfoTask.setSales(Integer.parseInt(sales));
