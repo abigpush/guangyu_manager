@@ -341,9 +341,9 @@ public class ApiController extends BasicController {
 				for (ProductInfo productInfo : productInfoList) {
 					if (productId.equals(productInfo.getProductId())) {
 						System.out.println("实际佣金=" + productInfo.getCommission());
-						commissionList.add((float) (Math
+						commissionList.add(((float) (Math
 								.round(productInfo.getCommission() * ConfigUtil.getFloat("commission.rate", 1) * 100))
-								/ 100);
+								/ 100));
 						break;
 					} else {
 						size = size + 1;
