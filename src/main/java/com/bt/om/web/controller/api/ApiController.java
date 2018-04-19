@@ -421,7 +421,7 @@ public class ApiController extends BasicController {
 		if (StringUtils.isEmpty(sign) || StringUtils.isEmpty(type)) {
 			return model;
 		}
-		Map<String, String> map = new HashMap<>();
+		Map<String, String> map = new HashMap<>(); 
 
 		TkInfoTask tkInfoTask = tkInfoTaskService.selectBySign(sign);
 		if (tkInfoTask == null) {
