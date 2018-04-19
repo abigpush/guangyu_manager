@@ -340,7 +340,10 @@ public class ApiController extends BasicController {
 			if (productListSize > 0) {
 				for (ProductInfo productInfo : productInfoList) {
 					if (productId.equals(productInfo.getProductId())) {
-						commissionList.add(productInfo.getCommission());
+						System.out.println("实际佣金=" + productInfo.getCommission());
+						commissionList.add((float) (Math
+								.round(productInfo.getCommission() * ConfigUtil.getFloat("commission.rate", 1) * 100))
+								/ 100);
 						break;
 					} else {
 						size = size + 1;
@@ -357,7 +360,7 @@ public class ApiController extends BasicController {
 		String commissions = "";
 		Float[] commissionArr = commissionList.toArray(new Float[commissionList.size()]);
 		commissions = StringUtils.join(commissionArr, ",");
-		System.out.println(commissions);
+		System.out.println("折后佣金=" + commissions);
 
 		result.setResult(new ProductCommissionVo(commissions));
 		model.addAttribute(SysConst.RESULT_KEY, result);
@@ -421,12 +424,12 @@ public class ApiController extends BasicController {
 		if (StringUtils.isEmpty(sign) || StringUtils.isEmpty(type)) {
 			return model;
 		}
-		Map<String, String> map = new HashMap<>(); 
+		Map<String, String> map = new HashMap<>();
 
 		TkInfoTask tkInfoTask = tkInfoTaskService.selectBySign(sign);
 		if (tkInfoTask == null) {
 			result.setSucc(false);
-			result.setMsg(""); 
+			result.setMsg("");
 		} else {
 			if (tkInfoTask.getStatus() == 1) {
 				result.setSucc(true);
