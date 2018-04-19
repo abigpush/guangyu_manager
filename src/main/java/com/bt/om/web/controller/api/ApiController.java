@@ -429,7 +429,7 @@ public class ApiController extends BasicController {
 			result.setMsg(""); 
 		} else {
 			if (tkInfoTask.getStatus() == 1) {
-				result.setSucc(false);
+				result.setSucc(true);
 				result.setMsg("");
 			} else {
 				map.put("img", tkInfoTask.getProductImgUrl());
