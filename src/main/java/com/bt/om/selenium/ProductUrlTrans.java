@@ -69,7 +69,7 @@ public class ProductUrlTrans {
 //						e.printStackTrace();
 						// 做数据库任务状态更新操作
 						tkInfoTask.setStatus(1);
-						tkInfoTaskService.insertTkInfoTask(tkInfoTask);
+						tkInfoTaskService.insertTkInfoTask(tkInfoTask); 
 					}
 				}
 			}

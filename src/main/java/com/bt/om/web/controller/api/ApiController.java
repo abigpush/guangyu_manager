@@ -426,7 +426,7 @@ public class ApiController extends BasicController {
 		TkInfoTask tkInfoTask = tkInfoTaskService.selectBySign(sign);
 		if (tkInfoTask == null) {
 			result.setSucc(false);
-			result.setMsg("");
+			result.setMsg(""); 
 		} else {
 			if (tkInfoTask.getStatus() == 1) {
 				result.setSucc(false);
