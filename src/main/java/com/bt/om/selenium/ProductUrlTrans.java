@@ -58,7 +58,7 @@ public class ProductUrlTrans {
 		Thread consumer = new Thread(new Runnable() {// 消费者
 			@Override
 			public void run() {
-				while (true) {
+				while (true) { 
 					TkInfoTask tkInfoTask=null;
 					try {
 						tkInfoTask = (TkInfoTask) queue.take();
