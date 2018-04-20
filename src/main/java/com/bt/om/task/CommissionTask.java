@@ -63,7 +63,7 @@ public class CommissionTask {
 //			System.out.println(ret);
 			ret=ret.replaceAll("null", "\"0.0\"");
 			List<String> list = GsonUtil.GsonToList(ret, String.class);
-			System.out.println(StringUtils.join(list.toArray(), ","));
+//			System.out.println(StringUtils.join(list.toArray(), ","));
 
 			for (int i = 0; i < productInfoList.size(); i++) {
 				ProductInfo pi = new ProductInfo();
