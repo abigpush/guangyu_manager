@@ -201,7 +201,6 @@ public class ApiController extends BasicController {
 	@RequestMapping(value = "/productInfo", method = RequestMethod.POST)
 	@ResponseBody
 	public Model productInfo(Model model, HttpServletRequest request, HttpServletResponse response) {
-		response.addHeader("Access-Control-Allow-Origin", "*");
 		ResultVo<ProductInfoVo> result = new ResultVo<>();
 		result.setCode(ResultCode.RESULT_SUCCESS.getCode());
 		result.setResultDes("商品信息获取成功");
