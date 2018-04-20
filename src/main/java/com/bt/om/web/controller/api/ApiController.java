@@ -296,11 +296,11 @@ public class ApiController extends BasicController {
 				sb.append(((float) (Math
 						.round(commission * ConfigUtil.getFloat("commission.rate", 1) * 100))
 						/ 100));
-				sb.append("</span></div><div id='btn-app'><a href='");
+				sb.append("</span></div><div id='btn-app'><a href='javascript;' onclick=drump('");
 				sb.append(tkLink);
 				sb.append("'>推广链接</a>");
 				if(StringUtils.isNotEmpty(couponLink)){
-					sb.append(" | <a href='");
+					sb.append(" | <a href='javascript;' onclick=drump('");
 					sb.append(couponLink);
 					sb.append("'>优惠券</a>");
 				}
