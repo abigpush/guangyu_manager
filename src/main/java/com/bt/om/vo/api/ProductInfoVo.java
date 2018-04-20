@@ -8,11 +8,13 @@ public class ProductInfoVo implements Serializable {
 	private String shortLinkUrl="";
 	private String couponName="";
 	private String couponLink="";
+	private String msg="";
 
-	public ProductInfoVo(String shortLinkUrl,String couponName,String couponLink) {
+	public ProductInfoVo(String shortLinkUrl,String couponName,String couponLink,String msg) {
 		this.shortLinkUrl = shortLinkUrl;
 		this.couponName=couponName;
 		this.couponLink=couponLink;
+		this.msg=msg;
 	}
 
 	public String getShortLinkUrl() {
@@ -37,6 +39,14 @@ public class ProductInfoVo implements Serializable {
 
 	public void setCouponLink(String couponLink) {
 		this.couponLink = couponLink;
+	}
+
+	public String getMsg() {
+		return msg;
+	}
+
+	public void setMsg(String msg) {
+		this.msg = msg;
 	}
 
 }
