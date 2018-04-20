@@ -70,7 +70,7 @@
 					success : function(data) {
 						console.log('请求到的数据为：', data)
 						$('#waiting').remove();
-						$('#result').html(data.ret.msg);
+						$('#result').html(data.ret.result.msg);
 					},
 					error : function(XMLHttpRequest, textStatus, errorThrown) {
 						console.log('请求失败')

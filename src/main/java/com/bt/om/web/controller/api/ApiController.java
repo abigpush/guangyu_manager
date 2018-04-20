@@ -281,9 +281,7 @@ public class ApiController extends BasicController {
 				productInfo.setCreateTime(new Date());
 				productInfo.setUpdateTime(new Date());
 				productInfoService.insertProductInfo(productInfo);
-				
-				
-				
+										
 				//组装msg
 				StringBuffer sb = new StringBuffer();
 				sb.append("<div id='e-c' align=center></div><div style='font-size:12px;width:330px;top:10%;left:38%;background:#fff;border-radius:10px;box-shadow:5px 5px 10px #888;'><div><img src='");
@@ -311,6 +309,31 @@ public class ApiController extends BasicController {
 			} else {
 				return model;
 			}
+		}else{
+			//组装msg
+			StringBuffer sb = new StringBuffer();
+			sb.append("<div id='e-c' align=center></div><div style='font-size:12px;width:330px;top:10%;left:38%;background:#fff;border-radius:10px;box-shadow:5px 5px 10px #888;'><div><img src='");
+			sb.append(productInfo.getProductImgUrl());
+			sb.append("'></div><div>");
+			sb.append(productInfo.getProductName());
+			sb.append("</div><div style='height:20px;'><span style='float:left;'>商店：</span><span style='float:right;'>销量：");
+			sb.append(productInfo.getMonthSales());
+			sb.append("</span></div><div style='height: 20px;'><span style='float: left;'>价格：￥");
+			sb.append(productInfo.getPrice());
+			sb.append("</span><span style='float: right;'>返现：￥");
+			sb.append(((float) (Math
+					.round(productInfo.getCommission() * ConfigUtil.getFloat("commission.rate", 1) * 100))
+					/ 100));
+			sb.append("</span></div><div id='btn-app'><a href='");
+			sb.append(productInfo.getTkLink());
+			sb.append("'>推广链接</a>");
+			if(StringUtils.isNotEmpty(productInfo.getCouponLink())){
+				sb.append(" | <a href='");
+				sb.append(productInfo.getCouponLink());
+				sb.append("'>优惠券</a>");
+			}
+			sb.append("</div><div style='color:red;'><br />如果有优惠券请先点优惠券获取，再点击优惠券下方的链接购买。</div></div></div>");
+			msg=sb.toString();
 		}
 
 		result.setResult(new ProductInfoVo(productInfo.getTkLink(), "领券", productInfo.getCouponLink(),msg));
