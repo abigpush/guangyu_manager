@@ -41,7 +41,8 @@ public class ProductUrlTrans {
 	private static int sleepTimeBegin = 100;
 	private static int sleepTimeEnd = 500;
 
-	final static DisruptorQueueImpl queue = new DisruptorQueueImpl("name", ProducerType.SINGLE, 1024,
+	//初始化队列，定义队列长度
+	final static DisruptorQueueImpl queue = new DisruptorQueueImpl("name", ProducerType.SINGLE, 256,
 			new BlockingWaitStrategy());
 
 	static {
