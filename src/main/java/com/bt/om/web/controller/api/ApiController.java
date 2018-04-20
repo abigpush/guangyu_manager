@@ -298,11 +298,11 @@ public class ApiController extends BasicController {
 						/ 100));
 				sb.append("</span></div><div id='btn-app'><a href='javascript;' onclick=drump('");
 				sb.append(tkLink);
-				sb.append("'>推广链接</a>");
+				sb.append("')>推广链接</a>");
 				if(StringUtils.isNotEmpty(couponLink)){
 					sb.append(" | <a href='javascript;' onclick=drump('");
 					sb.append(couponLink);
-					sb.append("'>优惠券</a>");
+					sb.append("')>优惠券</a>");
 				}
 				sb.append("</div><div style='color:red;'><br />如果有优惠券请先点优惠券获取，再点击优惠券下方的链接购买。</div></div></div>");
 				msg=sb.toString();
@@ -324,13 +324,13 @@ public class ApiController extends BasicController {
 			sb.append(((float) (Math
 					.round(productInfo.getCommission() * ConfigUtil.getFloat("commission.rate", 1) * 100))
 					/ 100));
-			sb.append("</span></div><div id='btn-app'><a href='");
+			sb.append("</span></div><div id='btn-app'><a href='javascript;' onclick=drump('");
 			sb.append(productInfo.getTkLink());
-			sb.append("'>推广链接</a>");
+			sb.append("')>推广链接</a>");
 			if(StringUtils.isNotEmpty(productInfo.getCouponLink())){
-				sb.append(" | <a href='");
+				sb.append(" | <a href='javascript; onclick=drump('");
 				sb.append(productInfo.getCouponLink());
-				sb.append("'>优惠券</a>");
+				sb.append("')>优惠券</a>");
 			}
 			sb.append("</div><div style='color:red;'><br />如果有优惠券请先点优惠券获取，再点击优惠券下方的链接购买。</div></div></div>");
 			msg=sb.toString();
