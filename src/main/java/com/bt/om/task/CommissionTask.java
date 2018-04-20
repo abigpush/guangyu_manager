@@ -10,6 +10,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.http.Header;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
@@ -27,6 +28,7 @@ import com.bt.om.util.HttpcomponentsUtil;
 
 @Component
 public class CommissionTask {
+	private static final Logger logger = Logger.getLogger(CommissionTask.class);
 	@Autowired
 	private IProductInfoService productInfoService;
 
@@ -34,8 +36,9 @@ public class CommissionTask {
 	private String commissionUrl;
 
 	// 每隔一段时间获取一次佣金信息
-//	@Scheduled(cron = "0/10 * * * * ?")
+	@Scheduled(cron = "0/10 * * * * ?")
 	public void getCommission() {
+		logger.info("定时查询佣金信息");
 		//获取前一日的商品数据
 		ProductInfo searchProductInfo=new ProductInfo();
 		searchProductInfo.setSize(ConfigUtil.getInt("commission.product.size",48));
@@ -51,13 +54,13 @@ public class CommissionTask {
 		}
 
 		String productIds = StringUtils.join(plist.toArray(), ",");
-		System.out.println(productIds);	
+//		System.out.println(productIds);	
 
 		List<NameValuePair> nvpList = new ArrayList<>();
 		nvpList.add(new BasicNameValuePair("num_iids", productIds));
 		try {
 			String ret = HttpcomponentsUtil.postReq(nvpList, commissionUrl);
-			System.out.println(ret);
+//			System.out.println(ret);
 			ret=ret.replaceAll("null", "\"0.0\"");
 			List<String> list = GsonUtil.GsonToList(ret, String.class);
 			System.out.println(StringUtils.join(list.toArray(), ","));
