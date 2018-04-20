@@ -49,7 +49,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/api")
 public class ApiController extends BasicController {
 	private static final Logger logger = Logger.getLogger(ApiController.class);
-	
+
 	@Autowired
 	private IUserService userService;
 
@@ -334,7 +334,7 @@ public class ApiController extends BasicController {
 		} else {
 			productListSize = productInfoList.size();
 		}
-//		System.out.println(productInfoList.size());
+		// System.out.println(productInfoList.size());
 
 		// 商品佣金一一对应
 		List<Float> commissionList = new ArrayList<>();
@@ -436,7 +436,8 @@ public class ApiController extends BasicController {
 		} else {
 			if (tkInfoTask.getStatus() == 1) {
 				result.setSucc(true);
-				result.setMsg("");
+				result.setMsg(
+						"<div id='e-c' style='position:fixed;z-index:999999999;width:100%;height:100%;left:0;top:0;' align=center><div style='background:#000;width:100%;height:100%;opacity:0.2;'></div><div style='font-size:12px;width:330px;position:fixed;top:10%;left:38%;background:#fff;border-radius:10px;box-shadow:5px 5px 10px #888;'><h2 style='padding:5px;font-size:18px;'>该商品无佣金。</h2></div></div>");
 			} else {
 				map.put("img", tkInfoTask.getProductImgUrl());
 				map.put("shop", "");
@@ -453,6 +454,16 @@ public class ApiController extends BasicController {
 				map.put("per", tkInfoTask.getRate() + "%");
 				map.put("sellNum", tkInfoTask.getSales() + "");
 				map.put("goodUrl1", tkInfoTask.getTkurl());
+				String msg = "<div id='e-c' style='position:fixed;z-index:999999999;width:100%;height:100%;left:0;top:0;' align=center><div style='background:#000;width:100%;height:100%;opacity:0.2;'></div><div style='font-size:12px;width:330px;position:fixed;top:10%;left:38%;background:#fff;border-radius:10px;box-shadow:5px 5px 10px #888;'><div><img src='"
+						+ tkInfoTask.getProductImgUrl() + "'></div><div>" + tkInfoTask.getProductName()
+						+ "</div><div style='height:20px;'><span style='float:left;'>商店：</span><span style='float:right;'>销量："
+						+ tkInfoTask.getSales()
+						+ "</span></div><div style='height: 20px;'><span style='float: left;'>价格：￥"
+						+ tkInfoTask.getPrice() + "</span><span style='float: right;'>返现：￥" + tkInfoTask.getCommision()
+						+ "(" + tkInfoTask.getRate() + "%)</span></div><div id='btn-app'><a href='"
+						+ tkInfoTask.getTkurl()
+						+ "'>推广链接</a></div><div style='color:red;'><br />如果有优惠券请先点优惠券获取，再点击优惠券下方的链接购买。</div></div></div>";
+				result.setMsg(msg);
 			}
 		}
 		result.setMap(map);
