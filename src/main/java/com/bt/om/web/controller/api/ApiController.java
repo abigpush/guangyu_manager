@@ -38,6 +38,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ExtendedModelMap;
@@ -47,6 +48,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = "/api")
 public class ApiController extends BasicController {
+	private static final Logger logger = Logger.getLogger(ApiController.class);
+	
 	@Autowired
 	private IUserService userService;
 
@@ -331,7 +334,7 @@ public class ApiController extends BasicController {
 		} else {
 			productListSize = productInfoList.size();
 		}
-		System.out.println(productInfoList.size());
+//		System.out.println(productInfoList.size());
 
 		// 商品佣金一一对应
 		List<Float> commissionList = new ArrayList<>();
@@ -340,7 +343,7 @@ public class ApiController extends BasicController {
 			if (productListSize > 0) {
 				for (ProductInfo productInfo : productInfoList) {
 					if (productId.equals(productInfo.getProductId())) {
-						System.out.println("实际佣金=" + productInfo.getCommission());
+						logger.info("实际佣金=" + productInfo.getCommission());
 						commissionList.add(((float) (Math
 								.round(productInfo.getCommission() * ConfigUtil.getFloat("commission.rate", 1) * 100))
 								/ 100));
@@ -360,7 +363,7 @@ public class ApiController extends BasicController {
 		String commissions = "";
 		Float[] commissionArr = commissionList.toArray(new Float[commissionList.size()]);
 		commissions = StringUtils.join(commissionArr, ",");
-		System.out.println("折后佣金=" + commissions);
+		logger.info("折后佣金=" + commissions);
 
 		result.setResult(new ProductCommissionVo(commissions));
 		model.addAttribute(SysConst.RESULT_KEY, result);
