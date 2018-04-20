@@ -258,7 +258,7 @@ public class ApiController extends BasicController {
 						? taskBean.getMap().get("goodUrl2") : taskBean.getMap().get("goodUrl1");
 				String productId=urlMap.get("id");
 				productInfo.setProductId(productId);
-				String productImgUrl="http://" + taskBean.getMap().get("img");
+				String productImgUrl=taskBean.getMap().get("img");
 				productInfo.setProductImgUrl(productImgUrl);
 				String productInfoUrl=taskBean.getMap().get("url");
 				productInfo.setProductInfoUrl(productInfoUrl);

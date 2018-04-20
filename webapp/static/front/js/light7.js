@@ -5439,22 +5439,22 @@ Device/OS Detection
   };
 
 
-  if($.smConfig.showPageLoadingIndicator) {
-    //这里的 以 push 开头的是私有事件，不要用
-    $(window).on("pageLoadStart", function() {
-      $.showIndicator();
-    });
-    $(document).on("pageAnimationStart", function() {
-      $.hideIndicator();
-    });
-    $(window).on("pageLoadCancel", function() {
-      $.hideIndicator();
-    });
-    $(window).on("pageLoadError", function() {
-      $.hideIndicator();
-      $.toast("加载失败");
-    });
-  }
+//  if($.smConfig.showPageLoadingIndicator) {
+//    //这里的 以 push 开头的是私有事件，不要用
+//    $(window).on("pageLoadStart", function() {
+//      $.showIndicator();
+//    });
+//    $(document).on("pageAnimationStart", function() {
+//      $.hideIndicator();
+//    });
+//    $(window).on("pageLoadCancel", function() {
+//      $.hideIndicator();
+//    });
+//    $(window).on("pageLoadError", function() {
+//      $.hideIndicator();
+//      $.toast("加载失败");
+//    });
+//  }
 
 
 
