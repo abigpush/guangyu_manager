@@ -288,7 +288,7 @@ public class ApiController extends BasicController {
 				sb.append(productImgUrl);
 				sb.append("' height='220' width='220' onclick='drump('");
 				sb.append(tkLink);
-				sb.append("')'></div><div>");
+				sb.append("')></div><div>");
 				sb.append(productName);
 				sb.append("</div><div style='height:20px;'><span style='float:left;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;商店：</span><span style='float:right;'>销量：");
 				sb.append(sellNum);
@@ -324,7 +324,7 @@ public class ApiController extends BasicController {
 			sb.append(productInfo.getProductImgUrl());
 			sb.append("' height='220' width='220' onclick='drump('");
 			sb.append(productInfo.getTkLink());
-			sb.append("')'></div><div>");			
+			sb.append("')></div><div>");			
 			sb.append(productInfo.getProductName());
 			sb.append("</div><div style='height:20px;'><span style='float:left;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;商店：</span><span style='float:right;'>销量：");
 			sb.append(productInfo.getMonthSales());
