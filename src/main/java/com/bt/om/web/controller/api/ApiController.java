@@ -286,7 +286,7 @@ public class ApiController extends BasicController {
 				StringBuffer sb = new StringBuffer();
 				sb.append("<div id='e-c' align=center></div><div style='font-size:12px;width:330px;top:10%;left:38%;background:#fff;border-radius:10px;box-shadow:5px 5px 10px #888;'><div><img src='");
 				sb.append(productImgUrl);
-				sb.append("' height='220' width='220' onclick='drump('");
+				sb.append("' height='220' width='220' onclick=drump('");
 				sb.append(tkLink);
 				sb.append("')></div><div>");
 				sb.append(productName);
@@ -322,7 +322,7 @@ public class ApiController extends BasicController {
 			StringBuffer sb = new StringBuffer();
 			sb.append("<div id='e-c' align=center></div><div style='font-size:12px;width:330px;top:10%;left:38%;background:#fff;border-radius:10px;box-shadow:5px 5px 10px #888;'><div><img src='");
 			sb.append(productInfo.getProductImgUrl());
-			sb.append("' height='220' width='220' onclick='drump('");
+			sb.append("' height='220' width='220' onclick=drump('");
 			sb.append(productInfo.getTkLink());
 			sb.append("')></div><div>");			
 			sb.append(productInfo.getProductName());
