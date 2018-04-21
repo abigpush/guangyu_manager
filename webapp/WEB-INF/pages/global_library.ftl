@@ -1,5 +1,5 @@
 <#if vm.getEvnVariable() == "on">
-<#assign static_domain = "http://static.guangfish.com">
+<#assign static_domain = "http://static.guangfish.com"> 
 <#else>
 <#assign static_domain = "http://static.guangfish.com">
 </#if>
