@@ -286,7 +286,7 @@ public class ApiController extends BasicController {
 				StringBuffer sb = new StringBuffer();
 				sb.append("<div id='e-c' align=center></div><div style='font-size:12px;width:330px;top:10%;left:38%;background:#fff;border-radius:10px;box-shadow:5px 5px 10px #888;'><div><img src='");
 				sb.append(productImgUrl);
-				sb.append("'></div><div>");
+				sb.append("' height='220' width='220' onclick='drump('"+tkLink+"')'></div><div>");
 				sb.append(productName);
 				sb.append("</div><div style='height:20px;'><span style='float:left;'>商店：</span><span style='float:right;'>销量：");
 				sb.append(sellNum);
@@ -320,7 +320,7 @@ public class ApiController extends BasicController {
 			StringBuffer sb = new StringBuffer();
 			sb.append("<div id='e-c' align=center></div><div style='font-size:12px;width:330px;top:10%;left:38%;background:#fff;border-radius:10px;box-shadow:5px 5px 10px #888;'><div><img src='");
 			sb.append(productInfo.getProductImgUrl());
-			sb.append("'></div><div>");
+			sb.append("' height='220' width='220' onclick='drump('"+productInfo.getTkLink()+"')'></div><div>");
 			sb.append(productInfo.getProductName());
 			sb.append("</div><div style='height:20px;'><span style='float:left;'>商店：</span><span style='float:right;'>销量：");
 			sb.append(productInfo.getMonthSales());

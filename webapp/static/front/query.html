@@ -50,44 +50,53 @@
 	<script type='text/javascript' src='js/jquery.min.js' charset='utf-8'></script>
 	<script type='text/javascript' src='js/light7.js' charset='utf-8'></script>
 	<script>
-	    function drump(link){
-	 	  //location.href=link;
-	    	window.open(link);
-	    }
-	
+		function drump(link) {
+			//location.href=link;
+			window.open(link);
+		}
+
 		function fetch() {
 			$('#e-c').remove();
-			
-			var div=document.createElement("div");
-			div.id="waiting";
-			document.body.appendChild(div);
-			div.innerHTML = '<h1 style="font-size: 18px;position: fixed;top: 0;z-index: 999999999;background: #fff;text-align: center;font-size: 18px;">数据检索中，请稍后...</h1>';
 			var producturl = $('.input_enter').val();
+			var reg = /http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
+			if (!reg.test(producturl)) {
+				alert("请输入有效的地址！");
+				return;
+			}
+
+			//加载中
+			$('#result')
+					.html(
+							"<div id='waiting'><img src='timg.gif' height='200' width='200'></div>");
 			if (producturl) {
-				$.ajax({
-					type : "post",
-					url : "https://plug.guangfish.com/api/productInfo",
-					contentType:"application/json",
-					dataType : "json",// 返回json格式的数据
-					data : JSON.stringify({
-					      "user_id":"",
-					      "product_url" : producturl
-					}),
-					timeout : 30000,
-					success : function(data) {
-						console.log('请求到的数据为：', data)
-						$('#waiting').remove();
-						if(JSON.stringify(data) == "{}"){
-							$('#result').html("<div id='e-c' align=center><div style='font-size:12px;width:330px;top:10%;left:38%;background:#fff;border-radius:10px;box-shadow:5px 5px 10px #888;'><h2 style='padding:5px;font-size:18px;'>该商品无佣金。</h2></div></div>");							
-						}else{
-							$('#result').html(data.ret.result.msg);							
-						}
-						
-					},
-					error : function(XMLHttpRequest, textStatus, errorThrown) {
-						console.log('请求失败')
-					}
-				});
+				$
+						.ajax({
+							type : "post",
+							url : "https://plug.guangfish.com/api/productInfo",
+							contentType : "application/json",
+							dataType : "json",// 返回json格式的数据
+							data : JSON.stringify({
+								"user_id" : "",
+								"product_url" : producturl
+							}),
+							timeout : 30000,
+							success : function(data) {
+								console.log('请求到的数据为：', data)
+								$('#waiting').remove();
+								if (JSON.stringify(data) == "{}") {
+									$('#result')
+											.html(
+													"<div id='e-c' align=center><div style='font-size:12px;width:330px;top:10%;left:38%;background:#fff;border-radius:10px;box-shadow:5px 5px 10px #888;'><h2 style='padding:5px;font-size:18px;'>该商品无佣金。</h2></div></div>");
+								} else {
+									$('#result').html(data.ret.result.msg);
+								}
+
+							},
+							error : function(XMLHttpRequest, textStatus,
+									errorThrown) {
+								console.log('请求失败')
+							}
+						});
 			} else {
 				alert("请输入商品地址后再查询");
 			}
