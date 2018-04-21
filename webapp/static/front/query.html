@@ -61,7 +61,7 @@
 			var div=document.createElement("div");
 			div.id="waiting";
 			document.body.appendChild(div);
-			div.innerHTML = '<div align=center><h1 style="font-size: 18px;position: fixed;top: 0;z-index: 999999999;background: #fff;text-align: center;font-size: 18px;">数据检索中，请稍后</h1></div>';
+			div.innerHTML = '<h1 style="font-size: 18px;position: fixed;top: 0;z-index: 999999999;background: #fff;text-align: center;font-size: 18px;">数据检索中，请稍后...</h1>';
 			var producturl = $('.input_enter').val();
 			if (producturl) {
 				$.ajax({
