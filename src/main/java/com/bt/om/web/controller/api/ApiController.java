@@ -286,17 +286,19 @@ public class ApiController extends BasicController {
 				StringBuffer sb = new StringBuffer();
 				sb.append("<div id='e-c' align=center></div><div style='font-size:12px;width:330px;top:10%;left:38%;background:#fff;border-radius:10px;box-shadow:5px 5px 10px #888;'><div><img src='");
 				sb.append(productImgUrl);
-				sb.append("' height='220' width='220' onclick='drump('"+tkLink+"')'></div><div>");
+				sb.append("' height='220' width='220' onclick='drump('");
+				sb.append(tkLink);
+				sb.append("')'></div><div>");
 				sb.append(productName);
-				sb.append("</div><div style='height:20px;'><span style='float:left;'>商店：</span><span style='float:right;'>销量：");
+				sb.append("</div><div style='height:20px;'><span style='float:left;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;商店：</span><span style='float:right;'>销量：");
 				sb.append(sellNum);
-				sb.append("</span></div><div style='height: 20px;'><span style='float: left;'>价格：￥");
+				sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div><div style='height: 20px;'><span style='float: left;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价格：￥");
 				sb.append(price);
 				sb.append("</span><span style='float: right;'>返现：￥");
 				sb.append(((float) (Math
 						.round(commission * ConfigUtil.getFloat("commission.rate", 1) * 100))
 						/ 100));
-				sb.append("</span></div><div id='btn-app'><a href='javascript;' onclick=drump('");
+				sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div><div id='btn-app'><a href='javascript;' onclick=drump('");
 				sb.append(tkLink);
 				sb.append("')>推广链接</a>");
 				if(StringUtils.isNotEmpty(couponLink)){
@@ -320,17 +322,19 @@ public class ApiController extends BasicController {
 			StringBuffer sb = new StringBuffer();
 			sb.append("<div id='e-c' align=center></div><div style='font-size:12px;width:330px;top:10%;left:38%;background:#fff;border-radius:10px;box-shadow:5px 5px 10px #888;'><div><img src='");
 			sb.append(productInfo.getProductImgUrl());
-			sb.append("' height='220' width='220' onclick='drump('"+productInfo.getTkLink()+"')'></div><div>");
+			sb.append("' height='220' width='220' onclick='drump('");
+			sb.append(productInfo.getTkLink());
+			sb.append("')'></div><div>");			
 			sb.append(productInfo.getProductName());
-			sb.append("</div><div style='height:20px;'><span style='float:left;'>商店：</span><span style='float:right;'>销量：");
+			sb.append("</div><div style='height:20px;'><span style='float:left;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;商店：</span><span style='float:right;'>销量：");
 			sb.append(productInfo.getMonthSales());
-			sb.append("</span></div><div style='height: 20px;'><span style='float: left;'>价格：￥");
+			sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div><div style='height: 20px;'><span style='float: left;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价格：￥");
 			sb.append(productInfo.getPrice());
 			sb.append("</span><span style='float: right;'>返现：￥");
 			sb.append(((float) (Math
 					.round(productInfo.getCommission() * ConfigUtil.getFloat("commission.rate", 1) * 100))
 					/ 100));
-			sb.append("</span></div><div id='btn-app'><a href='javascript;' onclick=drump('");
+			sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div><div id='btn-app'><a href='javascript;' onclick=drump('");
 			sb.append(productInfo.getTkLink());
 			sb.append("')>推广链接</a>");
 			if(StringUtils.isNotEmpty(productInfo.getCouponLink())){
