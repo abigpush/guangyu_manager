@@ -77,7 +77,12 @@
 					success : function(data) {
 						console.log('请求到的数据为：', data)
 						$('#waiting').remove();
-						$('#result').html(data.ret.result.msg);
+						if(data){
+							$('#result').html(data.ret.result.msg);
+						}else{
+							$('#result').html("<div id='e-c' align=center><div style='font-size:12px;width:330px;top:10%;left:38%;background:#fff;border-radius:10px;box-shadow:5px 5px 10px #888;'><h2 style='padding:5px;font-size:18px;'>该商品无佣金。</h2></div></div>");							
+						}
+						
 					},
 					error : function(XMLHttpRequest, textStatus, errorThrown) {
 						console.log('请求失败')

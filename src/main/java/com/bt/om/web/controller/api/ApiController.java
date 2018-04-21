@@ -307,12 +307,12 @@ public class ApiController extends BasicController {
 				sb.append("</div><div style='color:red;'><br />如果有优惠券请先点优惠券获取，再点击优惠券下方的链接购买。</div></div></div>");
 				msg=sb.toString();
 			} else {
-				msg="<div id='e-c' align=center><div style='font-size:12px;width:330px;top:10%;left:38%;background:#fff;border-radius:10px;box-shadow:5px 5px 10px #888;'><h2 style='padding:5px;font-size:18px;'>该商品无佣金。</h2></div></div>";
-				result.setResult(new ProductInfoVo("", "", "",msg));
-				model.addAttribute(SysConst.RESULT_KEY, result);
-				// response.getHeaders().add("Access-Control-Allow-Credentials","true");
-				response.setHeader("Access-Control-Allow-Origin", request.getHeader("origin"));
-				response.setHeader("Access-Control-Allow-Credentials", "true");
+//				msg="<div id='e-c' align=center><div style='font-size:12px;width:330px;top:10%;left:38%;background:#fff;border-radius:10px;box-shadow:5px 5px 10px #888;'><h2 style='padding:5px;font-size:18px;'>该商品无佣金。</h2></div></div>";
+//				result.setResult(new ProductInfoVo("", "", "",msg));
+//				model.addAttribute(SysConst.RESULT_KEY, result);
+//				// response.getHeaders().add("Access-Control-Allow-Credentials","true");
+//				response.setHeader("Access-Control-Allow-Origin", request.getHeader("origin"));
+//				response.setHeader("Access-Control-Allow-Credentials", "true");
 				return model;
 			}
 		}else{
