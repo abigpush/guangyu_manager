@@ -86,11 +86,11 @@
 								if (JSON.stringify(data) == "{}") {
 									$('#result')
 											.html(
-													"<div id='e-c' align=center><div style='font-size:12px;width:330px;top:10%;left:38%;background:#fff;border-radius:10px;box-shadow:5px 5px 10px #888;'><h2 style='padding:5px;font-size:18px;'>该商品无佣金。</h2></div></div>");
+													"<div id='e-c' align=center><div style='font-size:12px;width:330px;top:10%;left:38%;background:#fff;border-radius:10px;box-shadow:5px 5px 10px #888;'><h2 style='padding:5px;font-size:18px;'>该商品无佣金</h2></div></div>");
 								} else {
 									$('#result').html(data.ret.result.msg);
 								}
-
+								$(".input_enter").val("");
 							},
 							error : function(XMLHttpRequest, textStatus,
 									errorThrown) {
