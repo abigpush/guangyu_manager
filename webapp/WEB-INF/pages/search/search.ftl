@@ -32,6 +32,23 @@
 									</div>
 								</div>
 							</li>
+							<li>
+								<div class="item-content">
+									<div class="item-media">
+										<i class="icon icon-form-name"></i>
+									</div>
+									<div class="item-inner" style="padding:0">
+										<div class="item-input">
+											<input id="vcode" maxlength="5" class="input_enter" type="text" placeholder="输入验证码"
+												name="codeimage">
+										</div>
+										<div class="item-title label" style="width:100px;height:35px;">
+											 <img id="num" height="35" src="/getCode?%27+(new%20Date()).getTime()" onclick="document.getElementById('num').src='/getCode?'+(new Date()).getTime()"  alt="换一换" title="换一换" class="codeimage">
+										</div>
+										
+									</div>
+								</div>
+							</li>
 						</ul>
 					</div>
 					<div class="content-block">
@@ -54,8 +71,53 @@
 			//location.href=link;
 			window.open(link);
 		}
+		
+		function vcodevalid() {
+			var vcode = $('#vcode').val();
+
+			if (!vcode) {
+				alert("请输入验证码！");
+				return;
+			}
+			 
+			var dt=0;
+
+				$
+						.ajax({
+							type : "post",
+							url : "https://plug.guangfish.com/api/vcodevaild",
+							contentType : "application/json",
+							dataType : "json",// 返回json格式的数据
+							async:false,
+							data : JSON.stringify({
+								"vcode" : vcode
+							}),
+							timeout : 30000,
+							success : function(data) {
+								console.log('请求到的数据为：', data)
+								if(data.ret.result=="0"){
+								  dt=0;
+								}else{
+								  dt=1;
+								}					
+							},
+							error : function(XMLHttpRequest, textStatus,
+									errorThrown) {
+								console.log('请求失败')
+							}
+						});
+						return dt;
+		}
 
 		function fetch() {
+		    if(!(vcodevalid()==0)){
+		      alert("验证码验证失败");
+		      return;
+		    }else{
+		      $("#vcode").val("");
+		      document.getElementById('num').src='/getCode?'+(new Date()).getTime();
+		    }
+		
 			$('#e-c').remove();
 			var producturl = $('.input_enter').val();
 			var reg = /http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
