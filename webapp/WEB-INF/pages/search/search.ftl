@@ -77,7 +77,7 @@
 
 			if (!vcode) {
 				alert("请输入验证码！");
-				return;
+				return -1;
 			}
 			 
 			var dt=0;
@@ -110,20 +110,25 @@
 		}
 
 		function fetch() {
-		    if(!(vcodevalid()==0)){
-		      alert("验证码验证失败");
-		      return;
-		    }else{
-		      $("#vcode").val("");
-		      document.getElementById('num').src='/getCode?'+(new Date()).getTime();
-		    }
-		
+		    	
 			$('#e-c').remove();
 			var producturl = $('.input_enter').val();
 			var reg = /http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
 			if (!reg.test(producturl)) {
 				alert("请输入有效的地址！");
 				return;
+			}else{
+			  var adt=vcodevalid();
+			  if(adt==-1){
+			    return;
+			  }			  
+			  if(!(adt==0)){
+		        alert("验证码验证失败");
+		        return;
+		      }else{
+		        $("#vcode").val("");
+		        document.getElementById('num').src='/getCode?'+(new Date()).getTime();
+		      }
 			}
 
 			//加载中
