@@ -6,7 +6,6 @@ import com.bt.om.entity.ProductInfo;
 import com.bt.om.entity.TkInfoTask;
 import com.bt.om.entity.User;
 import com.bt.om.enums.ResultCode;
-import com.bt.om.enums.SessionKey;
 import com.bt.om.selenium.ProductUrlTrans;
 import com.bt.om.service.IProductInfoService;
 import com.bt.om.service.ITkInfoTaskService;
@@ -35,7 +34,6 @@ import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -290,7 +288,9 @@ public class ApiController extends BasicController {
 				sb.append(tkLink);
 				sb.append("')></div><div>");
 				sb.append(productName);
-				sb.append("</div><div style='height:20px;'><span style='float:left;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;商店：</span><span style='float:right;'>销量：");
+				sb.append("</div><div style='height:20px;'><span style='float:left;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;商店：");
+				sb.append(shopName);
+				sb.append("</span><span style='float:right;'>销量：");
 				sb.append(sellNum);
 				sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div><div style='height: 20px;'><span style='float: left;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价格：￥");
 				sb.append(price);
@@ -298,6 +298,9 @@ public class ApiController extends BasicController {
 				sb.append(((float) (Math
 						.round(commission * ConfigUtil.getFloat("commission.rate", 1) * 100))
 						/ 100));
+				sb.append("(");
+				sb.append(incomeRate*ConfigUtil.getFloat("commission.rate", 1));
+				sb.append("%)");
 				sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div><div id='btn-app'><a href='javascript;' onclick=drump('");
 				sb.append(tkLink);
 				sb.append("')>推广链接</a>");
@@ -309,12 +312,6 @@ public class ApiController extends BasicController {
 				sb.append("</div><div style='color:red;'><br />如果有优惠券请先点优惠券获取，再点击优惠券下方的链接购买。</div></div></div>");
 				msg=sb.toString();
 			} else {
-//				msg="<div id='e-c' align=center><div style='font-size:12px;width:330px;top:10%;left:38%;background:#fff;border-radius:10px;box-shadow:5px 5px 10px #888;'><h2 style='padding:5px;font-size:18px;'>该商品无佣金。</h2></div></div>";
-//				result.setResult(new ProductInfoVo("", "", "",msg));
-//				model.addAttribute(SysConst.RESULT_KEY, result);
-//				// response.getHeaders().add("Access-Control-Allow-Credentials","true");
-//				response.setHeader("Access-Control-Allow-Origin", request.getHeader("origin"));
-//				response.setHeader("Access-Control-Allow-Credentials", "true");
 				return model;
 			}
 		}else{
@@ -326,7 +323,9 @@ public class ApiController extends BasicController {
 			sb.append(productInfo.getTkLink());
 			sb.append("')></div><div>");			
 			sb.append(productInfo.getProductName());
-			sb.append("</div><div style='height:20px;'><span style='float:left;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;商店：</span><span style='float:right;'>销量：");
+			sb.append("</div><div style='height:20px;'><span style='float:left;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;商店：");
+			sb.append(productInfo.getShopName());
+			sb.append("</span><span style='float:right;'>销量：");
 			sb.append(productInfo.getMonthSales());
 			sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div><div style='height: 20px;'><span style='float: left;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价格：￥");
 			sb.append(productInfo.getPrice());
@@ -334,6 +333,9 @@ public class ApiController extends BasicController {
 			sb.append(((float) (Math
 					.round(productInfo.getCommission() * ConfigUtil.getFloat("commission.rate", 1) * 100))
 					/ 100));
+			sb.append("(");
+			sb.append(productInfo.getIncomeRate()*ConfigUtil.getFloat("commission.rate", 1));
+			sb.append("%)");
 			sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div><div id='btn-app'><a href='javascript;' onclick=drump('");
 			sb.append(productInfo.getTkLink());
 			sb.append("')>推广链接</a>");
@@ -513,7 +515,7 @@ public class ApiController extends BasicController {
 						"<div id='e-c' style='position:fixed;z-index:999999999;width:100%;height:100%;left:0;top:0;' align=center><div style='background:#000;width:100%;height:100%;opacity:0.2;'></div><div style='font-size:12px;width:330px;position:fixed;top:10%;left:38%;background:#fff;border-radius:10px;box-shadow:5px 5px 10px #888;'><h2 style='padding:5px;font-size:18px;'>该商品无佣金。</h2></div></div>");
 			} else {
 				map.put("img", tkInfoTask.getProductImgUrl());
-				map.put("shop", "");
+				map.put("shop", tkInfoTask.getShopName());
 				map.put("sign", sign);
 				map.put("tkl1", tkInfoTask.getTcode());
 				map.put("title", tkInfoTask.getProductName());
@@ -526,23 +528,16 @@ public class ApiController extends BasicController {
 				map.put("tag", "");
 				map.put("per", tkInfoTask.getRate() + "%");
 				map.put("sellNum", tkInfoTask.getSales() + "");
-				map.put("goodUrl1", tkInfoTask.getTkurl());
-//				String msg = "<div id='e-c' align=center></div><div style='font-size:12px;width:330px;top:10%;left:38%;background:#fff;border-radius:10px;box-shadow:5px 5px 10px #888;'><div><img src='"
-//						+ tkInfoTask.getProductImgUrl() + "'></div><div>" + tkInfoTask.getProductName()
-//						+ "</div><div style='height:20px;'><span style='float:left;'>商店：</span><span style='float:right;'>销量："
-//						+ tkInfoTask.getSales()
-//						+ "</span></div><div style='height: 20px;'><span style='float: left;'>价格：￥"
-//						+ tkInfoTask.getPrice() + "</span><span style='float: right;'>返现：￥" + tkInfoTask.getCommision()
-//						+ "(" + tkInfoTask.getRate() + "%)</span></div><div id='btn-app'><a href='"
-//						+ tkInfoTask.getTkurl()
-//						+ "'>推广链接</a></div><div style='color:red;'><br />如果有优惠券请先点优惠券获取，再点击优惠券下方的链接购买。</div></div></div>";
+				map.put("goodUrl1", tkInfoTask.getTkurl());			
 				
 				StringBuffer sb = new StringBuffer();
 				sb.append("<div id='e-c' align=center></div><div style='font-size:12px;width:330px;top:10%;left:38%;background:#fff;border-radius:10px;box-shadow:5px 5px 10px #888;'><div><img src='");
 				sb.append(tkInfoTask.getProductImgUrl());
 				sb.append("'></div><div>");
 				sb.append(tkInfoTask.getProductName());
-				sb.append("</div><div style='height:20px;'><span style='float:left;'>商店：</span><span style='float:right;'>销量：");
+				sb.append("</div><div style='height:20px;'><span style='float:left;'>商店：");
+				sb.append(tkInfoTask.getShopName());
+				sb.append("</span><span style='float:right;'>销量：");
 				sb.append(tkInfoTask.getSales());
 				sb.append("</span></div><div style='height: 20px;'><span style='float: left;'>价格：￥");
 				sb.append(tkInfoTask.getPrice());
