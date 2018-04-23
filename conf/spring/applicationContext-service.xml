@@ -45,6 +45,7 @@
 			<value>
 				/static/** = anon
 				/search* = anon
+				/order* = anon
 				/login* = anon
 				/doLogin* = anon
 				/autoLogin* = anon

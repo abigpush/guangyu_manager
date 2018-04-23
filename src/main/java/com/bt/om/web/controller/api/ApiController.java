@@ -4,19 +4,16 @@ import com.bt.om.cache.JedisPool;
 import com.bt.om.common.SysConst;
 import com.bt.om.entity.ProductInfo;
 import com.bt.om.entity.TkInfoTask;
-import com.bt.om.entity.User;
 import com.bt.om.enums.ResultCode;
 import com.bt.om.selenium.ProductUrlTrans;
 import com.bt.om.service.IProductInfoService;
 import com.bt.om.service.ITkInfoTaskService;
-import com.bt.om.service.IUserService;
 import com.bt.om.util.ConfigUtil;
 import com.bt.om.util.StringUtil;
 import com.bt.om.util.TaobaoSmsUtil;
 import com.bt.om.vo.api.GetSmsCodeVo;
 import com.bt.om.vo.api.ProductCommissionVo;
 import com.bt.om.vo.api.ProductInfoVo;
-import com.bt.om.vo.api.UserVo;
 import com.bt.om.vo.web.ResultVo;
 import com.bt.om.web.BasicController;
 import com.google.gson.Gson;
@@ -47,9 +44,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/api")
 public class ApiController extends BasicController {
 	private static final Logger logger = Logger.getLogger(ApiController.class);
-
-	@Autowired
-	private IUserService userService;
 
 	@Autowired
 	private IProductInfoService productInfoService;
@@ -118,80 +112,6 @@ public class ApiController extends BasicController {
 		response.setHeader("Access-Control-Allow-Origin", request.getHeader("origin"));
 		response.setHeader("Access-Control-Allow-Credentials", "true");
 
-		return model;
-	}
-
-	// 登录
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	@ResponseBody
-	public Model login(Model model, HttpServletRequest request, HttpServletResponse response) {
-		ResultVo<UserVo> result = new ResultVo<>();
-		result.setCode(ResultCode.RESULT_SUCCESS.getCode());
-		result.setResultDes("登录成功");
-		model = new ExtendedModelMap();
-		String mobile = null;
-		String vcode = null;
-
-		try {
-			InputStream is = request.getInputStream();
-			Gson gson = new Gson();
-			JsonObject obj = gson.fromJson(new InputStreamReader(is), JsonObject.class);
-			mobile = obj.get("mobile").getAsString();
-			vcode = obj.get("vcode").getAsString();
-		} catch (IOException e) {
-			result.setCode(ResultCode.RESULT_FAILURE.getCode());
-			result.setResultDes("系统繁忙，请稍后再试！");
-			model.addAttribute(SysConst.RESULT_KEY, result);
-			return model;
-		}
-
-		// 账户必须验证
-		if (StringUtils.isEmpty(mobile)) {
-			result.setCode(ResultCode.RESULT_FAILURE.getCode());
-			result.setResultDes("用户名为必填！");
-			model.addAttribute(SysConst.RESULT_KEY, result);
-			return model;
-		}
-
-		// 验证码必须验证
-		if (StringUtils.isEmpty(vcode)) {
-			result.setCode(ResultCode.RESULT_FAILURE.getCode());
-			result.setResultDes("验证码为必填！");
-			model.addAttribute(SysConst.RESULT_KEY, result);
-			return model;
-		}
-
-		String inVcode = jedisPool.getResource().get(mobile);
-		System.out.println(inVcode);
-		if (inVcode == null) {
-			result.setCode(ResultCode.RESULT_FAILURE.getCode());
-			result.setResultDes("验证码已失效！");
-			model.addAttribute(SysConst.RESULT_KEY, result);
-			return model;
-		}
-		User user = null;
-		if (vcode.equals(inVcode)) {
-			user = userService.getByMobile(mobile);
-			String md5Mobile = new Md5Hash(mobile).toString();
-			if (user == null) {
-				user = new User();
-				user.setMobile(mobile);
-				user.setUserId(md5Mobile);
-				int userId = userService.insert(user);
-				user.setId(userId);
-			}
-		} else {
-			result.setCode(ResultCode.RESULT_FAILURE.getCode());
-			result.setResultDes("手机号或验证码有误！");
-			model.addAttribute(SysConst.RESULT_KEY, result);
-			return model;
-		}
-
-		result.setResult(new UserVo(user));
-		model.addAttribute(SysConst.RESULT_KEY, result);
-		// response.getHeaders().add("Access-Control-Allow-Credentials","true");
-		response.setHeader("Access-Control-Allow-Origin", request.getHeader("origin"));
-		response.setHeader("Access-Control-Allow-Credentials", "true");
 		return model;
 	}
 
