@@ -64,7 +64,7 @@
 					</div>
 			</form>
 		</div>
-
+        <div><br/></div>
 		<div id="result" align="center"></div>
 
 	</div>

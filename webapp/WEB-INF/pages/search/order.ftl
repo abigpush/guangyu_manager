@@ -141,7 +141,7 @@
 				$
 						.ajax({
 							type : "post",
-							url : "http://localhost:8082/api/ordersave",
+							url : "https://plug.guangfish.com/api/ordersave",
 							contentType : "application/json",
 							dataType : "json",// 返回json格式的数据
 							data : JSON.stringify({
