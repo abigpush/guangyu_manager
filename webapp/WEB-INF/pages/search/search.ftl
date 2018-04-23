@@ -79,6 +79,10 @@
 				alert("请输入验证码！");
 				return -1;
 			}
+			if(vcode.toString().length!=5){
+			  alert("验证码输入不正确！");
+			  return -2;
+			}
 			 
 			var dt=0;
 
@@ -119,14 +123,13 @@
 				return;
 			}else{
 			  var adt=vcodevalid();
-			  if(adt==-1){
+			  if(adt==-1 || adt==-2){
 			    return;
 			  }			  
 			  if(!(adt==0)){
 		        alert("验证码验证失败");
 		        return;
-		      }else{
-		        $("#vcode").val("");
+		      }else{		        
 		        document.getElementById('num').src='/getCode?'+(new Date()).getTime();
 		      }
 			}
@@ -158,6 +161,7 @@
 									$('#result').html(data.ret.result.msg);
 								}
 								$(".input_enter").val("");
+								$("#vcode").val("");
 							},
 							error : function(XMLHttpRequest, textStatus,
 									errorThrown) {
