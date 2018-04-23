@@ -1,4 +1,4 @@
-package com.bt.om.web.controller;
+package com.bt.om.web.controller.api;
 
 import java.io.IOException;
 import java.io.InputStream;

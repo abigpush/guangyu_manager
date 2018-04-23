@@ -197,7 +197,7 @@ public class LoginController extends BasicController {
 		String num = getNumber(5);
 
 		// 验证码的内容保存到session中
-		HttpSession session = request.getSession();System.out.println(session.getId());
+		HttpSession session = request.getSession();;
 		session.setAttribute(SessionKey.SESSION_CODE.toString(), num);
 		g.drawString(num, 5, 25);
 

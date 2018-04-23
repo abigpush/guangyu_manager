@@ -56,6 +56,11 @@
 							<a class="button button-big button-fill external"
 								data-transition='fade' id="submitlogin" onclick="fetch();">查返利</a>
 						</p>
+						<p class='text-center signup'>                               
+								<a href="/order.html"
+								class='pull-right external' style="font-size: 0.8rem;">订单录入</a>
+								
+						</p>
 					</div>
 			</form>
 		</div>
