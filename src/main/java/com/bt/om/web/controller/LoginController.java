@@ -66,6 +66,22 @@ public class LoginController extends BasicController {
 		}
 		return PageConst.LOGIN_PAGE;
 	}
+	
+	/**
+	 * 跳转到登录页
+	 * 
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = { "/user/regist"}, method = RequestMethod.GET)
+	public String register(Model model, HttpServletRequest request) {
+
+		Subject subject = SecurityUtils.getSubject();
+		if (subject.isAuthenticated()) {
+			return "redirect:/index";
+		}
+		return PageConst.LOGIN_PAGE;
+	}
 
 	/**
 	 * 登录处理
