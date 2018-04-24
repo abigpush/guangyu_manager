@@ -40,7 +40,6 @@
 								<img id="num" src="/getCode?%27+(new%20Date()).getTime()" class="captcha-img" onclick="document.getElementById('num').src='/getCode?'+(new Date()).getTime()" alt="换一换" title="换一换">
 								<div class="tip"><div class="s-info">${ret?if_exists}</div></div>
 								<button type="submit" class="login-but">登 录</button>
-								<a href="#">还没有账户？ 注册</a>
 							</div>
 						</form>
 					</div>

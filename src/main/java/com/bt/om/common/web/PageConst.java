@@ -46,5 +46,9 @@ public class PageConst {
 	
 	/***资源管理***/
 	public static final String RESOURCE_ADD = "resource/add_ad_seat";
+	
+	
+	/***订单管理***/
+	public static final String ORDER_LIST = "order/list";
 
 }
