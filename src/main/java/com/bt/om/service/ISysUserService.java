@@ -51,6 +51,8 @@ public interface ISysUserService {
      * @return
      */
     List<SysUser> isExistsName(String username);
+    
+    void insert(SysUser sysUser);
 
 //	/**
 //	 * 保存用户信息

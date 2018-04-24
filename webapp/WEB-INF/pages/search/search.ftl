@@ -19,7 +19,7 @@
 	<div class="page">
 		<div class="content">
 			<form id="formdata">
-				<div class="page-login" style="margin-top: 2rem">
+				<div class="page-login" style="margin-top: 1rem">
 					<div class="list-block inset text-center">
 						<ul>
 							<li>

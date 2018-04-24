@@ -30,7 +30,7 @@
 									<div class="item-inner">
 										<div class="item-input">
 											<input id="orderid" maxlength="18" type="text" class="input_enter"
-												placeholder="请输入订单号" name="order_id">
+												placeholder="请输入订单号(必填)" name="order_id">
 										</div>
 									</div>
 								</div>
@@ -43,7 +43,7 @@
 									<div class="item-inner">
 										<div class="item-input">
 											<input id="mobile" maxlength="11" type="text" class="input_enter"
-												placeholder="请输入手机号码" name="mobile">
+												placeholder="请输入手机号码(必填)" name="mobile">
 										</div>
 									</div>
 								</div>
@@ -55,7 +55,7 @@
 									</div>
 									<div class="item-inner" style="padding:0">
 										<div class="item-input">
-											<input id="vcode" maxlength="5" class="input_enter" type="text" placeholder="输入验证码"
+											<input id="vcode" maxlength="5" class="input_enter" type="text" placeholder="输入验证码(必填)"
 												name="codeimage">
 										</div>
 										<div class="item-title label" style="width:100px;height:35px;">
