@@ -10,8 +10,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 
 import com.bt.om.common.ServiceLocator;
 import com.bt.om.entity.TkInfoTask;
@@ -33,8 +31,20 @@ public class ProductUrlTrans {
 
 	// private static String key = "webdriver.chrome.driver";
 	// private static String value = ".\\conf\\tools\\chromedriver.exe";
-	private static String key = ConfigUtil.getString("selenium.drive.name");
-	private static String value = ConfigUtil.getString("selenium.drive.path");
+	//private static String key = ConfigUtil.getString("selenium.drive.name");
+	//private static String value = ConfigUtil.getString("selenium.drive.path");
+	private static String key="";
+	private static String value="";
+	static{
+		if("on".equals(ConfigUtil.getString("is_test_evn"))){
+			key = "webdriver.chrome.driver";
+			value = ".\\conf\\tools\\chromedriver.exe";
+		}else{
+			key = ConfigUtil.getString("selenium.drive.name");
+			value = ConfigUtil.getString("selenium.drive.path");
+		}
+	}
+	
 	private static WebDriver driver;
 	private static String baseUrl = "https://pub.alimama.com/promo/search/index.htm";
 
@@ -49,8 +59,11 @@ public class ProductUrlTrans {
 		init();
 		schedule();
 		System.setProperty(key, value);
-		// driver = new ChromeDriver();
-		driver = new FirefoxDriver();
+		if("on".equals(ConfigUtil.getString("is_test_evn"))){
+			driver = new ChromeDriver();
+		}else{
+		    driver = new FirefoxDriver();
+		}
 		driver.get(baseUrl);
 		driver.manage().timeouts().implicitlyWait(1500, TimeUnit.MILLISECONDS);
 	}

@@ -14,9 +14,18 @@ import com.bt.om.util.HttpcomponentsUtil;
 public class CrawlTask {
 	private static final Logger logger = Logger.getLogger(CrawlTask.class);
 
-	private static String taskUrl = ConfigUtil.getString("crawl.task.send.url");
-	private static String loadDataUrl = ConfigUtil.getString("crawl.task.fetch.url");
+	private static String taskUrl = ConfigUtil.getString("crawl.task.send.domain")
+			+ ConfigUtil.getString("crawl.task.send.url");
+	private static String loadDataUrl = ConfigUtil.getString("crawl.task.send.domain")
+			+ ConfigUtil.getString("crawl.task.fetch.url");
 	private static int sleepTime = 500;
+	static {
+		if ("on".equals(ConfigUtil.getString("is_test_evn"))) {
+			taskUrl = ConfigUtil.getString("crawl.task.send.domain.test") + ConfigUtil.getString("crawl.task.send.url");
+			loadDataUrl = ConfigUtil.getString("crawl.task.send.domain.test")
+					+ ConfigUtil.getString("crawl.task.fetch.url");
+		}
+	}
 
 	private String sendTask(String url) {
 		List<NameValuePair> nvpList = new ArrayList<>();
@@ -55,7 +64,7 @@ public class CrawlTask {
 		TaskBeanRet taskBeanRet = GsonUtil.GsonToBean(productInfo, TaskBeanRet.class);
 		int i = 0;
 		while (true) {
-			//连续多少次查询后仍然查不到数据就退出
+			// 连续多少次查询后仍然查不到数据就退出
 			if (i >= ConfigUtil.getInt("task.info.check.num", 30)) {
 				break;
 			}

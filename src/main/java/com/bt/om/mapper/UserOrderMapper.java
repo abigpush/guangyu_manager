@@ -1,5 +1,7 @@
 package com.bt.om.mapper;
 
+import java.util.List;
+
 import com.bt.om.entity.UserOrder;
 
 public interface UserOrderMapper {
@@ -39,4 +41,6 @@ public interface UserOrderMapper {
 	 * @mbg.generated  Mon Apr 23 16:04:44 CST 2018
 	 */
 	int updateByPrimaryKey(UserOrder record);
+	
+	List<UserOrder> selectByMobile(String mobile);
 }

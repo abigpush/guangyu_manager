@@ -1,5 +1,7 @@
 package com.bt.om.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,5 +17,10 @@ public class UserOrderService implements IUserOrderService {
 	@Override
 	public void insert(UserOrder userOrder) {
 		userOrderMapper.insert(userOrder);
+	}
+
+	@Override
+	public List<UserOrder> selectByMobile(String mobile) {
+		return userOrderMapper.selectByMobile(mobile);
 	}
 }

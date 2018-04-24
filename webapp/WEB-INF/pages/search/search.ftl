@@ -65,7 +65,7 @@
 			</form>
 		</div>
         <div><br/></div>
-		<div id="result" align="center"></div>
+		<div id="result" align="center" style="color: red;">省钱从点滴开始！</div>
 
 	</div>
 
@@ -94,7 +94,7 @@
 				$
 						.ajax({
 							type : "post",
-							url : "https://plug.guangfish.com/api/vcodevaild",
+							url : "/api/vcodevaild",
 							contentType : "application/json",
 							dataType : "json",// 返回json格式的数据
 							async:false,
@@ -147,7 +147,7 @@
 				$
 						.ajax({
 							type : "post",
-							url : "https://plug.guangfish.com/api/productInfo",
+							url : "/api/productInfo",
 							contentType : "application/json",
 							dataType : "json",// 返回json格式的数据
 							data : JSON.stringify({

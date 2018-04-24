@@ -165,7 +165,7 @@ public class ApiController extends BasicController {
 		// model.addAttribute(SysConst.RESULT_KEY, result);
 		// return model;
 		// }
-		String msg="";
+		String msg = "";
 		if (productInfo == null) {
 			productInfo = new ProductInfo();
 			CrawlTask crawlTask = new CrawlTask();
@@ -174,101 +174,114 @@ public class ApiController extends BasicController {
 					|| StringUtils.isNotEmpty(taskBean.getMap().get("goodUrl2"))) {
 				String goodUrl = StringUtils.isEmpty(taskBean.getMap().get("goodUrl1"))
 						? taskBean.getMap().get("goodUrl2") : taskBean.getMap().get("goodUrl1");
-				String productId=urlMap.get("id");
+				String productId = urlMap.get("id");
 				productInfo.setProductId(productId);
-				String productImgUrl=taskBean.getMap().get("img");
+				String productImgUrl = taskBean.getMap().get("img");
 				productInfo.setProductImgUrl(productImgUrl);
-				String productInfoUrl=taskBean.getMap().get("url");
+				String productInfoUrl = taskBean.getMap().get("url");
 				productInfo.setProductInfoUrl(productInfoUrl);
-				String shopName=taskBean.getMap().get("shop");
+				String shopName = taskBean.getMap().get("shop");
 				productInfo.setShopName(shopName);
-				String productName=taskBean.getMap().get("title");
+				String productName = taskBean.getMap().get("title");
 				productInfo.setProductName(productName);
-				String tkLink=goodUrl;
+				String tkLink = goodUrl;
 				productInfo.setTkLink(tkLink);
-				double price= Double.valueOf(taskBean.getMap().get("price").replace("￥", "").replace(",", ""));
+				double price = Double.valueOf(taskBean.getMap().get("price").replace("￥", "").replace(",", ""));
 				productInfo.setPrice(price);
-				float incomeRate=Float.valueOf(taskBean.getMap().get("per").replace("%", ""));
+				float incomeRate = Float.valueOf(taskBean.getMap().get("per").replace("%", ""));
 				productInfo.setIncomeRate(incomeRate);
-				float commission=Float.valueOf(taskBean.getMap().get("money").replace("￥", ""));
+				float commission = Float.valueOf(taskBean.getMap().get("money").replace("￥", ""));
 				productInfo.setCommission(commission);
-				String couponLink=taskBean.getMap().get("quanUrl");
+				String couponLink = taskBean.getMap().get("quanUrl");
 				productInfo.setCouponLink(couponLink);
-				String sellNum=taskBean.getMap().get("sellNum");
+				String sellNum = taskBean.getMap().get("sellNum");
 				productInfo.setMonthSales(Integer.parseInt(sellNum));
 				productInfo.setCreateTime(new Date());
 				productInfo.setUpdateTime(new Date());
 				productInfoService.insertProductInfo(productInfo);
-										
-				//组装msg
+
+				// 组装msg
 				StringBuffer sb = new StringBuffer();
-				sb.append("<div id='e-c' align=center></div><div style='font-size:12px;width:330px;top:10%;left:38%;background:#fff;border-radius:10px;box-shadow:5px 5px 10px #888;'><div><img src='");
+				sb.append(
+						"<div id='e-c' align=center></div><div style='font-size:12px;width:330px;top:10%;left:38%;background:#fff;border-radius:10px;box-shadow:5px 5px 10px #888;'><div><img src='");
 				sb.append(productImgUrl);
 				sb.append("' height='220' width='220' onclick=drump('");
-				sb.append(tkLink);
+				if (StringUtils.isNotEmpty(couponLink)) {
+					sb.append(couponLink);
+				} else {
+					sb.append(tkLink);
+				}
 				sb.append("')></div><div>");
 				sb.append(productName);
-				sb.append("</div><div style='height:20px;'><span style='float:left;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;商店：");
+				sb.append(
+						"</div><div style='height:20px;'><span style='float:left;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;商店：");
 				sb.append(shopName);
 				sb.append("</span><span style='float:right;'>销量：");
 				sb.append(sellNum);
-				sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div><div style='height: 20px;'><span style='float: left;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价格：￥");
+				sb.append(
+						"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div><div style='height: 20px;'><span style='float: left;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价格：￥");
 				sb.append(price);
 				sb.append("</span><span style='float: right;'>返现：￥");
-				sb.append(((float) (Math
-						.round(commission * ConfigUtil.getFloat("commission.rate", 1) * 100))
-						/ 100));
+				sb.append(((float) (Math.round(commission * ConfigUtil.getFloat("commission.rate", 1) * 100)) / 100));
 				sb.append("(");
-				sb.append(incomeRate*ConfigUtil.getFloat("commission.rate", 1));
+				sb.append(incomeRate * ConfigUtil.getFloat("commission.rate", 1));
 				sb.append("%)");
-				sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div><div id='btn-app'><a href='javascript;' onclick=drump('");
+				sb.append(
+						"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div><div id='btn-app'><a href='javascript;' onclick=drump('");
 				sb.append(tkLink);
 				sb.append("')>推广链接</a>");
-				if(StringUtils.isNotEmpty(couponLink)){
+				if (StringUtils.isNotEmpty(couponLink)) {
 					sb.append(" | <a href='javascript;' onclick=drump('");
 					sb.append(couponLink);
 					sb.append("')>优惠券</a>");
 				}
-				sb.append("</div><div style='color:red;'><br />如果有优惠券请先点优惠券获取，再点击优惠券下方的链接购买。</div></div></div>");
-				msg=sb.toString();
+				sb.append("</div><div style='color:red;'><br />点击图片即可跳回淘宝购物。</div></div></div>");
+				msg = sb.toString();
 			} else {
 				return model;
 			}
-		}else{
-			//组装msg
+		} else {
+			// 组装msg
 			StringBuffer sb = new StringBuffer();
-			sb.append("<div id='e-c' align=center></div><div style='font-size:12px;width:330px;top:10%;left:38%;background:#fff;border-radius:10px;box-shadow:5px 5px 10px #888;'><div><img src='");
+			sb.append(
+					"<div id='e-c' align=center></div><div style='font-size:12px;width:330px;top:10%;left:38%;background:#fff;border-radius:10px;box-shadow:5px 5px 10px #888;'><div><img src='");
 			sb.append(productInfo.getProductImgUrl());
 			sb.append("' height='220' width='220' onclick=drump('");
-			sb.append(productInfo.getTkLink());
-			sb.append("')></div><div>");			
+			if (StringUtils.isNotEmpty(productInfo.getCouponLink())) {
+				sb.append(productInfo.getCouponLink());
+			}else{
+				sb.append(productInfo.getTkLink());
+			}
+			sb.append("')></div><div>");
 			sb.append(productInfo.getProductName());
 			sb.append("</div><div style='height:20px;'><span style='float:left;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;商店：");
 			sb.append(productInfo.getShopName());
 			sb.append("</span><span style='float:right;'>销量：");
 			sb.append(productInfo.getMonthSales());
-			sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div><div style='height: 20px;'><span style='float: left;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价格：￥");
+			sb.append(
+					"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div><div style='height: 20px;'><span style='float: left;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价格：￥");
 			sb.append(productInfo.getPrice());
 			sb.append("</span><span style='float: right;'>返现：￥");
-			sb.append(((float) (Math
-					.round(productInfo.getCommission() * ConfigUtil.getFloat("commission.rate", 1) * 100))
-					/ 100));
+			sb.append(
+					((float) (Math.round(productInfo.getCommission() * ConfigUtil.getFloat("commission.rate", 1) * 100))
+							/ 100));
 			sb.append("(");
-			sb.append(productInfo.getIncomeRate()*ConfigUtil.getFloat("commission.rate", 1));
+			sb.append(productInfo.getIncomeRate() * ConfigUtil.getFloat("commission.rate", 1));
 			sb.append("%)");
-			sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div><div id='btn-app'><a href='javascript;' onclick=drump('");
+			sb.append(
+					"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div><div id='btn-app'><a href='javascript;' onclick=drump('");
 			sb.append(productInfo.getTkLink());
 			sb.append("')>推广链接</a>");
-			if(StringUtils.isNotEmpty(productInfo.getCouponLink())){
+			if (StringUtils.isNotEmpty(productInfo.getCouponLink())) {
 				sb.append(" | <a href='javascript; onclick=drump('");
 				sb.append(productInfo.getCouponLink());
 				sb.append("')>优惠券</a>");
 			}
-			sb.append("</div><div style='color:red;'><br />如果有优惠券请先点优惠券获取，再点击优惠券下方的链接购买。</div></div></div>");
-			msg=sb.toString();
+			sb.append("</div><div style='color:red;'><br />点击图片即可跳回淘宝购物。</div></div></div>");
+			msg = sb.toString();
 		}
 
-		result.setResult(new ProductInfoVo(productInfo.getTkLink(), "领券", productInfo.getCouponLink(),msg));
+		result.setResult(new ProductInfoVo(productInfo.getTkLink(), "领券", productInfo.getCouponLink(), msg));
 		model.addAttribute(SysConst.RESULT_KEY, result);
 		// response.getHeaders().add("Access-Control-Allow-Credentials","true");
 		response.setHeader("Access-Control-Allow-Origin", request.getHeader("origin"));
@@ -448,10 +461,11 @@ public class ApiController extends BasicController {
 				map.put("tag", "");
 				map.put("per", tkInfoTask.getRate() + "%");
 				map.put("sellNum", tkInfoTask.getSales() + "");
-				map.put("goodUrl1", tkInfoTask.getTkurl());			
-				
+				map.put("goodUrl1", tkInfoTask.getTkurl());
+
 				StringBuffer sb = new StringBuffer();
-				sb.append("<div id='e-c' align=center></div><div style='font-size:12px;width:330px;top:10%;left:38%;background:#fff;border-radius:10px;box-shadow:5px 5px 10px #888;'><div><img src='");
+				sb.append(
+						"<div id='e-c' align=center></div><div style='font-size:12px;width:330px;top:10%;left:38%;background:#fff;border-radius:10px;box-shadow:5px 5px 10px #888;'><div><img src='");
 				sb.append(tkInfoTask.getProductImgUrl());
 				sb.append("'></div><div>");
 				sb.append(tkInfoTask.getProductName());
@@ -468,7 +482,7 @@ public class ApiController extends BasicController {
 				sb.append("%)</span></div><div id='btn-app'><a href='");
 				sb.append(tkInfoTask.getTkurl());
 				sb.append("'>推广链接</a>");
-				if(StringUtils.isNotEmpty(tkInfoTask.getQuanUrl())){
+				if (StringUtils.isNotEmpty(tkInfoTask.getQuanUrl())) {
 					sb.append(" | <a href='");
 					sb.append(tkInfoTask.getQuanUrl());
 					sb.append("'>优惠券</a>");

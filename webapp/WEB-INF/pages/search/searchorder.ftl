@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">   
-<title>逛鱼订单录入</title> 
+<title>逛鱼订单查询</title> 
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui">
 <link rel="shortcut icon" href="/static/front/favicon.ico">
@@ -22,19 +22,6 @@
 				<div class="page-login" style="margin-top: 2rem">
 					<div class="list-block inset text-center">
 						<ul>
-							<li>
-								<div class="item-content">
-								    <div class="item-media">
-										<i class="icon icon-form-name"></i>
-									</div>
-									<div class="item-inner">
-										<div class="item-input">
-											<input id="orderid" maxlength="18" type="text" class="input_enter"
-												placeholder="请输入订单号(必填)" name="order_id">
-										</div>
-									</div>
-								</div>
-							</li>
 							<li>
 								<div class="item-content">
 								    <div class="item-media">
@@ -64,17 +51,17 @@
 										
 									</div>
 								</div>
-							</li>
+							</li>							
 						</ul>
 					</div>
 					<div class="content-block">
 						<p>
 							<a class="button button-big button-fill external"
-								data-transition='fade' id="submitlogin" onclick="commit();">提交订单</a>
+								data-transition='fade' id="submitlogin" onclick="commit();">订单查询</a>
 						</p>
 						<p class='text-center signup'>
-						        <a href="searchorder.html" class='pull-left external'
-								style="font-size: 0.8rem;">查订单</a>
+								<a href="orderdraw.html" class='pull-left external'
+								style="font-size: 0.8rem;">申请提现</a>
 								<a href="/search.html"
 								class='pull-right external' style="font-size: 0.8rem;">查返利</a>								
 						</p>
@@ -99,18 +86,8 @@
       }
 	    
 	    function commit(){
-	      var orderid = $('#orderid').val();
 	      var mobile = $('#mobile').val();
 	      var vcode = $('#vcode').val();
-	      if (!orderid) {
-	        alert("请输入18位订单号！");
-	        return;
-	      }else{
-	        if(orderid.toString().length!=18){
-			  alert("订单号位数不正确！");
-			  return;
-			}
-	      }
 	      if(!mobile){
 	        alert("请输入手机号！");
 	        return;
@@ -135,41 +112,30 @@
 			}
 	      }
 	      
-	      save(orderid,mobile,vcode);	      	      	      	      
+	      save(mobile,vcode);	      	      	      	      
 	    }
 
-		function save(orderid,mobile,vcode) {
+		function save(mobile,vcode) {
 				$
 						.ajax({
 							type : "post",
-							url : "/api/ordersave",
+							url : "/api/searchorder",
 							contentType : "application/json",
 							dataType : "json",// 返回json格式的数据
 							data : JSON.stringify({
-								"orderid" : ""+orderid,
 								"mobile" : ""+mobile,
 								"vcode" : ""+vcode
 							}),
 							timeout : 30000,
 							success : function(data) {
 								console.log('请求到的数据为：', data)
-								if(JSON.stringify(data) != "{}"){
-								  if(data.ret.result=="0"){
-								    alert("提交成功");
-								    $("#orderid").val("");
-								    $("#mobile").val("");
+								if(JSON.stringify(data) != "{}"){								  		  
+								  if(data.ret.result.status=="3"){
+								    alert("验证码错误");
 								    $("#vcode").val("");								    
 								  }
-								  
-								  if(data.ret.result=="-1"){
-								    alert("该订单号已存在，请勿重复提交!");
-								    $("#orderid").val("");
-								    $("#vcode").val("");
-								  }
-								  
-								  if(data.ret.result=="4"){
-								    $('#result').html("验证码错误");
-								    $("#vcode").val("");								    
+								  if(data.ret.result.status=="0"){
+								    $('#result').html(data.ret.result.msg);
 								  }
 								}
 								document.getElementById('num').src='/getCode?'+(new Date()).getTime();							
