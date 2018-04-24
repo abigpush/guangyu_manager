@@ -1,5 +1,4 @@
 	${webEnd?if_exists}
-	
 	<script>
 	$(function(){
 		$(".longTitle .data-title").hover( function(){

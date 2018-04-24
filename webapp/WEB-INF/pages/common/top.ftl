@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<title>运营管理平台-${webTitle?default("adtime")}</title>
+		<title>后台管理系统</title>
 		<link rel="stylesheet" type="text/css" href="${model.static_domain}/css/new_main.css">
 		<link rel="stylesheet" type="text/css" href="${model.static_domain}/css/icon_fonts.css">
 		${webHead?if_exists}
