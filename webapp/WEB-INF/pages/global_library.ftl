@@ -111,6 +111,16 @@
 <@include page="common/end.ftl" />
 </#macro>
 
+<#--插入页头 -->
+<#macro webheadsearch>
+<@include page="search/top.ftl" />
+</#macro>
+
+<#--插入页尾 -->
+<#macro webendsearch>
+<@include page="search/end.ftl" />
+</#macro>
+
 <#--插入JS-->
 <#macro includeJs jsList>
 <#list jsList?split(",") as js>

@@ -89,40 +89,48 @@ public class SearchOrderController extends BasicController {
 			return model;
 		}
 
-		List<UserOrder> userOrderList = userOrderService.selectByMobile(mobile);
-		StringBuffer sb = new StringBuffer();
-		sb.append("<br/><div class='table'>");
-		if (userOrderList != null && userOrderList.size() > 0) {
-			double totalCommission=0;
-			for(UserOrder userOrder : userOrderList){
-				totalCommission=totalCommission+userOrder.getCommission3();
+		String msg = "";
+		try {
+			List<UserOrder> userOrderList = userOrderService.selectByMobile(mobile);
+			StringBuffer sb = new StringBuffer();
+			sb.append("<br/><div class='table'>");
+			if (userOrderList != null && userOrderList.size() > 0) {
+				double totalCommission = 0;
+				for (UserOrder userOrder : userOrderList) {
+					totalCommission = totalCommission + userOrder.getCommission3();
+				}
+				sb.append("<h2 class='table-caption'>共<font color='red'>" + userOrderList.size()
+						+ "</font>条可提现订单，可提现金额<font color='red'>￥" + totalCommission + "</font>：</h2>");
+			} else {
+				sb.append("<h2 class='table-caption'>无可提现订单或订单处于校验中：</h2>");
 			}
-			sb.append("<h2 class='table-caption'>共<font color='red'>" + userOrderList.size() + "</font>条可提现订单，可提现金额<font color='red'>￥"+totalCommission+"</font>：</h2>");
-		} else {
-			sb.append("<h2 class='table-caption'>无可提现订单或订单处于校验中：</h2>");
-		}
-		sb.append(
-				"<div class='table-column-group'><div class='table-column'></div><div class='table-column'></div><div class='table-column'></div><div class='table-column'></div></div>");
-		sb.append(
-				"<div class='table-header-group'><ul class='table-row'><li class='table-cell'>商品</li><li class='table-cell'>返利</li><li class='table-cell'>创建时间</li></ul></div>");
-		if (userOrderList != null && userOrderList.size() > 0) {
-			sb.append("<div class='table-row-group'>");
-			for (UserOrder userOrder : userOrderList) {
-				sb.append("<ul class='table-row'>");
-//				sb.append("<li class='table-cell'>").append("<img height='80' width='80' src='")
-//						.append(userOrder.getProductImgUrl()).append("'>").append("</li>");
-				sb.append("<li class='table-cell'>" + StringUtil.getSubString(userOrder.getProductInfo(),30) + "</li>");
-				sb.append("<li class='table-cell'>￥" + userOrder.getCommission3() + "</li>");
-				sb.append("<li class='table-cell'>"
-						+ DateUtil.formatDate(userOrder.getCreateTime(), DateUtil.CHINESE_PATTERN) + "</li>");
-				sb.append("</ul>");
+			sb.append(
+					"<div class='table-column-group'><div class='table-column'></div><div class='table-column'></div><div class='table-column'></div><div class='table-column'></div></div>");
+			sb.append(
+					"<div class='table-header-group'><ul class='table-row'><li class='table-cell'>商品</li><li class='table-cell'>返利</li><li class='table-cell'>创建时间</li></ul></div>");
+			if (userOrderList != null && userOrderList.size() > 0) {
+				sb.append("<div class='table-row-group'>");
+				for (UserOrder userOrder : userOrderList) {
+					sb.append("<ul class='table-row'>");
+					// sb.append("<li class='table-cell'>").append("<img
+					// height='80' width='80' src='")
+					// .append(userOrder.getProductImgUrl()).append("'>").append("</li>");
+					sb.append("<li class='table-cell'>" + StringUtil.getSubString(userOrder.getProductInfo(), 30)
+							+ "</li>");
+					sb.append("<li class='table-cell'>￥" + userOrder.getCommission3() + "</li>");
+					sb.append("<li class='table-cell'>"
+							+ DateUtil.formatDate(userOrder.getCreateTime(), DateUtil.CHINESE_PATTERN) + "</li>");
+					sb.append("</ul>");
+				}
+				sb.append("</div>");
 			}
 			sb.append("</div>");
-		}
-		sb.append("</div>");
 
-		// 这里组装一个msg
-		String msg = sb.toString();
+			// 这里组装一个msg
+			msg = sb.toString();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		result.setResult(new UserOrderVo(msg, "0"));// 验证码验证成功
 		model.addAttribute(SysConst.RESULT_KEY, result);
