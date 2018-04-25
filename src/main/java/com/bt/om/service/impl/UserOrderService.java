@@ -23,4 +23,19 @@ public class UserOrderService implements IUserOrderService {
 	public List<UserOrder> selectByMobile(String mobile) {
 		return userOrderMapper.selectByMobile(mobile);
 	}
+	
+	@Override
+	public void updateStatus2(UserOrder userOrder) {
+		userOrderMapper.updateStatus2(userOrder);
+	}
+	
+	@Override
+	public List<UserOrder> selectUnCheckByMobile(UserOrder userOrder) {
+		return userOrderMapper.selectUnCheckByMobile(userOrder);
+	}
+	
+	@Override
+	public void updateByPrimaryKey(UserOrder userOrder) {
+		userOrderMapper.updateByPrimaryKey(userOrder);
+	}
 }

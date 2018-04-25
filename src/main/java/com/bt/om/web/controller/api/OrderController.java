@@ -1,13 +1,14 @@
 package com.bt.om.web.controller.api;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ExtendedModelMap;
@@ -31,6 +32,7 @@ import com.google.gson.JsonObject;
  */
 @Controller
 public class OrderController extends BasicController {
+	private static final Logger logger = Logger.getLogger(OrderController.class);
 	@Autowired
 	private IUserOrderService userOrderService;
 
@@ -58,7 +60,7 @@ public class OrderController extends BasicController {
 			mobile = obj.get("mobile").getAsString();
 			orderId = obj.get("orderid").getAsString();
 			vcode = obj.get("vcode").getAsString();
-			
+
 			// 手机号必须验证
 			if (StringUtils.isEmpty(mobile)) {
 				result.setResult("1"); // 手机号为空
@@ -87,7 +89,7 @@ public class OrderController extends BasicController {
 
 		String sessionCode = request.getSession().getAttribute(SessionKey.SESSION_CODE.toString()) == null ? ""
 				: request.getSession().getAttribute(SessionKey.SESSION_CODE.toString()).toString();
-		
+
 		// 验证码有效验证
 		if (!vcode.equalsIgnoreCase(sessionCode)) {
 			result.setResult("4"); // 验证码不一致
@@ -100,14 +102,19 @@ public class OrderController extends BasicController {
 		UserOrder userOrder = new UserOrder();
 		userOrder.setOrderId(orderId);
 		userOrder.setMobile(mobile);
+		userOrder.setStatus1(1);
+		userOrder.setStatus2(1);
+		userOrder.setStatus3(1);
+		userOrder.setCreateTime(new Date());
+		userOrder.setUpdateTime(new Date());
 		try {
 			userOrderService.insert(userOrder);
 			result.setResult("0");// 订单保存成功
 		} catch (Exception e) {
-            e.printStackTrace();
-            result.setResult("-1");// 订单号重复提交
+			logger.info(e.getMessage());
+			result.setResult("-1");// 订单号重复提交
 		}
-		
+
 		model.addAttribute(SysConst.RESULT_KEY, result);
 		return model;
 	}

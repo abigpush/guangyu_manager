@@ -77,7 +77,7 @@
 										</div>
 										<div id="send" class="item-title label" style="width: 3rem;">
 											<a href="javascript:void(0);" id="send_btn"
-												style="color: #a0a0a0; font-size: 0.8rem;" onclick="sendsmscode()">发送</a>
+												style="color: #a0a0a0; font-size: 0.8rem;" onclick="sendsmscode()">发送短信验证码</a>
 										</div>
 										<div id="timer" class="item-title label"
 											style="width: 3rem; display: none; color: orangered; font-size: 0.8rem;"></div>
@@ -101,7 +101,7 @@
 			</form>
 		</div>
 
-		<div id="result" align="center"></div>
+		<div id="result" align="center"><div style="color: red;"><br/>贴士：提现成功后请注意查收支付宝，我们的客户会在2小时内给您打款！</div></div>
 
 	</div>
 
@@ -179,23 +179,24 @@
 							success : function(data) {
 								console.log('请求到的数据为：', data)
 								if(JSON.stringify(data) != "{}"){
-								  if(data.ret.result=="0"){
-								    alert("提现申请成功");
+								  if(data.ret.result.status=="0"){
+								    alert("提现申请成功,提现商品"+data.ret.result.productNums+"件,提现金额"+data.ret.result.money+"元,请注意支付宝查收！");
 								    $("#mobile").val("");
 								    $("#alipay").val("");
 								    $("#vcode").val("");
 								    $("#smscode").val("");
 								    document.getElementById('num').src='/getCode?'+(new Date()).getTime();
+								    $('#result').html("<br/><br/><font color='red'>提现申请成功,提现商品"+data.ret.result.productNums+"件,提现金额"+data.ret.result.money+"元,请注意支付宝查收！</font>");
 								  }								  
-								  if(data.ret.result=="5"){
+								  if(data.ret.result.status=="5"){
 								    alert("验证码验证失败!");
 								    document.getElementById('num').src='/getCode?'+(new Date()).getTime();
 								  }								  
-								  if(data.ret.result=="6"){
+								  if(data.ret.result.status=="6"){
 								    alert("短信验证码已失效，请重新发送!");
 								    $("#smscode").val("");
 								  }
-								  if(data.ret.result=="7"){
+								  if(data.ret.result.status=="7"){
 								    alert("短信验证码验证失败!");
 								    $("#smscode").val("");
 								  }								  
@@ -210,8 +211,13 @@
 		
 		function sendsmscode() {
 			var mobile = $('#mobile').val();
+			var vcode = $('#vcode').val();
 			if (!mobile) {
 				alert("请输入手机号码！");
+				return;
+			}
+			if (!vcode) {
+				alert("请输入图形验证码！");
 				return;
 			}
 				$
@@ -222,11 +228,19 @@
 							dataType : "json",// 返回json格式的数据
 							async:false,
 							data : JSON.stringify({
-								"mobile" : mobile
+								"mobile" : mobile,
+								"vcode" : vcode
 							}),
 							timeout : 30000,
 							success : function(data) {
-								console.log('请求到的数据为：', data);										
+								console.log('请求到的数据为：', data);
+								if(data.ret.result.status=="3"){
+								    alert("图形验证码不正确");
+								    $("#vcode").val("");								    
+								}
+								if(data.ret.result.status=="4"){
+								    alert("请等待60秒后再次发送短信验证码");							    
+								}
 							},
 							error : function(XMLHttpRequest, textStatus,
 									errorThrown) {

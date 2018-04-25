@@ -58,14 +58,16 @@
 						</p>
 						<p class='text-center signup'>                               
 								<a href="/order.html"
-								class='pull-right external' style="font-size: 0.8rem;">订单录入</a>
+								class='pull-left external' style="font-size: 0.8rem;">订单录入</a>
+								<a href="/searchorder.html"
+								class='pull-right external' style="font-size: 0.8rem;">查订单</a>
 								
 						</p>
 					</div>
 			</form>
 		</div>
         <div><br/></div>
-		<div id="result" align="center" style="color: red;">省钱从点滴开始！</div>
+		<div id="result" align="center"><div style="color: red;">省钱从点滴开始！</div></div>
 
 	</div>
 

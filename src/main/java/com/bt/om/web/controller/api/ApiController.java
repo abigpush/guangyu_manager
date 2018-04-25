@@ -5,6 +5,7 @@ import com.bt.om.common.SysConst;
 import com.bt.om.entity.ProductInfo;
 import com.bt.om.entity.TkInfoTask;
 import com.bt.om.enums.ResultCode;
+import com.bt.om.enums.SessionKey;
 import com.bt.om.selenium.ProductUrlTrans;
 import com.bt.om.service.IProductInfoService;
 import com.bt.om.service.ITkInfoTaskService;
@@ -14,6 +15,7 @@ import com.bt.om.util.TaobaoSmsUtil;
 import com.bt.om.vo.api.GetSmsCodeVo;
 import com.bt.om.vo.api.ProductCommissionVo;
 import com.bt.om.vo.api.ProductInfoVo;
+import com.bt.om.vo.api.UserOrderVo;
 import com.bt.om.vo.web.ResultVo;
 import com.bt.om.web.BasicController;
 import com.google.gson.Gson;
@@ -66,11 +68,13 @@ public class ApiController extends BasicController {
 		result.setResultDes("获取验证码成功");
 		model = new ExtendedModelMap();
 		String mobile = null;
+		String code = "";
 		try {
 			InputStream is = request.getInputStream();
 			Gson gson = new Gson();
 			JsonObject obj = gson.fromJson(new InputStreamReader(is), JsonObject.class);
 			mobile = obj.get("mobile").getAsString();
+			code = obj.get("vcode").getAsString();
 		} catch (IOException e) {
 			result.setCode(ResultCode.RESULT_FAILURE.getCode());
 			result.setResultDes("系统繁忙，请稍后再试！");
@@ -82,17 +86,38 @@ public class ApiController extends BasicController {
 		if (StringUtils.isEmpty(mobile)) {
 			result.setCode(ResultCode.RESULT_FAILURE.getCode());
 			result.setResultDes("手机号为必填！");
+			result.setResult(new GetSmsCodeVo("","1"));
+			model.addAttribute(SysConst.RESULT_KEY, result);
+			return model;
+		}
+		// 验证码验证
+		if (StringUtils.isEmpty(code)) {
+			result.setCode(ResultCode.RESULT_FAILURE.getCode());
+			result.setResultDes("验证码为必填！");
+			result.setResult(new GetSmsCodeVo("","2"));
 			model.addAttribute(SysConst.RESULT_KEY, result);
 			return model;
 		}
 
-		// User user = userService.getByMobile(mobile);
-		// if (user != null) {
-		// result.setCode(ResultCode.RESULT_FAILURE.getCode());
-		// result.setResultDes("该手机号已注册！");
-		// model.addAttribute(SysConst.RESULT_KEY, result);
-		// return model;
-		// }
+		String sessionCode = request.getSession().getAttribute(SessionKey.SESSION_CODE.toString()) == null ? ""
+				: request.getSession().getAttribute(SessionKey.SESSION_CODE.toString()).toString();
+
+		// 验证码有效验证
+		if (!code.equalsIgnoreCase(sessionCode)) {
+			result.setCode(ResultCode.RESULT_FAILURE.getCode());
+			result.setResultDes("验证码验证失败！");
+			result.setResult(new GetSmsCodeVo("","3"));
+			model.addAttribute(SysConst.RESULT_KEY, result);
+			return model;
+		}
+		
+		if(jedisPool.getResource().exists(mobile)){
+			result.setCode(ResultCode.RESULT_FAILURE.getCode());
+			result.setResultDes("请等待60秒后再次发送短信验证码！");
+			result.setResult(new GetSmsCodeVo("","4"));
+			model.addAttribute(SysConst.RESULT_KEY, result);
+			return model;
+		}
 
 		String vcode = getVcode(5);
 		System.out.println(vcode);
@@ -105,10 +130,8 @@ public class ApiController extends BasicController {
 		}
 
 		// System.out.println(jedisPool.getResource().get("vcode"));
-
-		result.setResult(new GetSmsCodeVo(vcode));
+		result.setResult(new GetSmsCodeVo(vcode,"0"));
 		model.addAttribute(SysConst.RESULT_KEY, result);
-		// response.getHeaders().add("Access-Control-Allow-Credentials","true");
 		response.setHeader("Access-Control-Allow-Origin", request.getHeader("origin"));
 		response.setHeader("Access-Control-Allow-Credentials", "true");
 
@@ -249,7 +272,7 @@ public class ApiController extends BasicController {
 			sb.append("' height='220' width='220' onclick=drump('");
 			if (StringUtils.isNotEmpty(productInfo.getCouponLink())) {
 				sb.append(productInfo.getCouponLink());
-			}else{
+			} else {
 				sb.append(productInfo.getTkLink());
 			}
 			sb.append("')></div><div>");

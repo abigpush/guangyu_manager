@@ -13,6 +13,7 @@
 
 <link rel="stylesheet" href="/static/front/css/light7.css">
 <link rel="stylesheet" href="/static/front/css/app.css">
+<link rel="stylesheet" href="/static/front/css/table.css">
 
 </head>
 <body style="position: static; width: 300px; height: 600px;">
@@ -69,7 +70,7 @@
 			</form>
 		</div>
 
-		<div id="result" align="center"></div>
+		<div id="result" align="center"><div style="color: red;"><br/>贴士：只能查询到已校验过、可提现的订单哦！</div></div>
 
 	</div>
 
@@ -136,6 +137,7 @@
 								  }
 								  if(data.ret.result.status=="0"){
 								    $('#result').html(data.ret.result.msg);
+								    $("#vcode").val("");
 								  }
 								}
 								document.getElementById('num').src='/getCode?'+(new Date()).getTime();							

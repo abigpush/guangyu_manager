@@ -82,7 +82,7 @@
 			</form>
 		</div>
 
-		<div id="result" align="center"></div>
+		<div id="result" align="center"><br/><img width="80%" src="/static/front/orderid.jpg"></div>
 
 	</div>
 
