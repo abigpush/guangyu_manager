@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="/static/front/css/table.css">
 <@model.webheadsearch />
 	<div class="page">
 		<div class="content">
