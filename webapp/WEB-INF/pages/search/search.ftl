@@ -10,7 +10,7 @@
 									<div class="item-inner">
 										<div class="item-input">
 											<input type="text" class="input_enter"
-												placeholder="请粘贴从手机淘宝或天猫复制的商品链接地址" name="product_url">
+												placeholder="请粘贴从手机淘宝复制的商品链接地址" name="product_url">
 										</div>
 									</div>
 								</div>
@@ -141,6 +141,7 @@
 							url : "/api/productInfo",
 							contentType : "application/json",
 							dataType : "json",// 返回json格式的数据
+							async : false,
 							data : JSON.stringify({
 								"user_id" : "",
 								"product_url" : producturl
@@ -154,7 +155,11 @@
 											.html(
 													"<div id='e-c' align=center><div style='font-size:12px;width:330px;top:10%;left:38%;background:#fff;border-radius:10px;box-shadow:5px 5px 10px #888;'><h2 style='padding:5px;font-size:18px;'>该商品无佣金</h2></div></div>");
 								} else {
-									$('#result').html(data.ret.result.msg);
+								    if(data.ret.result==null){
+								      alert("链接地址不正确");
+								    }else{
+									  $('#result').html(data.ret.result.msg);
+									}  
 								}
 								$(".input_enter").val("");
 								//暂时屏蔽掉

@@ -10,7 +10,7 @@
 									<div class="item-inner">
 										<div class="item-input">
 											<input id="orderid" maxlength="18" type="text" class="input_enter"
-												placeholder="请粘贴从手机淘宝或天猫复制的商品订单号" name="order_id">
+												placeholder="请粘贴从手机淘宝复制的商品订单号" name="order_id">
 										</div>
 									</div>
 								</div>
