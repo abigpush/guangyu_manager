@@ -44,6 +44,8 @@
 						<p class='text-center signup'>                               
 								<a href="/order.html"
 								class='pull-left external' style="font-size: 0.8rem;">我要录入订单号</a>
+								<a href="/searchhelp.html"
+								class='pull-center external' style="font-size: 0.8rem;color:red">使用帮助</a>
 								<a href="/searchorder.html"
 								class='pull-right external' style="font-size: 0.8rem;">我要提现</a>
 								
