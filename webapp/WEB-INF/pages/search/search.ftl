@@ -53,10 +53,10 @@
 					</div>
 			</form>
 		</div>
-		<div><br/></div>
+
 		<div id="result" align="center">
-		  <br/><div style="color: red;">【花钱也能赚钱、让逛鱼带你飞】
-		  <br/><font style="font-size: 0.6rem;">保存书签：请用手机浏览器打开本页面，请勿在微信中打开</font>
+		  <br/><font style="color: red;">【花钱也能赚钱、让逛鱼带你飞】</font>
+		  <br/><font style="font-size: 0.6rem;color: red;">保存书签：请用手机浏览器打开本页面，请勿在微信中打开</font>
 		  <br/><img width="90%" src="/static/front/bookmark.png">
 		</div>	
 
@@ -143,7 +143,6 @@
 							url : "/api/productInfo",
 							contentType : "application/json",
 							dataType : "json",// 返回json格式的数据
-							async : false,
 							data : JSON.stringify({
 								"user_id" : "",
 								"product_url" : producturl
