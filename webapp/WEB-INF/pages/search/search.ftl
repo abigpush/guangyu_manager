@@ -140,7 +140,7 @@
 				$
 						.ajax({
 							type : "post",
-							url : "/api/productInfo",
+							url : "/api/productInfo", 
 							contentType : "application/json",
 							dataType : "json",// 返回json格式的数据
 							data : JSON.stringify({
