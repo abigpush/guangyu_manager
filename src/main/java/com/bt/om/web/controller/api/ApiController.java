@@ -247,7 +247,7 @@ public class ApiController extends BasicController {
 				sb.append("</span><span style='float: right;'>返现：￥");
 				sb.append(((float) (Math.round(commission * ConfigUtil.getFloat("commission.rate", 1) * 100)) / 100));
 				sb.append("(");
-				sb.append(incomeRate * ConfigUtil.getFloat("commission.rate", 1));
+				sb.append(((float) (Math.round(incomeRate * ConfigUtil.getFloat("commission.rate", 1) * 100)) / 100));
 				sb.append("%)");
 				sb.append(
 						"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div><div id='btn-app'><a href='javascript;' onclick=drump('");
@@ -289,7 +289,7 @@ public class ApiController extends BasicController {
 					((float) (Math.round(productInfo.getCommission() * ConfigUtil.getFloat("commission.rate", 1) * 100))
 							/ 100));
 			sb.append("(");
-			sb.append(productInfo.getIncomeRate() * ConfigUtil.getFloat("commission.rate", 1));
+			sb.append(((float) (Math.round(productInfo.getIncomeRate() * ConfigUtil.getFloat("commission.rate", 1) * 100)) / 100));
 			sb.append("%)");
 			sb.append(
 					"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div><div id='btn-app'><a href='javascript;' onclick=drump('");
