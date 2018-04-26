@@ -14,7 +14,7 @@
 									<div class="item-inner">
 										<div class="item-input">
 											<input id="mobile" maxlength="11" type="text" class="input_enter"
-												placeholder="请输入手机号码" name="mobile">
+												placeholder="请输入您的手机号码" name="mobile">
 										</div>
 									</div>
 								</div>

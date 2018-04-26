@@ -10,7 +10,7 @@
 									<div class="item-inner">
 										<div class="item-input">
 											<input type="text" class="input_enter"
-												placeholder="请输入要查询的商品链接地址" name="product_url">
+												placeholder="请粘贴从手机淘宝或天猫复制的商品链接地址" name="product_url">
 										</div>
 									</div>
 								</div>
