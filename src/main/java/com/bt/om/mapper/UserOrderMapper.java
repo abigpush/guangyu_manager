@@ -1,6 +1,9 @@
 package com.bt.om.mapper;
 
 import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.session.RowBounds;
 
 import com.bt.om.entity.UserOrder;
 
@@ -47,4 +50,8 @@ public interface UserOrderMapper {
 	void updateStatus2(UserOrder userOrder);
 	
 	List<UserOrder> selectUnCheckByMobile(UserOrder userOrder);
+	
+	List<Map<String, Object>> getAllListCount(Map<String, Object> searchMap);
+	
+	List<Map<String, Object>> getAllList(Map<String, Object> searchMap, RowBounds rowBounds);
 }

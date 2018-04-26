@@ -1,13 +1,16 @@
 package com.bt.om.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bt.om.entity.UserOrder;
 import com.bt.om.mapper.UserOrderMapper;
 import com.bt.om.service.IUserOrderService;
+import com.bt.om.vo.web.SearchDataVo;
 
 @Service
 public class UserOrderService implements IUserOrderService {
@@ -37,5 +40,11 @@ public class UserOrderService implements IUserOrderService {
 	@Override
 	public void updateByPrimaryKey(UserOrder userOrder) {
 		userOrderMapper.updateByPrimaryKey(userOrder);
+	}
+
+	@Override
+	public List<Map<String, Object>> getAllList(SearchDataVo vo) {
+		Map<String, Object> searchMap = vo.getSearchMap();
+		return userOrderMapper.getAllList(searchMap ,new RowBounds(vo.getStart(), vo.getSize()));
 	}
 }
