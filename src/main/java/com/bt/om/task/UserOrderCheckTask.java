@@ -25,7 +25,7 @@ public class UserOrderCheckTask {
 	private ITkOrderInputService tkOrderInputService;
 
 	// 每隔一段时间进行一次订单校验
-	@Scheduled(cron = "0 0 */5 * * ?")
+	@Scheduled(cron = "0 0 */1 * * ?")
 	public void userOrderCheck() {
 		logger.info("用户订单定时校验");
 		UserOrder userOrder = new UserOrder();
@@ -41,7 +41,12 @@ public class UserOrderCheckTask {
 					userOrder1.setShopName(tkOrderInput.getShopName());
 					userOrder1.setProductInfo(tkOrderInput.getProductInfo());
 					userOrder1.setCommission1(tkOrderInput.getCommissionMoney());
-					userOrder1.setCommission2(tkOrderInput.getCommissionMoney() * 0.8);
+//					userOrder1.setCommission2(tkOrderInput.getCommissionMoney() * 0.8);
+					//佣金的基础上去掉2层支付给阿里妈妈的服务费
+					userOrder1.setCommission2(((double) (Math
+							.round(tkOrderInput.getCommissionMoney() * 0.8 * 100))
+							/ 100));
+					//基本佣金的基础上计算反给客户的佣金，比例应该填小于0.8，不然亏钱
 					userOrder1.setCommission3(((double) (Math
 							.round(tkOrderInput.getCommissionMoney() * ConfigUtil.getFloat("commission.rate", 1) * 100))
 							/ 100));

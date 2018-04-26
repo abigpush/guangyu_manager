@@ -85,8 +85,13 @@
 			</form>
 		</div>
 
-		<div id="result" align="center"><div style="color: red;font-size: 0.7rem;">提现提示：手机号是您的唯一身份标识，支付宝账号用于客服给你打款；提现成功后请注意查收支付宝，我们的客户会在2小时内给您打款！</div></div>
-
+		<div id="result" align="center">
+		  <div style="color: red;font-size: 0.7rem;">提现提示：
+		  <br/>1.手机号是您的唯一身份标识，用于匹配你的订单
+		  <br/>2.支付宝账号用于逛鱼客服人员给你打款，请务必输入您的真实支付宝账号
+		  <br/>3.提现成功后请注意查收支付宝，我们的客户会在2小时内给您打款！
+		  </div>
+		</div>
 	</div>
 
 	<script type='text/javascript' src='/static/front/js/jquery.min.js' charset='utf-8'></script>

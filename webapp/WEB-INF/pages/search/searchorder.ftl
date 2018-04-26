@@ -19,6 +19,7 @@
 									</div>
 								</div>
 							</li>
+							<!-- 暂时屏蔽掉
 							<li>
 								<div class="item-content">
 									<div class="item-media">
@@ -31,11 +32,11 @@
 										</div>
 										<div class="item-title label" style="width:100px;height:35px;">
 											 <img id="num" height="35" src="/getCode?%27+(new%20Date()).getTime()" onclick="document.getElementById('num').src='/getCode?'+(new Date()).getTime()"  alt="换一换" title="换一换" class="codeimage">
-										</div>
-										
+										</div>										
 									</div>
 								</div>
-							</li>							
+							</li>
+							-->
 						</ul>
 					</div>
 					<div class="content-block">
@@ -56,8 +57,8 @@
 		<div id="result" align="center">
 		  <div style="color: red;font-size: 0.7rem;">
 		    <br/>FAQ:<br/>
-		    <br/>问："我提交的订单，马上可以提现吗？" <br/>答："不能，需要订单核对完成。"<br/>
-		    <br/>问："大概什么时候能申请提现？" <br/>答："不产生退单的情况下，一般一个星期。"<br/>
+		    <br/>问："我确认收货了，提交订单后，可以马上提现吗？" <br/>答："不能，需要订单核对完成。"<br/>
+		    <br/>问："周期需要多久？" <br/>答："只要是确认收货了，一般一天左右。"<br/>
 		    <br/>问："能查哪些订单？" <br/>答："能查已核对完成的订单。"
 		  </div>
 		</div>
@@ -93,15 +94,17 @@
               return;  
             } 	        
 	      }    
-	      if(!vcode){
-	        alert("请输入验证码！");
-	        return;
-	      }else{
-	        if(vcode.toString().length!=5){
-			  alert("验证码输入不正确！");
-			  return;
-			}
-	      }
+	      
+	      //暂时屏蔽掉
+	      //if(!vcode){
+	      //  alert("请输入验证码！");
+	      //  return;
+	      //}else{
+	      //  if(vcode.toString().length!=5){
+		  //	  alert("验证码输入不正确！");
+		  //	  return;
+		  //	}
+	      //}
 	      
 	      save(mobile,vcode);	      	      	      	      
 	    }
@@ -123,14 +126,17 @@
 								if(JSON.stringify(data) != "{}"){								  		  
 								  if(data.ret.result.status=="3"){
 								    alert("验证码错误");
-								    $("#vcode").val("");								    
+								    //暂时屏蔽掉
+								    //$("#vcode").val("");								    
 								  }
 								  if(data.ret.result.status=="0"){
 								    $('#result').html(data.ret.result.msg);
-								    $("#vcode").val("");
+								    //暂时屏蔽掉
+								    //$("#vcode").val("");
 								  }
 								}
-								document.getElementById('num').src='/getCode?'+(new Date()).getTime();							
+								//暂时屏蔽掉
+								//document.getElementById('num').src='/getCode?'+(new Date()).getTime();							
 							},
 							error : function(XMLHttpRequest, textStatus,
 									errorThrown) {

@@ -15,6 +15,7 @@
 									</div>
 								</div>
 							</li>
+							<!-- 暂时屏蔽掉
 							<li>
 								<div class="item-content">
 									<div class="item-media">
@@ -32,6 +33,7 @@
 									</div>
 								</div>
 							</li>
+							-->
 						</ul>
 					</div>
 					<div class="content-block">
@@ -49,6 +51,7 @@
 					</div>
 			</form>
 		</div>
+		<div><br/></div>
 		<div id="result" align="center">
 		  <br/><div style="color: red;">【花钱也能赚钱、让逛鱼带你飞】
 		  <br/><font style="font-size: 0.6rem;">保存书签：请用手机浏览器打开本页面，请勿在微信中打开</font>
@@ -106,8 +109,7 @@
 						return dt;
 		}
 
-		function fetch() {
-		    	
+		function fetch() {		    	
 			$('#e-c').remove();
 			var producturl = $('.input_enter').val();
 			var reg = /http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
@@ -115,18 +117,19 @@
 				alert("请输入有效的地址！");
 				return;
 			}else{
-			  var adt=vcodevalid();
-			  if(adt==-1 || adt==-2){
-			    return;
-			  }			  
-			  if(!(adt==0)){
-		        alert("验证码验证失败");
-		        return;
-		      }else{		        
-		        document.getElementById('num').src='/getCode?'+(new Date()).getTime();
-		      }
+			  //暂时屏蔽掉
+			  //var adt=vcodevalid();
+			  //if(adt==-1 || adt==-2){
+			  //  return;
+			  //}			  
+			  //if(!(adt==0)){
+		      //  alert("验证码验证失败");
+		      //  return;
+		      //}else{		        
+		      //  document.getElementById('num').src='/getCode?'+(new Date()).getTime();
+		      //}
 			}
-
+            $('#submitlogin').removeAttr('onclick');
 			//加载中
 			$('#result')
 					.html(
@@ -154,7 +157,10 @@
 									$('#result').html(data.ret.result.msg);
 								}
 								$(".input_enter").val("");
+								//暂时屏蔽掉
 								$("#vcode").val("");
+								
+								$('#submitlogin').attr('onclick','fetch()');
 							},
 							error : function(XMLHttpRequest, textStatus,
 									errorThrown) {

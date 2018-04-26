@@ -59,7 +59,8 @@ public class OrderController extends BasicController {
 			JsonObject obj = gson.fromJson(new InputStreamReader(is), JsonObject.class);
 			mobile = obj.get("mobile").getAsString();
 			orderId = obj.get("orderid").getAsString();
-			vcode = obj.get("vcode").getAsString();
+			//暂时屏蔽掉
+			//vcode = obj.get("vcode").getAsString();
 
 			// 手机号必须验证
 			if (StringUtils.isEmpty(mobile)) {
@@ -73,12 +74,14 @@ public class OrderController extends BasicController {
 				model.addAttribute(SysConst.RESULT_KEY, result);
 				return model;
 			}
+			
+			//暂时屏蔽掉
 			// 验证码必须验证
-			if (StringUtils.isEmpty(vcode)) {
-				result.setResult("3"); // 验证码为空
-				model.addAttribute(SysConst.RESULT_KEY, result);
-				return model;
-			}
+//			if (StringUtils.isEmpty(vcode)) {
+//				result.setResult("3"); // 验证码为空
+//				model.addAttribute(SysConst.RESULT_KEY, result);
+//				return model;
+//			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			result.setCode(ResultCode.RESULT_FAILURE.getCode());
@@ -87,17 +90,16 @@ public class OrderController extends BasicController {
 			return model;
 		}
 
-		String sessionCode = request.getSession().getAttribute(SessionKey.SESSION_CODE.toString()) == null ? ""
-				: request.getSession().getAttribute(SessionKey.SESSION_CODE.toString()).toString();
-
-		// 验证码有效验证
-		if (!vcode.equalsIgnoreCase(sessionCode)) {
-			result.setResult("4"); // 验证码不一致
-			model.addAttribute(SysConst.RESULT_KEY, result);
-			return model;
-		}
-
-		request.getSession().removeAttribute(SessionKey.SESSION_CODE.toString());
+		//暂时屏蔽掉
+//		String sessionCode = request.getSession().getAttribute(SessionKey.SESSION_CODE.toString()) == null ? ""
+//				: request.getSession().getAttribute(SessionKey.SESSION_CODE.toString()).toString();
+//		// 验证码有效验证
+//		if (!vcode.equalsIgnoreCase(sessionCode)) {
+//			result.setResult("4"); // 验证码不一致
+//			model.addAttribute(SysConst.RESULT_KEY, result);
+//			return model;
+//		}
+//		request.getSession().removeAttribute(SessionKey.SESSION_CODE.toString());
 
 		UserOrder userOrder = new UserOrder();
 		userOrder.setOrderId(orderId);

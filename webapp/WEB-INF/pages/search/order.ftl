@@ -31,6 +31,7 @@
 									</div>
 								</div>
 							</li>
+							<!-- 暂时屏蔽掉
 							<li>
 								<div class="item-content">
 									<div class="item-media">
@@ -48,6 +49,7 @@
 									</div>
 								</div>
 							</li>
+							-->
 						</ul>
 					</div>
 					<div class="content-block">
@@ -108,16 +110,17 @@
 	          alert("请输入正确的手机号码");
               return;  
             } 	        
-	      }    
-	      if(!vcode){
-	        alert("请输入验证码！");
-	        return;
-	      }else{
-	        if(vcode.toString().length!=5){
-			  alert("验证码输入不正确！");
-			  return;
-			}
-	      }
+	      }  
+	      //暂时屏蔽掉  
+	      //if(!vcode){
+	      //  alert("请输入验证码！");
+	      //  return;
+	      //}else{
+	      //  if(vcode.toString().length!=5){
+		  //  alert("验证码输入不正确！");
+		  //	  return;
+		  //	}
+	      //}
 	      
 	      save(orderid,mobile,vcode);	      	      	      	      
 	    }
@@ -142,21 +145,25 @@
 								    alert("提交成功");
 								    $("#orderid").val("");
 								    $("#mobile").val("");
+								    //暂时屏蔽掉
 								    $("#vcode").val("");								    
 								  }
 								  
 								  if(data.ret.result=="-1"){
 								    alert("该订单号已存在，请勿重复提交!");
 								    $("#orderid").val("");
+								    //暂时屏蔽掉
 								    $("#vcode").val("");
 								  }
 								  
 								  if(data.ret.result=="4"){
 								    $('#result').html("验证码错误");
+								    //暂时屏蔽掉
 								    $("#vcode").val("");								    
 								  }
 								}
-								document.getElementById('num').src='/getCode?'+(new Date()).getTime();							
+								//暂时屏蔽掉
+								//document.getElementById('num').src='/getCode?'+(new Date()).getTime();							
 							},
 							error : function(XMLHttpRequest, textStatus,
 									errorThrown) {

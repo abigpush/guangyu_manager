@@ -58,14 +58,16 @@ public class SearchOrderController extends BasicController {
 			InputStream is = request.getInputStream();
 			Gson gson = new Gson();
 			JsonObject obj = gson.fromJson(new InputStreamReader(is), JsonObject.class);
-			vcode = obj.get("vcode").getAsString();
+			//暂时屏蔽掉需要时开启
+			//vcode = obj.get("vcode").getAsString();
 			mobile = obj.get("mobile").getAsString();
-			// 验证码必须验证
-			if (StringUtils.isEmpty(vcode)) {
-				result.setResult(new UserOrderVo("", "1"));
-				model.addAttribute(SysConst.RESULT_KEY, result);
-				return model;
-			}
+			
+			// 验证码必须验证 暂时屏蔽掉，需要时开启
+//			if (StringUtils.isEmpty(vcode)) {
+//				result.setResult(new UserOrderVo("", "1"));
+//				model.addAttribute(SysConst.RESULT_KEY, result);
+//				return model;
+//			}
 			// 手机号码必须验证
 			if (StringUtils.isEmpty(mobile)) {
 				result.setResult(new UserOrderVo("", "2"));
@@ -78,16 +80,16 @@ public class SearchOrderController extends BasicController {
 			model.addAttribute(SysConst.RESULT_KEY, result);
 			return model;
 		}
-
-		String sessionCode = request.getSession().getAttribute(SessionKey.SESSION_CODE.toString()) == null ? ""
-				: request.getSession().getAttribute(SessionKey.SESSION_CODE.toString()).toString();
-
-		// 验证码有效验证
-		if (!vcode.equalsIgnoreCase(sessionCode)) {
-			result.setResult(new UserOrderVo("", "3")); // 验证码不一致
-			model.addAttribute(SysConst.RESULT_KEY, result);
-			return model;
-		}
+        
+		//暂时屏蔽掉，需要时开启
+//		String sessionCode = request.getSession().getAttribute(SessionKey.SESSION_CODE.toString()) == null ? ""
+//				: request.getSession().getAttribute(SessionKey.SESSION_CODE.toString()).toString();
+//		// 验证码有效验证
+//		if (!vcode.equalsIgnoreCase(sessionCode)) {
+//			result.setResult(new UserOrderVo("", "3")); // 验证码不一致
+//			model.addAttribute(SysConst.RESULT_KEY, result);
+//			return model;
+//		}
 
 		String msg = "";
 		try {
