@@ -16,11 +16,12 @@ import com.bt.om.web.BasicController;
 public class OrderManagerController extends BasicController{
 
 	/**
-	 * 
+	 * 订单管理列表
 	 * @return
 	 */
 	@RequestMapping(value="/order/list", method=RequestMethod.GET)
 	public String getOrderList() {
+		
 		
 		
 		return PageConst.ORDER_LIST;
