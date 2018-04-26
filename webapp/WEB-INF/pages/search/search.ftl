@@ -37,20 +37,23 @@
 					<div class="content-block">
 						<p>
 							<a class="button button-big button-fill external"
-								data-transition='fade' id="submitlogin" onclick="fetch();">查返利</a>
+								data-transition='fade' id="submitlogin" onclick="fetch();">搜返利</a>
 						</p>
 						<p class='text-center signup'>                               
 								<a href="/order.html"
-								class='pull-left external' style="font-size: 0.8rem;">订单录入</a>
+								class='pull-left external' style="font-size: 0.8rem;">我要录入订单号</a>
 								<a href="/searchorder.html"
-								class='pull-right external' style="font-size: 0.8rem;">查订单</a>
+								class='pull-right external' style="font-size: 0.8rem;">我要提现</a>
 								
 						</p>
 					</div>
 			</form>
 		</div>
-        <div><br/></div>
-		<div id="result" align="center"><div style="color: red;">省钱从点滴开始！</div></div>
+		<div id="result" align="center">
+		  <br/><div style="color: red;">【花钱也能赚钱、让逛鱼带你飞】
+		  <br/><font style="font-size: 0.6rem;">保存书签：请用手机浏览器打开本页面，请勿在微信中打开</font>
+		  <br/><img width="90%" src="/static/front/bookmark.png">
+		</div>	
 
 	</div>
 

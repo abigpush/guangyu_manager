@@ -13,7 +13,7 @@
 									<div class="item-inner">
 										<div class="item-input">
 											<input id="mobile" maxlength="11" type="text" class="input_enter"
-												placeholder="请输入手机号码(必填)" name="mobile">
+												placeholder="请输入手机号码" name="mobile">
 										</div>
 									</div>
 								</div>
@@ -26,7 +26,7 @@
 									<div class="item-inner">
 										<div class="item-input">
 											<input id="alipay" maxlength="50" type="text" class="input_enter"
-												placeholder="请输入支付宝账号(必填)" name="alipay">
+												placeholder="请输入支付宝账号" name="alipay">
 										</div>
 									</div>
 								</div>
@@ -38,7 +38,7 @@
 									</div>
 									<div class="item-inner" style="padding:0">
 										<div class="item-input">
-											<input id="vcode" maxlength="5" class="input_enter" type="text" placeholder="输入验证码(必填)"
+											<input id="vcode" maxlength="5" class="input_enter" type="text" placeholder="输入验证码"
 												name="codeimage">
 										</div>
 										<div class="item-title label" style="width:100px;height:35px;">
@@ -55,7 +55,7 @@
 									</div>
 									<div class="item-inner">
 										<div class="item-input">
-											<input id="smscode" class="input_enter" type="text" placeholder="输入短信验证码(必填)"
+											<input id="smscode" class="input_enter" type="text" placeholder="输入短信验证码"
 												name="smscode">																																				
 										</div>
 										<div id="send" class="item-title label" style="width: 3rem;">
@@ -75,16 +75,17 @@
 								data-transition='fade' id="submitlogin" onclick="commit();">申请提现</a>
 						</p>
 						<p class='text-center signup'>
-								<a href="searchorder.html" class='pull-left external'
+								<!--<a href="searchorder.html" class='pull-left external'
 								style="font-size: 0.8rem;">订单查询</a>
+								-->
 								<a href="/search.html"
-								class='pull-right external' style="font-size: 0.8rem;">查返利</a>								
+								class='pull-center external' style="font-size: 0.8rem;">继续搜返利</a>								
 						</p>
 					</div>
 			</form>
 		</div>
 
-		<div id="result" align="center"><div style="color: red;"><br/>贴士：提现成功后请注意查收支付宝，我们的客户会在2小时内给您打款！</div></div>
+		<div id="result" align="center"><div style="color: red;font-size: 0.7rem;">提现提示：手机号是您的唯一身份标识，支付宝账号用于客服给你打款；提现成功后请注意查收支付宝，我们的客户会在2小时内给您打款！</div></div>
 
 	</div>
 

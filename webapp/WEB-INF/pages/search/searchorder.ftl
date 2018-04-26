@@ -14,7 +14,7 @@
 									<div class="item-inner">
 										<div class="item-input">
 											<input id="mobile" maxlength="11" type="text" class="input_enter"
-												placeholder="请输入手机号码(必填)" name="mobile">
+												placeholder="请输入手机号码" name="mobile">
 										</div>
 									</div>
 								</div>
@@ -26,7 +26,7 @@
 									</div>
 									<div class="item-inner" style="padding:0">
 										<div class="item-input">
-											<input id="vcode" maxlength="5" class="input_enter" type="text" placeholder="输入验证码(必填)"
+											<input id="vcode" maxlength="5" class="input_enter" type="text" placeholder="输入验证码"
 												name="codeimage">
 										</div>
 										<div class="item-title label" style="width:100px;height:35px;">
@@ -45,15 +45,22 @@
 						</p>
 						<p class='text-center signup'>
 								<a href="orderdraw.html" class='pull-left external'
-								style="font-size: 0.8rem;">申请提现</a>
+								style="font-size: 0.8rem;">我要申请提现</a>
 								<a href="/search.html"
-								class='pull-right external' style="font-size: 0.8rem;">查返利</a>								
+								class='pull-right external' style="font-size: 0.8rem;">继续搜返利</a>								
 						</p>
 					</div>
 			</form>
 		</div>
 
-		<div id="result" align="center"><div style="color: red;"><br/>贴士：只能查询到已校验过、可提现的订单哦！</div></div>
+		<div id="result" align="center">
+		  <div style="color: red;font-size: 0.7rem;">
+		    <br/>FAQ:<br/>
+		    <br/>问："我提交的订单，马上可以提现吗？" <br/>答："不能，需要订单核对完成。"<br/>
+		    <br/>问："大概什么时候能申请提现？" <br/>答："不产生退单的情况下，一般一个星期。"<br/>
+		    <br/>问："能查哪些订单？" <br/>答："能查已核对完成的订单。"
+		  </div>
+		</div>
 
 	</div>
 

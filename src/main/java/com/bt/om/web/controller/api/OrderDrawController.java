@@ -55,8 +55,8 @@ public class OrderDrawController extends BasicController {
 		if ("2".equals(weekday) || "5".equals(weekday)) {
 			return "search/orderdraw";
 		} else {
-			 return "search/orderdraw-none";
-//			return "search/orderdraw";
+//			 return "search/orderdraw-none";
+			return "search/orderdraw";
 		}
 	}
 

@@ -258,7 +258,7 @@ public class ApiController extends BasicController {
 					sb.append(couponLink);
 					sb.append("')>优惠券</a>");
 				}
-				sb.append("</div><div style='color:red;'><br />点击图片即可跳回淘宝购物。</div></div></div>");
+				sb.append("</div><div style='color:red;'>点击图片即可跳回淘宝购物。</div></div></div>");
 				msg = sb.toString();
 			} else {
 				return model;
@@ -300,7 +300,7 @@ public class ApiController extends BasicController {
 				sb.append(productInfo.getCouponLink());
 				sb.append("')>优惠券</a>");
 			}
-			sb.append("</div><div style='color:red;'><br />点击图片即可跳回淘宝购物。</div></div></div>");
+			sb.append("</div><div style='color:red;'>点击图片即可跳回淘宝购物。</div></div></div>");
 			msg = sb.toString();
 		}
 

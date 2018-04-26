@@ -13,7 +13,7 @@
 									<div class="item-inner">
 										<div class="item-input">
 											<input id="orderid" maxlength="18" type="text" class="input_enter"
-												placeholder="请输入订单号(必填)" name="order_id">
+												placeholder="请输入订单号" name="order_id">
 										</div>
 									</div>
 								</div>
@@ -26,7 +26,7 @@
 									<div class="item-inner">
 										<div class="item-input">
 											<input id="mobile" maxlength="11" type="text" class="input_enter"
-												placeholder="请输入手机号码(必填)" name="mobile">
+												placeholder="请输入手机号码" name="mobile">
 										</div>
 									</div>
 								</div>
@@ -38,7 +38,7 @@
 									</div>
 									<div class="item-inner" style="padding:0">
 										<div class="item-input">
-											<input id="vcode" maxlength="5" class="input_enter" type="text" placeholder="输入验证码(必填)"
+											<input id="vcode" maxlength="5" class="input_enter" type="text" placeholder="输入验证码"
 												name="codeimage">
 										</div>
 										<div class="item-title label" style="width:100px;height:35px;">
@@ -56,16 +56,17 @@
 								data-transition='fade' id="submitlogin" onclick="commit();">提交订单</a>
 						</p>
 						<p class='text-center signup'>
-						        <a href="searchorder.html" class='pull-left external'
+						        <!--<a href="searchorder.html" class='pull-left external'
 								style="font-size: 0.8rem;">查订单</a>
+								-->
 								<a href="/search.html"
-								class='pull-right external' style="font-size: 0.8rem;">查返利</a>								
+								class='pull-center external' style="font-size: 0.8rem;">继续搜返利</a>								
 						</p>
 					</div>
 			</form>
 		</div>
 
-		<div id="result" align="center"><br/><img width="80%" src="/static/front/orderid.jpg"></div>
+		<div id="result" align="center"><font style="font-size: 0.8rem;color:red">找到您的订单号，并复制</font><br/><img width="90%" src="/static/front/getorderid.png"></div>
 
 	</div>
 
