@@ -3,7 +3,14 @@
 	  <div class="content">
 				<div class="page-login" style="margin-top: 1rem">
 					<div class="content-block">
+					    <div class="content-block">
+					      <p class='text-center signup'>
+					        <a href="/search.html"
+								data-transition='fade' style="font-size: 1rem;">返&nbsp;回</a>
+					      </p>
+					    </div>
 						<p class='text-center signup'> 
+						        
 						        <font color="red">步骤一：在手机淘宝上找到想买的商品，长按商品标题，选择"拷贝链接"</font><br/><br/>
 								<img width="60%" src="/static/front/1.png"><br/>
 								<br/><font color="red">步骤二：按手机Home键退出手机淘宝，找到手机浏览器（Safari），并打开</font><br/><br/>
