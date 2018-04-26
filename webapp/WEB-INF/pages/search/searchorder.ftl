@@ -132,7 +132,9 @@
 								    $('#result').html(data.ret.result.msg);
 								    if(data.ret.result.canDraw=="1"){
 								      $('#candraw').html("<a href='orderdraw.html' class='pull-left external' style='font-size: 0.8rem;'>我要申请提现</a>");
-								    }								    
+								    }else{
+								      $("#candraw").html("");
+								    }
 								    //暂时屏蔽掉
 								    //$("#vcode").val("");
 								  }
