@@ -4,7 +4,7 @@
 				<div class="page-login" style="margin-top: 1rem">
 					<div class="content-block">
 					    <div class="content-block">
-					      <p class='text-center signup'>
+					      <p class='text-center signup'> 
 					        <a href="/search.html"
 								data-transition='fade' style="font-size: 1rem;">返&nbsp;回</a>
 					      </p>
