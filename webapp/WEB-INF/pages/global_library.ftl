@@ -3,7 +3,7 @@
 <#else>
 <#assign static_domain = "http://static.guangfish.com"> 
 </#if>
-<#assign static_version = "2015">
+<#assign static_version = "2018">
 
 <#assign basePath = request.contextPath>
 
