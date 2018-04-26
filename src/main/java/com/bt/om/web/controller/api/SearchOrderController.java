@@ -64,13 +64,13 @@ public class SearchOrderController extends BasicController {
 			
 			// 验证码必须验证 暂时屏蔽掉，需要时开启
 //			if (StringUtils.isEmpty(vcode)) {
-//				result.setResult(new UserOrderVo("", "1"));
+//				result.setResult(new UserOrderVo("", "1","0"));
 //				model.addAttribute(SysConst.RESULT_KEY, result);
 //				return model;
 //			}
 			// 手机号码必须验证
 			if (StringUtils.isEmpty(mobile)) {
-				result.setResult(new UserOrderVo("", "2"));
+				result.setResult(new UserOrderVo("", "2","0"));
 				model.addAttribute(SysConst.RESULT_KEY, result);
 				return model;
 			}
@@ -86,12 +86,14 @@ public class SearchOrderController extends BasicController {
 //				: request.getSession().getAttribute(SessionKey.SESSION_CODE.toString()).toString();
 //		// 验证码有效验证
 //		if (!vcode.equalsIgnoreCase(sessionCode)) {
-//			result.setResult(new UserOrderVo("", "3")); // 验证码不一致
+//			result.setResult(new UserOrderVo("", "3","0")); // 验证码不一致
 //			model.addAttribute(SysConst.RESULT_KEY, result);
 //			return model;
 //		}
 
 		String msg = "";
+		//判断是否可以提现 0：不可提现 1：可提现
+		String canDraw="0";
 		try {
 			List<UserOrder> userOrderList = userOrderService.selectByMobile(mobile);
 			StringBuffer sb = new StringBuffer();
@@ -103,6 +105,9 @@ public class SearchOrderController extends BasicController {
 				}
 				sb.append("<h2 class='table-caption'>共<font color='red'>" + userOrderList.size()
 						+ "</font>条可提现订单，可提现金额<font color='red'>￥" + totalCommission + "</font>：</h2>");
+				if(totalCommission>0){
+					canDraw="1";
+				}
 			} else {
 				sb.append("<h2 class='table-caption'>无可提现订单或订单处于校验中：</h2>");
 			}
@@ -134,7 +139,7 @@ public class SearchOrderController extends BasicController {
 			e.printStackTrace();
 		}
 
-		result.setResult(new UserOrderVo(msg, "0"));// 验证码验证成功
+		result.setResult(new UserOrderVo(msg, "0",canDraw));// 验证码验证成功
 		model.addAttribute(SysConst.RESULT_KEY, result);
 		return model;
 	}

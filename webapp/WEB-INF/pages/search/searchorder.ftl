@@ -45,8 +45,7 @@
 								data-transition='fade' id="submitlogin" onclick="commit();">订单查询</a>
 						</p>
 						<p class='text-center signup'>
-								<a href="orderdraw.html" class='pull-left external'
-								style="font-size: 0.8rem;">我要申请提现</a>
+						        <p id="candraw"></p>								
 								<a href="/search.html"
 								class='pull-right external' style="font-size: 0.8rem;">继续搜返利</a>								
 						</p>
@@ -131,6 +130,9 @@
 								  }
 								  if(data.ret.result.status=="0"){
 								    $('#result').html(data.ret.result.msg);
+								    if(data.ret.result.canDraw=="1"){
+								      $('#candraw').html("<a href='orderdraw.html' class='pull-left external' style='font-size: 0.8rem;'>我要申请提现</a>");
+								    }								    
 								    //暂时屏蔽掉
 								    //$("#vcode").val("");
 								  }

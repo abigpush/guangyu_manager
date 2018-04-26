@@ -6,10 +6,12 @@ public class UserOrderVo implements Serializable {
 	private static final long serialVersionUID = 354883746982564301L;
 	private String msg;
 	private String status;
+	private String canDraw;
 
-	public UserOrderVo(String msg, String status) {
+	public UserOrderVo(String msg, String status, String canDraw) {
 		this.msg = msg;
 		this.status = status;
+		this.canDraw = canDraw;
 	}
 
 	public String getMsg() {
@@ -26,6 +28,14 @@ public class UserOrderVo implements Serializable {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getCanDraw() {
+		return canDraw;
+	}
+
+	public void setCanDraw(String canDraw) {
+		this.canDraw = canDraw;
 	}
 
 }
