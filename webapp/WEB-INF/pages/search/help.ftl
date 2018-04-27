@@ -12,21 +12,21 @@
 						<p class='text-center signup'> 
 						        
 						        <font color="red">步骤一：在手机淘宝上找到想买的商品，长按商品标题，选择"拷贝链接"</font><br/><br/>
-								<img width="80%" src="/static/front/1.png"><br/>
+								<img width="80%" src="/static/front/img/1.png"><br/>
 								<br/><font color="red">步骤二：按手机Home键退出手机淘宝，找到手机浏览器（Safari），并打开</font><br/><br/>
-								<img width="80%" src="/static/front/2.png"><br/>
+								<img width="80%" src="/static/front/img/2.png"><br/>
 								<br/><font color="red">步骤三：在地址栏中输入返利搜索地址，如果之前已保存成书签，可直接选择书签打开页面</font><br/><br/>
-								<img width="80%" src="/static/front/3.png"><br/>
+								<img width="80%" src="/static/front/img/3.png"><br/>
 								<br/><font color="red">步骤四：开打返利搜索页面后，在地址栏中长按粘贴从步骤一拷贝的链接地址</font><br/><br/>
-								<img width="80%" src="/static/front/4.png"><br/>
+								<img width="80%" src="/static/front/img/4.png"><br/>
 								<br/><font color="red">步骤五：点击"搜返利"按钮，稍等片刻，商品信息即显示在下方，点击图片地址，跳转到步骤六</font><br/><br/>
-								<img width="80%" src="/static/front/5.png"><br/>
+								<img width="80%" src="/static/front/img/5.png"><br/>
 								<br/><font color="red">步骤六：页面提示"是否在手机淘宝中打开页面"，选择"打开"</font><br/><br/>
-								<img width="80%" src="/static/front/6.png"><br/>
+								<img width="80%" src="/static/front/img/6.png"><br/>
 								<br/><font color="red">步骤七：如果商品有优惠券，请先领券，点击"立即领券"按钮</font><br/><br/>
-								<img width="80%" src="/static/front/7.png"><br/>
+								<img width="80%" src="/static/front/img/7.png"><br/>
 								<br/><font color="red">步骤八：领券后页面又会回到详细商品页面，完成购买即可得到返利</font><br/><br/>
-								<img width="80%" src="/static/front/8.png">
+								<img width="80%" src="/static/front/img/8.png">
 						</p>
 					</div>
 		</div>

@@ -28,7 +28,9 @@ import com.bt.om.enums.SessionKey;
 import com.bt.om.service.IDrawCashOrderService;
 import com.bt.om.service.IDrawCashService;
 import com.bt.om.service.IUserOrderService;
+import com.bt.om.util.ConfigUtil;
 import com.bt.om.util.DateUtil;
+import com.bt.om.util.TaobaoSmsUtil;
 import com.bt.om.vo.api.OrderDrawVo;
 import com.bt.om.vo.web.ResultVo;
 import com.bt.om.web.BasicController;
@@ -55,7 +57,7 @@ public class OrderDrawController extends BasicController {
 		if ("2".equals(weekday) || "5".equals(weekday)) {
 			return "search/orderdraw";
 		} else {
-//			 return "search/orderdraw-none";
+			// return "search/orderdraw-none";
 			return "search/orderdraw";
 		}
 	}
@@ -159,8 +161,8 @@ public class OrderDrawController extends BasicController {
 		drawCash.setCreateTime(new Date());
 		drawCash.setUpdateTime(new Date());
 		drawCashService.insert(drawCash);
-		
-		for(UserOrder userOrder : userOrderList){
+
+		for (UserOrder userOrder : userOrderList) {
 			DrawCashOrder drawCashOrder = new DrawCashOrder();
 			drawCashOrder.setOrderId(userOrder.getOrderId());
 			drawCashOrder.setDrawCachId(drawCash.getId());
@@ -168,13 +170,18 @@ public class OrderDrawController extends BasicController {
 			drawCashOrder.setUpdateTime(new Date());
 			drawCashOrderService.insert(drawCashOrder);
 		}
-		
-		UserOrder userOrder=new UserOrder();
+
+		UserOrder userOrder = new UserOrder();
 		userOrder.setMobile(mobile);
 		userOrder.setStatus2(2);
 		userOrder.setUpdateTime(new Date());
 		userOrderService.updateStatus2(userOrder);
-		
+
+		// 发送短通知有客户申请提现
+		if ("on".equals(ConfigUtil.getString("is.sms.send"))) {
+			TaobaoSmsUtil.sendSms("逛鱼返利", "SMS_133960015", "user", mobile, "13732203065");
+		}
+
 		result.setResult(new OrderDrawVo(productNums, totalCommission, "0"));// 申请成功
 		model.addAttribute(SysConst.RESULT_KEY, result);
 		return model;

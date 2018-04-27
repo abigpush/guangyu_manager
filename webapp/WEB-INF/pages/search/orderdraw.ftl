@@ -77,7 +77,7 @@
 						<p class='text-center signup'>
 								<!--<a href="searchorder.html" class='pull-left external'
 								style="font-size: 0.8rem;">订单查询</a>
-								-->
+								-->								
 								<a href="/search.html"
 								class='pull-center external' style="font-size: 0.8rem;">继续搜返利</a>								
 						</p>

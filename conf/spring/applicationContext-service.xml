@@ -46,6 +46,7 @@
 				/static/** = anon
 				/search* = anon
 				/order* = anon
+				/help* = anon
 				/register* = anon
 				/login* = anon
 				/doLogin* = anon

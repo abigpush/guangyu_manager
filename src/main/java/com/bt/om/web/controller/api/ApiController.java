@@ -126,7 +126,7 @@ public class ApiController extends BasicController {
 
 		// 发送短信验证码
 		if ("on".equals(ConfigUtil.getString("is.sms.send"))) {
-			TaobaoSmsUtil.sendSms("逛鱼返利", "SMS_125955002", vcode, mobile);
+			TaobaoSmsUtil.sendSms("逛鱼返利", "SMS_125955002","vcode", vcode, mobile);
 		}
 
 		// System.out.println(jedisPool.getResource().get("vcode"));

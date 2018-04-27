@@ -15,8 +15,15 @@ import com.bt.om.web.BasicController;
 @Controller
 public class HelpController extends BasicController {
 
-	@RequestMapping(value = "/searchhelp.html", method = RequestMethod.GET)
-	public String search(Model model, HttpServletRequest request) {
+	//使用帮助
+	@RequestMapping(value = "/help.html", method = RequestMethod.GET)
+	public String help(Model model, HttpServletRequest request) {
 		return "search/help";
+	}
+	
+	//提现帮助
+	@RequestMapping(value = "/helpdraw.html", method = RequestMethod.GET)
+	public String helpDraw(Model model, HttpServletRequest request) {
+		return "search/helpdraw";
 	}
 }
