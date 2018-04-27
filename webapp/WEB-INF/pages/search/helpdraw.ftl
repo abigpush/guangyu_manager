@@ -10,7 +10,7 @@
 					      </p>
 					    </div>
 						<p class='text-center signup'>
-						        <font color="red">步骤一：进入"我要录入订单号"页面，建议在淘宝上确认付款后再把订单录入系统</font><br/><br/>
+						        <font color="red">步骤一：进入"我要录入订单号"页面</font><br/><br/>
 								<img width="80%" src="/static/front/img/draw-0.png"><br/>
 								<br/><font color="red">步骤二：输入订单号（页面下方有寻找订单号图示），并填写您的手机号码</font><br/><br/>
 								<img width="80%" src="/static/front/img/draw-2.png"><br/>
