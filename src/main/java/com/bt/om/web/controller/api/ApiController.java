@@ -113,7 +113,7 @@ public class ApiController extends BasicController {
 		
 		if(jedisPool.getResource().exists(mobile)){
 			result.setCode(ResultCode.RESULT_FAILURE.getCode());
-			result.setResultDes("请等待60秒后再次发送短信验证码！");
+			result.setResultDes("请等待2分钟后再次发送短信验证码！");
 			result.setResult(new GetSmsCodeVo("","4"));
 			model.addAttribute(SysConst.RESULT_KEY, result);
 			return model;
@@ -122,7 +122,7 @@ public class ApiController extends BasicController {
 		String vcode = getVcode(5);
 		System.out.println(vcode);
 		// jedisService.putInCache("gy", "vcode", vcode, 60);
-		jedisPool.getResource().setex(mobile, 60, vcode);
+		jedisPool.getResource().setex(mobile, 120, vcode);
 
 		// 发送短信验证码
 		if ("on".equals(ConfigUtil.getString("is.sms.send"))) {

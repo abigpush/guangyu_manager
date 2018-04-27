@@ -112,7 +112,7 @@
 	      var vcode = $('#vcode').val();
 	      var smscode = $('#smscode').val();	   
 	      if(!mobile){
-	        alert("请输入手机号！");
+	        alert("请务必输入正确的手机号码，用于接收短信验证码！");
 	        return;
 	      }else{
 	        if(mobile.toString().length!=11){
@@ -121,20 +121,20 @@
 			}
 	        var myreg=/^[1][3,4,5,7,8][0-9]{9}$/; 
 	        if (!myreg.test(mobile)) {  
-	          alert("请输入正确的手机号码");
+	          alert("请务必输入正确的手机号码，用于接收短息验证码！");
               return;  
             } 	        
 	      }
 	      if(!alipay){
-	        alert("请输入支付宝账号，用于收款！");
+	        alert("请务必输入正确的支付宝账号，用于收款！");
 	        return;
 	      }
 	      if(!vcode){
-	        alert("请输入验证码！");
+	        alert("请输入图形验证码！");
 	        return;
 	      }else{
 	        if(vcode.toString().length!=5){
-			  alert("验证码输入不正确！");
+			  alert("图形验证码输入不正确！");
 			  return;
 			}
 	      }
@@ -228,7 +228,10 @@
 								    $("#vcode").val("");								    
 								}
 								if(data.ret.result.status=="4"){
-								    alert("请等待60秒后再次发送短信验证码");							    
+								    alert("请等待2分钟后再次发送短信验证码");							    
+								}
+								if(data.ret.result.status=="0"){
+								    alert("短息验证码发送成功，短信验证码2分钟之内有效，过期后请重新发送！");
 								}
 							},
 							error : function(XMLHttpRequest, textStatus,
