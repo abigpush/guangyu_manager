@@ -115,7 +115,7 @@ public class SearchOrderController extends BasicController {
 			sb.append(
 					"<div class='table-column-group'><div class='table-column'></div><div class='table-column'></div><div class='table-column'></div><div class='table-column'></div></div>");
 			sb.append(
-					"<div class='table-header-group' style='font-size: 0.8rem;'><ul class='table-row'><li class='table-cell' style='font-size: 0.8rem;'>商品</li><li class='table-cell' style='font-size: 0.8rem;'>返利(自己的)</li><li class='table-cell' style='font-size: 0.8rem;'>服务费(给淘宝的)</li><li class='table-cell' style='font-size: 0.8rem;'>创建时间</li></ul></div>");
+					"<div class='table-header-group'><ul class='table-row'><li class='table-cell' style='font-size: 0.6rem;'>商品</li><li class='table-cell' style='font-size: 0.6rem;'>返利(自己的)</li><li class='table-cell' style='font-size: 0.6rem;'>服务费(给淘宝的)</li><li class='table-cell' style='font-size: 0.6rem;'>创建时间</li></ul></div>");
 			if (userOrderList != null && userOrderList.size() > 0) {
 				sb.append("<div class='table-row-group'>");
 				for (UserOrder userOrder : userOrderList) {

@@ -31,7 +31,7 @@ public class UserOrderCheckTask {
 		UserOrder userOrder = new UserOrder();
 		List<UserOrder> userOrderList = userOrderService.selectUnCheckByMobile(userOrder);
 		if (userOrderList != null && userOrderList.size() > 0) {
-			logger.info("共有"+userOrderList.size()+"条商品未校验");
+			logger.info("共有"+userOrderList.size()+"件商品未校验");
 			for (UserOrder userOrder1 : userOrderList) {
 				TkOrderInput tkOrderInput = tkOrderInputService.selectByOrderId(userOrder1.getOrderId());
 				if (tkOrderInput != null) {
@@ -54,7 +54,7 @@ public class UserOrderCheckTask {
 					userOrder1.setUpdateTime(new Date());
 					userOrderService.updateByPrimaryKey(userOrder1);
 				}else{
-					logger.info("订单"+userOrder1.getOrderId()+"为从阿里妈妈导入、或订单不存在");
+					logger.info("订单"+userOrder1.getOrderId()+"未从阿里妈妈导入、或订单不存在");
 				}
 			}
 		}else{
