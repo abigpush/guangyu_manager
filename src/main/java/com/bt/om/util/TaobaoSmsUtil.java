@@ -10,13 +10,13 @@ public class TaobaoSmsUtil {
 	private static final String AppKey = "23597119";
 	private static final String AppSecret = "7607483df891e2e7f49db33b960a09fd";
 
-	public static void sendSms(String signName, String smsTemplateCode, String name, String mobile) {
+	public static void sendSms(String signName, String smsTemplateCode, String var, String name, String mobile) {
 		TaobaoClient client = new DefaultTaobaoClient(Url, AppKey, AppSecret);
 		AlibabaAliqinFcSmsNumSendRequest req = new AlibabaAliqinFcSmsNumSendRequest();
 		req.setExtend("");
 		req.setSmsType("normal");
 		req.setSmsFreeSignName(signName);
-		req.setSmsParamString("{vcode:'" + name + "'}");
+		req.setSmsParamString("{" + var + ":'" + name + "'}");
 		req.setRecNum(mobile);
 		req.setSmsTemplateCode(smsTemplateCode);
 		try {
@@ -28,6 +28,6 @@ public class TaobaoSmsUtil {
 	}
 
 	public static void main(String[] args) {
-		sendSms("逛鱼返利", "SMS_125955002", "12345", "13732203065");
+		sendSms("逛鱼返利", "SMS_125955002", "vcode", "12345", "13732203065");
 	}
 }
