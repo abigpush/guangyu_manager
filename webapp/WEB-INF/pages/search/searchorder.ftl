@@ -46,7 +46,7 @@
 						</p>
 						<p class='text-center signup'>
 						        <p id="candraw"><a href="/helpdraw.html"
-								class='pull-left external' style="font-size: 0.8rem;color:red">提现帮助</a></p>						        					
+								class='pull-left external' style="font-size: 0.8rem;">提现帮助</a></p>						        					
 								<a href="/search.html"
 								class='pull-right external' style="font-size: 0.8rem;">继续搜返利</a>								
 						</p>
@@ -136,7 +136,7 @@
 								      $('#candraw').html("<a href='orderdraw.html' class='pull-left external' style='font-size: 0.8rem;'>我要申请提现</a>");
 								    }else{
 								      $("#candraw").html("");
-								      $('#candraw').html("<a href='/helpdraw.html' class='pull-left external' style='font-size: 0.8rem;color:red'>提现帮助</a>");
+								      $('#candraw').html("<a href='/helpdraw.html' class='pull-left external' style='font-size: 0.8rem;'>提现帮助</a>");
 								    }
 								    //暂时屏蔽掉
 								    //$("#vcode").val("");

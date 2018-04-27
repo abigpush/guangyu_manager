@@ -115,7 +115,7 @@ public class SearchOrderController extends BasicController {
 			sb.append(
 					"<div class='table-column-group'><div class='table-column'></div><div class='table-column'></div><div class='table-column'></div><div class='table-column'></div></div>");
 			sb.append(
-					"<div class='table-header-group'><ul class='table-row'><li class='table-cell'>商品</li><li class='table-cell'>返利</li><li class='table-cell'>创建时间</li></ul></div>");
+					"<div class='table-header-group' style='font-size: 0.8rem;'><ul class='table-row'><li class='table-cell' style='font-size: 0.8rem;'>商品</li><li class='table-cell' style='font-size: 0.8rem;'>返利(自己的)</li><li class='table-cell' style='font-size: 0.8rem;'>服务费(给淘宝的)</li><li class='table-cell' style='font-size: 0.8rem;'>创建时间</li></ul></div>");
 			if (userOrderList != null && userOrderList.size() > 0) {
 				sb.append("<div class='table-row-group'>");
 				for (UserOrder userOrder : userOrderList) {
@@ -123,9 +123,10 @@ public class SearchOrderController extends BasicController {
 					// sb.append("<li class='table-cell'>").append("<img
 					// height='80' width='80' src='")
 					// .append(userOrder.getProductImgUrl()).append("'>").append("</li>");
-					sb.append("<li class='table-cell'>" + StringUtil.getSubString(userOrder.getProductInfo(), 30)
-							+ "</li>");
+					sb.append("<li class='table-cell'>" + StringUtil.getSubString(userOrder.getProductInfo(), 15)
+							+ "...</li>");
 					sb.append("<li class='table-cell'>￥" + userOrder.getCommission3() + "</li>");
+					sb.append("<li class='table-cell'>￥" + ((float) (Math.round((userOrder.getCommission1()- userOrder.getCommission3()) * 100)) / 100) + "</li>");
 					sb.append("<li class='table-cell'>"
 							+ DateUtil.formatDate(userOrder.getCreateTime(), DateUtil.CHINESE_PATTERN) + "</li>");
 					sb.append("</ul>");
