@@ -23,6 +23,7 @@ import com.bt.om.entity.UserOrder;
 import com.bt.om.enums.ResultCode;
 import com.bt.om.enums.SessionKey;
 import com.bt.om.service.IUserOrderService;
+import com.bt.om.util.ConfigUtil;
 import com.bt.om.util.StringUtil;
 import com.bt.om.vo.api.UserOrderVo;
 import com.bt.om.vo.web.ResultVo;
@@ -104,7 +105,7 @@ public class SearchOrderController extends BasicController {
 					totalCommission = totalCommission + userOrder.getCommission3();
 				}
 				sb.append("<h2 class='table-caption'>共<font color='red'>" + userOrderList.size()
-						+ "</font>条可提现订单，可提现金额<font color='red'>￥" + totalCommission + "</font>：</h2>");
+						+ "</font>条可提现订单，可提现金额<font color='red'>￥" + ((float) (Math.round(totalCommission * 100)) / 100) + "</font>：</h2>");
 				if(totalCommission>0){
 					canDraw="1";
 				}

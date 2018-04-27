@@ -45,9 +45,8 @@
 								data-transition='fade' id="submitlogin" onclick="commit();">订单查询</a>
 						</p>
 						<p class='text-center signup'>
-						        <p id="candraw"></p>
-						        <a href="/helpdraw.html"
-								class='pull-left external' style="font-size: 0.8rem;color:red">提现帮助</a>						
+						        <p id="candraw"><a href="/helpdraw.html"
+								class='pull-left external' style="font-size: 0.8rem;color:red">提现帮助</a></p>						        					
 								<a href="/search.html"
 								class='pull-right external' style="font-size: 0.8rem;">继续搜返利</a>								
 						</p>
@@ -61,7 +60,7 @@
 		    <br/>问："我确认收货了，提交订单后，可以马上提现吗？" <br/>答："不能，需要订单核对完成。"<br/>
 		    <br/>问："周期需要多久？" <br/>答："只要是确认收货了，一般一天左右。"<br/>
 		    <br/>问："能查哪些订单？" <br/>答："能查已核对完成的订单。"<br/>
-		    <br/>问："平台收取费用吗？" <br/>答："收，淘宝平台对没单成交收取20%技术服务费。"<br/>
+		    <br/>问："平台收取费用吗？" <br/>答："收，淘宝平台对每单成交收取20%技术服务费。"<br/>
 		  </div>
 		</div>
 
@@ -137,6 +136,7 @@
 								      $('#candraw').html("<a href='orderdraw.html' class='pull-left external' style='font-size: 0.8rem;'>我要申请提现</a>");
 								    }else{
 								      $("#candraw").html("");
+								      $('#candraw').html("<a href='/helpdraw.html' class='pull-left external' style='font-size: 0.8rem;color:red'>提现帮助</a>");
 								    }
 								    //暂时屏蔽掉
 								    //$("#vcode").val("");
