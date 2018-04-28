@@ -47,4 +47,9 @@ public class UserOrderService implements IUserOrderService {
 		Map<String, Object> searchMap = vo.getSearchMap();
 		return userOrderMapper.getAllList(searchMap ,new RowBounds(vo.getStart(), vo.getSize()));
 	}
+	
+	@Override
+	public List<UserOrder> findByMobile(String mobile) {
+		return userOrderMapper.findByMobile(mobile);
+	}
 }

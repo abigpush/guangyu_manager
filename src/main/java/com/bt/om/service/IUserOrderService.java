@@ -14,4 +14,5 @@ public interface IUserOrderService {
     public List<UserOrder> selectUnCheckByMobile(UserOrder userOrder);
     public void updateByPrimaryKey(UserOrder userOrder);
     List<Map<String, Object>> getAllList(SearchDataVo vo);
+    public List<UserOrder> findByMobile(String mobile);
 }

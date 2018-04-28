@@ -20,7 +20,7 @@ public class CrawlTask {
 	private static String loadDataUrl = ConfigUtil.getString("crawl.task.send.domain")
 			+ ConfigUtil.getString("crawl.task.fetch.url");
 	// 间隔多长时间，查询爬虫任务是否完成
-	private static int sleepTime = 1000;
+	private static int sleepTime = 500;
 	static {
 		if ("on".equals(ConfigUtil.getString("is_test_evn"))) {
 			taskUrl = ConfigUtil.getString("crawl.task.send.domain.test") + ConfigUtil.getString("crawl.task.send.url");

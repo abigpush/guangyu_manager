@@ -196,7 +196,13 @@ public class ApiController extends BasicController {
 		}else if("jd".equals(platform)){
 			String puri=urlMap.get("puri");
 			//截取京东商品ID
-			uriProductId=puri.substring(puri.lastIndexOf("/")+1, puri.lastIndexOf("."));
+			String action=puri.substring(puri.lastIndexOf("/")+1);
+			if(action.contains(".")){
+				uriProductId=puri.substring(puri.lastIndexOf("/")+1, puri.lastIndexOf("."));
+			}else{
+				uriProductId=action;
+			}
+			
 			if (StringUtils.isEmpty(uriProductId)) {
 				result.setCode(ResultCode.RESULT_FAILURE.getCode());
 				result.setResultDes("商品ID为空！");

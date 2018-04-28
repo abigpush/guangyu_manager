@@ -115,236 +115,258 @@ public class ProductUrlTrans {
 	}
 
 	private static void getTKUrl(TkInfoTask tkInfoTask) throws Exception {
-		driver.findElement(By.id("q")).clear();
-		driver.findElement(By.id("q")).sendKeys(tkInfoTask.getProductUrl());
-		driver.findElement(By.xpath("//div[@id='magix_vf_header']/div/div/div[2]/div[2]/button")).click();
-		// 点击搜索按钮后sleep
-		Thread.sleep(NumberUtil.getRandomNumber(sleepTimeBegin, sleepTimeEnd));
-
-		// 滚动到图片元素
-		WebElement element0 = driver.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[1]/a/img"));
-		PageUtils.scrollToElementAndPick(element0, driver);
-
-		String productImgUrl = driver.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[1]/a/img"))
-				.getAttribute("src");
-		String productName = driver.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[1]/p/a/span"))
-				.getText();
-		String price = "0";
-		String sales = "0";
-		String commision = "0";
-		String rate = "0";
-		String shopName = "";
-		shopName = driver.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[3]/div[1]/span/a/span"))
-				.getText();
 		try {
-			// 存在优惠券的处理方式
-			price = driver.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[3]/span[1]/span[2]"))
-					.getText() + "."
-					+ driver.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[3]/span[1]/span[4]"))
-							.getText();
-			sales = driver
-					.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[3]/span[2]/span[2]/span"))
-					.getText();
-			commision = driver
-					.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[4]/span[2]/span[2]/span[2]"))
-					.getText()
-					+ "."
-					+ driver.findElement(
-							By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[4]/span[2]/span[2]/span[4]"))
-							.getText();
-			rate = driver
-					.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[4]/span[1]/span[2]/span[1]"))
-					.getText()
-					+ "."
-					+ driver.findElement(
-							By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[4]/span[1]/span[2]/span[3]"))
-							.getText();
-		} catch (Exception e) {
-			// 不存在优惠券的处理方式
-			price = driver.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[2]/span[1]/span[2]"))
-					.getText() + "."
-					+ driver.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[2]/span[1]/span[4]"))
-							.getText();
-			sales = driver
-					.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[2]/span[2]/span[2]/span"))
-					.getText();
-			commision = driver
-					.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[3]/span[2]/span[2]/span[2]"))
-					.getText()
-					+ "."
-					+ driver.findElement(
-							By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[3]/span[2]/span[2]/span[4]"))
-							.getText();
-			rate = driver
-					.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[3]/span[1]/span[2]/span[1]"))
-					.getText()
-					+ "."
-					+ driver.findElement(
-							By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[3]/span[1]/span[2]/span[3]"))
-							.getText();
-		}
-
-		tkInfoTask.setProductName(productName);
-		tkInfoTask.setProductImgUrl(productImgUrl);
-		tkInfoTask.setPrice(Double.valueOf(price.replace(",", "")));
-		tkInfoTask.setSales(Integer.parseInt(sales));
-		tkInfoTask.setCommision(Double.valueOf(commision));
-		tkInfoTask.setRate(Double.valueOf(rate));
-		tkInfoTask.setShopName(shopName);
-
-		// 点击立即推广按钮
-		WebElement element1 = driver.findElement(By.linkText("立即推广"));
-		PageUtils.scrollToElementAndClick(element1, driver);
-
-		// 点击确定按钮
-		Thread.sleep(NumberUtil.getRandomNumber(sleepTimeBegin, sleepTimeEnd));
-		WebElement element2 = driver.findElement(By.xpath("//div[@id='J_global_dialog']/div/div[3]/button"));
-		PageUtils.scrollToElementAndClick(element2, driver);
-
-		// 点击复制按钮
-		// Thread.sleep(2000);
-		// WebElement
-		// element3=driver.findElement(By.xpath("(//button[@type='button'])[6]"));
-		// PageUtils.scrollToElementAndClick(element3, driver);
-		String tkurl = "";
-		String quanurl = "";
-		try {
-			tkurl = driver.findElement(By.id("clipboard-target-1")).getAttribute("value");
-			quanurl = driver.findElement(By.id("clipboard-target-2")).getAttribute("value");
-		} catch (Exception e) {
-			tkurl = driver.findElement(By.xpath("//*[@id='clipboard-target']")).getAttribute("value");
-		}
-
-		// 点击淘口令按钮
-		Thread.sleep(NumberUtil.getRandomNumber(sleepTimeBegin, sleepTimeEnd));
-		WebElement element3 = driver.findElement(By.xpath("//*[@id='magix_vf_code']/div/div[1]/ul/li[4]"));
-		PageUtils.scrollToElementAndClick(element3, driver);
-
-		String tcode = "";
-		String quancode = "";
-
-		try {
-			tcode = driver.findElement(By.xpath("//*[@id='clipboard-target-1']")).getAttribute("value");
-			quancode = driver.findElement(By.xpath("//*[@id='clipboard-target-2']")).getAttribute("value");
-
-			// 点击关闭按钮
+			driver.findElement(By.id("q")).clear();
+			driver.findElement(By.id("q")).sendKeys(tkInfoTask.getProductUrl());
+			driver.findElement(By.xpath("//div[@id='magix_vf_header']/div/div/div[2]/div[2]/button")).click();
+			// 点击搜索按钮后sleep
 			Thread.sleep(NumberUtil.getRandomNumber(sleepTimeBegin, sleepTimeEnd));
-			WebElement element4 = driver.findElement(By.xpath("//div[@id='magix_vf_code']/div/div[3]/button"));
-			PageUtils.scrollToElementAndClick(element4, driver);
-		} catch (Exception e) {
-			tcode = driver.findElement(By.xpath("//*[@id='clipboard-target']")).getAttribute("value");
 
-			// 点击关闭按钮
+			// 滚动到图片元素
+			WebElement element0 = driver.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[1]/a/img"));
+			PageUtils.scrollToElementAndPick(element0, driver);
+
+			String productImgUrl = driver.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[1]/a/img"))
+					.getAttribute("src");
+			String productName = driver
+					.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[1]/p/a/span")).getText();
+			String price = "0";
+			String sales = "0";
+			String commision = "0";
+			String rate = "0";
+			String shopName = "";
+			shopName = driver.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[3]/div[1]/span/a/span"))
+					.getText();
+			try {
+				// 存在优惠券的处理方式
+				price = driver
+						.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[3]/span[1]/span[2]"))
+						.getText()
+						+ "."
+						+ driver.findElement(
+								By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[3]/span[1]/span[4]"))
+								.getText();
+				sales = driver
+						.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[3]/span[2]/span[2]/span"))
+						.getText();
+				commision = driver
+						.findElement(
+								By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[4]/span[2]/span[2]/span[2]"))
+						.getText()
+						+ "."
+						+ driver.findElement(
+								By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[4]/span[2]/span[2]/span[4]"))
+								.getText();
+				rate = driver
+						.findElement(
+								By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[4]/span[1]/span[2]/span[1]"))
+						.getText()
+						+ "."
+						+ driver.findElement(
+								By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[4]/span[1]/span[2]/span[3]"))
+								.getText();
+			} catch (Exception e) {
+				// 不存在优惠券的处理方式
+				price = driver
+						.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[2]/span[1]/span[2]"))
+						.getText()
+						+ "."
+						+ driver.findElement(
+								By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[2]/span[1]/span[4]"))
+								.getText();
+				sales = driver
+						.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[2]/span[2]/span[2]/span"))
+						.getText();
+				commision = driver
+						.findElement(
+								By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[3]/span[2]/span[2]/span[2]"))
+						.getText()
+						+ "."
+						+ driver.findElement(
+								By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[3]/span[2]/span[2]/span[4]"))
+								.getText();
+				rate = driver
+						.findElement(
+								By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[3]/span[1]/span[2]/span[1]"))
+						.getText()
+						+ "."
+						+ driver.findElement(
+								By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[3]/span[1]/span[2]/span[3]"))
+								.getText();
+			}
+
+			tkInfoTask.setProductName(productName);
+			tkInfoTask.setProductImgUrl(productImgUrl);
+			tkInfoTask.setPrice(Double.valueOf(price.replace(",", "")));
+			tkInfoTask.setSales(Integer.parseInt(sales));
+			tkInfoTask.setCommision(Double.valueOf(commision));
+			tkInfoTask.setRate(Double.valueOf(rate));
+			tkInfoTask.setShopName(shopName);
+
+			// 点击立即推广按钮
+			WebElement element1 = driver.findElement(By.linkText("立即推广"));
+			PageUtils.scrollToElementAndClick(element1, driver);
+
+			// 点击确定按钮
 			Thread.sleep(NumberUtil.getRandomNumber(sleepTimeBegin, sleepTimeEnd));
-			WebElement element4 = driver.findElement(By.xpath("//*[@id='magix_vf_code']/div/div[3]/button[2]"));
-			PageUtils.scrollToElementAndClick(element4, driver);
+			WebElement element2 = driver.findElement(By.xpath("//div[@id='J_global_dialog']/div/div[3]/button"));
+			PageUtils.scrollToElementAndClick(element2, driver);
 
+			// 点击复制按钮
+			// Thread.sleep(2000);
+			// WebElement
+			// element3=driver.findElement(By.xpath("(//button[@type='button'])[6]"));
+			// PageUtils.scrollToElementAndClick(element3, driver);
+			String tkurl = "";
+			String quanurl = "";
+			try {
+				tkurl = driver.findElement(By.id("clipboard-target-1")).getAttribute("value");
+				quanurl = driver.findElement(By.id("clipboard-target-2")).getAttribute("value");
+			} catch (Exception e) {
+				tkurl = driver.findElement(By.xpath("//*[@id='clipboard-target']")).getAttribute("value");
+			}
+
+			// 点击淘口令按钮
+			Thread.sleep(NumberUtil.getRandomNumber(sleepTimeBegin, sleepTimeEnd));
+			WebElement element3 = driver.findElement(By.xpath("//*[@id='magix_vf_code']/div/div[1]/ul/li[4]"));
+			PageUtils.scrollToElementAndClick(element3, driver);
+
+			String tcode = "";
+			String quancode = "";
+
+			try {
+				tcode = driver.findElement(By.xpath("//*[@id='clipboard-target-1']")).getAttribute("value");
+				quancode = driver.findElement(By.xpath("//*[@id='clipboard-target-2']")).getAttribute("value");
+
+				// 点击关闭按钮
+				Thread.sleep(NumberUtil.getRandomNumber(sleepTimeBegin, sleepTimeEnd));
+				WebElement element4 = driver.findElement(By.xpath("//div[@id='magix_vf_code']/div/div[3]/button"));
+				PageUtils.scrollToElementAndClick(element4, driver);
+			} catch (Exception e) {
+				tcode = driver.findElement(By.xpath("//*[@id='clipboard-target']")).getAttribute("value");
+
+				// 点击关闭按钮
+				Thread.sleep(NumberUtil.getRandomNumber(sleepTimeBegin, sleepTimeEnd));
+				WebElement element4 = driver.findElement(By.xpath("//*[@id='magix_vf_code']/div/div[3]/button[2]"));
+				PageUtils.scrollToElementAndClick(element4, driver);
+
+			}
+
+			tkInfoTask.setTkurl(tkurl);
+			tkInfoTask.setQuanUrl(quanurl);
+			tkInfoTask.setTcode(tcode);
+			tkInfoTask.setQuanCode(quancode);
+
+			tkInfoTaskService.insertTkInfoTask(tkInfoTask);
+		} catch (Exception e) {
+			e.printStackTrace();
+			driver.navigate().refresh();
+			return;
 		}
-
-		tkInfoTask.setTkurl(tkurl);
-		tkInfoTask.setQuanUrl(quanurl);
-		tkInfoTask.setTcode(tcode);
-		tkInfoTask.setQuanCode(quancode);
-
-		tkInfoTaskService.insertTkInfoTask(tkInfoTask);
 	}
 
 	private static void getJdTKUrl(TkInfoTask tkInfoTask) throws Exception {
-		jdDriver.findElement(By.id("keyword")).clear();
-		jdDriver.findElement(By.id("keyword")).sendKeys(tkInfoTask.getProductUrl());
-		jdDriver.findElement(By.xpath("//*[@id='b_search']")).click();
-
-		// 点击搜索按钮后sleep
-		Thread.sleep(NumberUtil.getRandomNumber(sleepTimeBegin, sleepTimeEnd));
-
-		// 滚动到图片元素
-		WebElement element0 = jdDriver
-				.findElement(By.xpath("//*[@id='goodsQueryForm']/div[2]/div/div/div/div[2]/ul/li/div[1]/div[1]/a/img"));
-		PageUtils.scrollToElementAndPick(element0, jdDriver);
-
-		// 选择无线，无线佣金比例高
-		jdDriver.findElement(By
-				.xpath("//*[@id='goodsQueryForm']/div[2]/div/div/div/div[2]/ul/li/div[1]/div[2]/div[2]/select/option[2]"))
-				.click();
-
-		String productImgUrl = jdDriver
-				.findElement(By.xpath("//*[@id='goodsQueryForm']/div[2]/div/div/div/div[2]/ul/li/div[1]/div[1]/a/img"))
-				.getAttribute("src");
-		String productName = jdDriver
-				.findElement(By.xpath("//*[@id='goodsQueryForm']/div[2]/div/div/div/div[2]/ul/li/div[1]/div[2]/a"))
-				.getText();
-		String price = "0";
-		String sales = "0";
-		String commision = "0";
-		String rate = "0";
-		String shopName = "";
-		price = jdDriver
-				.findElement(By
-						.xpath("//*[@id='goodsQueryForm']/div[2]/div/div/div/div[2]/ul/li/div[1]/div[2]/div[2]/span[2]/span"))
-				.getText();
-		sales = jdDriver
-				.findElement(By
-						.xpath("//*[@id='goodsQueryForm']/div[2]/div/div/div/div[2]/ul/li/div[1]/div[2]/div[3]/div[5]/em"))
-				.getText();
-		commision = jdDriver
-				.findElement(By
-						.xpath("//*[@id='goodsQueryForm']/div[2]/div/div/div/div[2]/ul/li/div[1]/div[2]/div[3]/div[4]/em"))
-				.getText();
-		rate = jdDriver
-				.findElement(By
-						.xpath("//*[@id='goodsQueryForm']/div[2]/div/div/div/div[2]/ul/li/div[1]/div[2]/div[3]/div[2]/em"))
-				.getText();
-		shopName = jdDriver
-				.findElement(
-						By.xpath("//*[@id='goodsQueryForm']/div[2]/div/div/div/div[2]/ul/li/div[1]/div[2]/div[4]/a"))
-				.getText();
-		price = price.replace("￥", "");
-		commision = commision.replace("￥", "");
-		rate = rate.replace("%", "");
-
-		tkInfoTask.setProductName(productName);
-		tkInfoTask.setProductImgUrl(productImgUrl);
-		tkInfoTask.setPrice(Double.valueOf(price.replace(",", "")));
-		tkInfoTask.setSales(Integer.parseInt(sales));
-		tkInfoTask.setCommision(Double.valueOf(commision));
-		tkInfoTask.setRate(Double.valueOf(rate));
-		tkInfoTask.setShopName(shopName);
-
-		// 点击我要推广按钮
-		WebElement element1 = jdDriver
-				.findElement(By.xpath("//*[@id='goodsQueryForm']/div[2]/div/div/div/div[2]/ul/li/div[2]/a"));
-		PageUtils.scrollToElementAndClick(element1, jdDriver);
-
-		// 点击选择推广类型、推广位名称
-		Thread.sleep(NumberUtil.getRandomNumber(sleepTimeBegin, sleepTimeEnd));
-		jdDriver.findElement(By.xpath("//*[@id='adtTypeDiv']/div[2]/label[4]")).click();
-		jdDriver.findElement(By.xpath("//*[@id='spaceName']/option[2]")).click();
-
-		// 点击获取代码按钮
-		Thread.sleep(NumberUtil.getRandomNumber(sleepTimeBegin, sleepTimeEnd));
-		WebElement element2 = jdDriver.findElement(By.xpath("//*[@id='getcode-btn']"));
-		PageUtils.scrollToElementAndClick(element2, jdDriver);
-
-		Thread.sleep(NumberUtil.getRandomNumber(sleepTimeBegin * 2, sleepTimeEnd * 2));
-		String tkurl = "";
 		try {
+			jdDriver.findElement(By.id("keyword")).clear();
+			jdDriver.findElement(By.id("keyword")).sendKeys(tkInfoTask.getProductUrl());
+			jdDriver.findElement(By.xpath("//*[@id='b_search']")).click();
+
+			// 点击搜索按钮后sleep
+			Thread.sleep(NumberUtil.getRandomNumber(sleepTimeBegin, sleepTimeEnd));
+
+			// 滚动到图片元素
+			WebElement element0 = jdDriver.findElement(
+					By.xpath("//*[@id='goodsQueryForm']/div[2]/div/div/div/div[2]/ul/li/div[1]/div[1]/a/img"));
+			PageUtils.scrollToElementAndPick(element0, jdDriver);
+
+			// 选择无线，无线佣金比例高
+			jdDriver.findElement(By
+					.xpath("//*[@id='goodsQueryForm']/div[2]/div/div/div/div[2]/ul/li/div[1]/div[2]/div[2]/select/option[2]"))
+					.click();
+
+			String productImgUrl = jdDriver
+					.findElement(
+							By.xpath("//*[@id='goodsQueryForm']/div[2]/div/div/div/div[2]/ul/li/div[1]/div[1]/a/img"))
+					.getAttribute("src");
+			String productName = jdDriver
+					.findElement(By.xpath("//*[@id='goodsQueryForm']/div[2]/div/div/div/div[2]/ul/li/div[1]/div[2]/a"))
+					.getText();
+			String price = "0";
+			String sales = "0";
+			String commision = "0";
+			String rate = "0";
+			String shopName = "";
+			price = jdDriver
+					.findElement(By
+							.xpath("//*[@id='goodsQueryForm']/div[2]/div/div/div/div[2]/ul/li/div[1]/div[2]/div[2]/span[2]/span"))
+					.getText();
+			sales = jdDriver
+					.findElement(By
+							.xpath("//*[@id='goodsQueryForm']/div[2]/div/div/div/div[2]/ul/li/div[1]/div[2]/div[3]/div[5]/em"))
+					.getText();
+			commision = jdDriver
+					.findElement(By
+							.xpath("//*[@id='goodsQueryForm']/div[2]/div/div/div/div[2]/ul/li/div[1]/div[2]/div[3]/div[4]/em"))
+					.getText();
+			rate = jdDriver
+					.findElement(By
+							.xpath("//*[@id='goodsQueryForm']/div[2]/div/div/div/div[2]/ul/li/div[1]/div[2]/div[3]/div[2]/em"))
+					.getText();
+			shopName = jdDriver
+					.findElement(By
+							.xpath("//*[@id='goodsQueryForm']/div[2]/div/div/div/div[2]/ul/li/div[1]/div[2]/div[4]/a"))
+					.getText();
+			price = price.replace("￥", "");
+			commision = commision.replace("￥", "");
+			rate = rate.replace("%", "");
+
+			tkInfoTask.setProductName(productName);
+			tkInfoTask.setProductImgUrl(productImgUrl);
+			tkInfoTask.setPrice(Double.valueOf(price.replace(",", "")));
+			tkInfoTask.setSales(Integer.parseInt(sales));
+			tkInfoTask.setCommision(Double.valueOf(commision));
+			tkInfoTask.setRate(Double.valueOf(rate));
+			tkInfoTask.setShopName(shopName);
+
+			// 点击我要推广按钮
+			WebElement element1 = jdDriver
+					.findElement(By.xpath("//*[@id='goodsQueryForm']/div[2]/div/div/div/div[2]/ul/li/div[2]/a"));
+			PageUtils.scrollToElementAndClick(element1, jdDriver);
+
+			// 点击选择推广类型、推广位名称
+			Thread.sleep(NumberUtil.getRandomNumber(sleepTimeBegin, sleepTimeEnd));
+			jdDriver.findElement(By.xpath("//*[@id='adtTypeDiv']/div[2]/label[4]")).click();
+			Thread.sleep(NumberUtil.getRandomNumber(sleepTimeBegin, sleepTimeEnd));
+			jdDriver.findElement(By.xpath("//*[@id='spaceName']/option[2]")).click();
+
+			// 点击获取代码按钮
+			Thread.sleep(NumberUtil.getRandomNumber(sleepTimeBegin, sleepTimeEnd));
+			WebElement element2 = jdDriver.findElement(By.xpath("//*[@id='getcode-btn']"));
+			PageUtils.scrollToElementAndClick(element2, jdDriver);
+
+			Thread.sleep(NumberUtil.getRandomNumber(sleepTimeBegin * 10, sleepTimeEnd * 4));
+			String tkurl = "";
+
 			tkurl = jdDriver.findElement(By.xpath("//*[@id='shotCodeHref']")).getAttribute("value");
+			System.out.println(tkurl);
 
 			// 点击关闭按钮
-			Thread.sleep(NumberUtil.getRandomNumber(sleepTimeBegin, sleepTimeEnd));
+			// Thread.sleep(NumberUtil.getRandomNumber(sleepTimeBegin,
+			// sleepTimeEnd));
 			WebElement element4 = jdDriver.findElement(By.xpath("//*[@id='getSJBCode']/div/div/div[3]/a[2]"));
 			PageUtils.scrollToElementAndClick(element4, jdDriver);
+
+			tkInfoTask.setTkurl(tkurl);
+			tkInfoTask.setQuanUrl("");
+			tkInfoTask.setTcode("");
+			tkInfoTask.setQuanCode("");
+
+			tkInfoTaskService.insertTkInfoTask(tkInfoTask);
 		} catch (Exception e) {
 			e.printStackTrace();
+			jdDriver.navigate().refresh();
+			return;
 		}
-
-		tkInfoTask.setTkurl(tkurl);
-		tkInfoTask.setQuanUrl("");
-		tkInfoTask.setTcode("");
-		tkInfoTask.setQuanCode("");
-
-		tkInfoTaskService.insertTkInfoTask(tkInfoTask);
-
 	}
 
 	private static void schedule() {

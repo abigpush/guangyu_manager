@@ -44,8 +44,13 @@
 						<p class='text-center signup'>                               
 								<a href="/order.html"
 								class='pull-left external' style="font-size: 0.8rem;">我要录入订单号</a>
+								<!--
+								<a href="/api/invitation.html"
+								class='pull-center external' style="font-size: 0.8rem;color:red">我要邀请</a>
+								&nbsp;&nbsp;&nbsp;
+								-->
 								<a href="/helptbios.html"
-								class='pull-center external' style="font-size: 0.8rem;color:red">使用帮助</a>
+								class='pull-center external' style="font-size: 0.8rem;color:red">我要帮助</a>
 								<a href="/searchorder.html"
 								class='pull-right external' style="font-size: 0.8rem;">我要提现</a>
 								
@@ -156,6 +161,9 @@
 											.html(
 													"<div id='e-c' align=center><div style='font-size:12px;width:330px;top:10%;left:38%;background:#fff;border-radius:10px;box-shadow:5px 5px 10px #888;'><h2 style='padding:5px;font-size:18px;'>该商品无佣金</h2></div></div>");
 								} else {
+								    if(data.ret.code==101){
+								      alert("系统忙，请重新再试！");
+								    }else{
 								    if(data.ret.result.status=="1"){
 								      alert("系统繁忙，请稍后再试");
 								    }
@@ -167,7 +175,8 @@
 								    }
 								    if(data.ret.result.status=="0"){
 								      $('#result').html(data.ret.result.msg);
-								    }
+								    }	
+								    }							    
 								}
 								$(".input_enter").val("");
 								//暂时屏蔽掉
