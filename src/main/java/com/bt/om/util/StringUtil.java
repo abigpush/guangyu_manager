@@ -1099,6 +1099,24 @@ public class StringUtil {
 		}
 		return strAllParam;
 	}
+	/**
+	 * 
+	 * 去掉url后面的参数，留下?号前的地址
+	 * @param strURL
+	 * @return
+	 */
+	public static String getUri(String strURL) {
+		String strUri = null;
+		String[] arrSplit = null;
+		strURL = strURL.trim().toLowerCase();
+		arrSplit = strURL.split("[?]");
+		if (strURL.length() > 1) {
+			if (arrSplit.length > 1) {
+				strUri = arrSplit[0];
+			}
+		}
+		return strUri;
+	}
 
 	/**
 	 * 解析出url参数中的键值对 如 "index.jsp?Action=del&id=123"，解析出Action:del,id:123存入map中
@@ -1112,9 +1130,11 @@ public class StringUtil {
 		Map<String, String> mapRequest = new HashMap<String, String>();
 		String[] arrSplit = null;
 		String strUrlParam = TruncateUrlPage(URL);
+		String strUri = getUri(URL);
 		if (strUrlParam == null) {
 			return mapRequest;
 		}
+		mapRequest.put("puri", strUri);
 		arrSplit = strUrlParam.split("[&]");
 		for (String strSplit : arrSplit) {
 			String[] arrSplitEqual = null;

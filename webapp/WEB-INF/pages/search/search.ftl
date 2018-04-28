@@ -10,7 +10,7 @@
 									<div class="item-inner">
 										<div class="item-input">
 											<input type="text" class="input_enter"
-												placeholder="请粘贴从手机淘宝复制的商品链接地址" name="product_url">
+												placeholder="请粘贴淘宝或京东复制的商品地址" name="product_url">
 										</div>
 									</div>
 								</div>
@@ -156,11 +156,18 @@
 											.html(
 													"<div id='e-c' align=center><div style='font-size:12px;width:330px;top:10%;left:38%;background:#fff;border-radius:10px;box-shadow:5px 5px 10px #888;'><h2 style='padding:5px;font-size:18px;'>该商品无佣金</h2></div></div>");
 								} else {
-								    if(data.ret.result==null){
-								      alert("链接地址不正确");
-								    }else{
-									  $('#result').html(data.ret.result.msg);
-									}  
+								    if(data.ret.result.status=="1"){
+								      alert("系统繁忙，请稍后再试");
+								    }
+								    if(data.ret.result.status=="2"){
+								      alert("请输入商品链接地址");
+								    }
+								    if(data.ret.result.status=="3"){
+								      alert("商品链接地址不正确");
+								    }
+								    if(data.ret.result.status=="0"){
+								      $('#result').html(data.ret.result.msg);
+								    }
 								}
 								$(".input_enter").val("");
 								//暂时屏蔽掉

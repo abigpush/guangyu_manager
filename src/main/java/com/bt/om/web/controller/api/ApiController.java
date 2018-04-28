@@ -159,6 +159,7 @@ public class ApiController extends BasicController {
 		} catch (IOException e) {
 			result.setCode(ResultCode.RESULT_FAILURE.getCode());
 			result.setResultDes("系统繁忙，请稍后再试！");
+			result.setResult(new ProductInfoVo("","","","","1"));
 			model.addAttribute(SysConst.RESULT_KEY, result);
 			return model;
 		}
@@ -167,42 +168,77 @@ public class ApiController extends BasicController {
 		if (StringUtils.isEmpty(product_url)) {
 			result.setCode(ResultCode.RESULT_FAILURE.getCode());
 			result.setResultDes("商品链接为空！");
+			result.setResult(new ProductInfoVo("","","","","2"));
 			model.addAttribute(SysConst.RESULT_KEY, result);
 			return model;
 		}
 
 		Map<String, String> urlMap = StringUtil.urlSplit(product_url);
-
-		// 判断链接中是否有ID
-		if (StringUtils.isEmpty(urlMap.get("id"))) {
-			result.setCode(ResultCode.RESULT_FAILURE.getCode());
-			result.setResultDes("商品ID为空！");
-			model.addAttribute(SysConst.RESULT_KEY, result);
-			return model;
+		String platform = "taobao";
+		if (urlMap.get("puri").contains("taobao.com") || urlMap.get("puri").contains("tmall.com")) {
+			platform = "taobao";
+		} else if (urlMap.get("puri").contains("jd.com")) {
+			platform = "jd";
+		}
+        
+		ProductInfo productInfo = null;
+		String uriProductId="";
+		if ("taobao".equals(platform)) {
+			// 判断链接中是否有ID
+			if (StringUtils.isEmpty(urlMap.get("id"))) {
+				result.setCode(ResultCode.RESULT_FAILURE.getCode());
+				result.setResultDes("商品ID为空！");
+				result.setResult(new ProductInfoVo("","","","","3"));
+				model.addAttribute(SysConst.RESULT_KEY, result);
+				return model;
+			}
+			productInfo = productInfoService.getByProductId(urlMap.get("id"));
+		}else if("jd".equals(platform)){
+			String puri=urlMap.get("puri");
+			//截取京东商品ID
+			uriProductId=puri.substring(puri.lastIndexOf("/")+1, puri.lastIndexOf("."));
+			if (StringUtils.isEmpty(uriProductId)) {
+				result.setCode(ResultCode.RESULT_FAILURE.getCode());
+				result.setResultDes("商品ID为空！");
+				result.setResult(new ProductInfoVo("","","","","3"));
+				model.addAttribute(SysConst.RESULT_KEY, result);
+				return model;
+			}			
+			productInfo = productInfoService.getByProductId(uriProductId);
 		}
 
-		ProductInfo productInfo = productInfoService.getByProductId(urlMap.get("id"));
-		// if (productInfo == null) {
-		// result.setCode(ResultCode.RESULT_FAILURE.getCode());
-		// result.setResultDes("商品信息不存在！");
-		// model.addAttribute(SysConst.RESULT_KEY, result);
-		// return model;
-		// }
 		String msg = "";
 		if (productInfo == null) {
 			productInfo = new ProductInfo();
 			CrawlTask crawlTask = new CrawlTask();
-			TaskBean taskBean = crawlTask.getProduct(product_url);
+			TaskBean taskBean = null;
+			//如果是淘宝搜索的参数是商品地址
+			if("taobao".equals(platform)){
+				taskBean = crawlTask.getProduct(product_url);
+			}
+			//如果是京东，搜索的参数是链接中商品ID
+			else if("jd".equals(platform)){
+				taskBean = crawlTask.getProduct(uriProductId);
+			}
 			if (StringUtils.isNotEmpty(taskBean.getMap().get("goodUrl1"))
 					|| StringUtils.isNotEmpty(taskBean.getMap().get("goodUrl2"))) {
 				String goodUrl = StringUtils.isEmpty(taskBean.getMap().get("goodUrl1"))
 						? taskBean.getMap().get("goodUrl2") : taskBean.getMap().get("goodUrl1");
-				String productId = urlMap.get("id");
+				
+				String productId = "";
+				String productInfoUrl = "";
+				if ("taobao".equals(platform)) {
+					productId = urlMap.get("id");
+					productInfoUrl = taskBean.getMap().get("url");
+				} else {
+					productId = uriProductId;
+					productInfoUrl = urlMap.get("puri");
+				}
 				productInfo.setProductId(productId);
+				productInfo.setProductInfoUrl(productInfoUrl);
 				String productImgUrl = taskBean.getMap().get("img");
 				productInfo.setProductImgUrl(productImgUrl);
-				String productInfoUrl = taskBean.getMap().get("url");
-				productInfo.setProductInfoUrl(productInfoUrl);
+				
 				String shopName = taskBean.getMap().get("shop");
 				productInfo.setShopName(shopName);
 				String productName = taskBean.getMap().get("title");
@@ -258,7 +294,7 @@ public class ApiController extends BasicController {
 					sb.append(couponLink);
 					sb.append("')>优惠券</a>");
 				}
-				sb.append("</div><div style='color:red;'>点击图片即可跳回淘宝购物。</div></div></div>");
+				sb.append("</div><div style='color:red;'>点击图片即可跳回淘宝或京东购物。</div></div></div>");
 				msg = sb.toString();
 			} else {
 				return model;
@@ -300,11 +336,11 @@ public class ApiController extends BasicController {
 				sb.append(productInfo.getCouponLink());
 				sb.append("')>优惠券</a>");
 			}
-			sb.append("</div><div style='color:red;'>点击图片即可跳回淘宝购物。</div></div></div>");
+			sb.append("</div><div style='color:red;'>点击图片即可跳回淘宝或京东购物。</div></div></div>");
 			msg = sb.toString();
 		}
-
-		result.setResult(new ProductInfoVo(productInfo.getTkLink(), "领券", productInfo.getCouponLink(), msg));
+        //查询成功
+		result.setResult(new ProductInfoVo(productInfo.getTkLink(), "领券", productInfo.getCouponLink(), msg,"0"));
 		model.addAttribute(SysConst.RESULT_KEY, result);
 		// response.getHeaders().add("Access-Control-Allow-Credentials","true");
 		response.setHeader("Access-Control-Allow-Origin", request.getHeader("origin"));

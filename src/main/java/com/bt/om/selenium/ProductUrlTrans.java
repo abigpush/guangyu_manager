@@ -31,27 +31,30 @@ public class ProductUrlTrans {
 
 	// private static String key = "webdriver.chrome.driver";
 	// private static String value = ".\\conf\\tools\\chromedriver.exe";
-	//private static String key = ConfigUtil.getString("selenium.drive.name");
-	//private static String value = ConfigUtil.getString("selenium.drive.path");
-	private static String key="";
-	private static String value="";
-	static{
-		if("on".equals(ConfigUtil.getString("is_test_evn"))){
+	// private static String key = ConfigUtil.getString("selenium.drive.name");
+	// private static String value =
+	// ConfigUtil.getString("selenium.drive.path");
+	private static String key = "";
+	private static String value = "";
+	static {
+		if ("on".equals(ConfigUtil.getString("is_test_evn"))) {
 			key = "webdriver.chrome.driver";
 			value = ".\\conf\\tools\\chromedriver.exe";
-		}else{
+		} else {
 			key = ConfigUtil.getString("selenium.drive.name");
 			value = ConfigUtil.getString("selenium.drive.path");
 		}
 	}
-	
+
 	private static WebDriver driver;
+	private static WebDriver jdDriver;
 	private static String baseUrl = "https://pub.alimama.com/promo/search/index.htm";
+	private static String jdBaseUrl = "https://media.jd.com/gotoadv/goods";
 
 	private static int sleepTimeBegin = 100;
 	private static int sleepTimeEnd = 500;
 
-	//初始化队列，定义队列长度
+	// 初始化队列，定义队列长度
 	final static DisruptorQueueImpl queue = new DisruptorQueueImpl("name", ProducerType.SINGLE, 256,
 			new BlockingWaitStrategy());
 
@@ -59,13 +62,17 @@ public class ProductUrlTrans {
 		init();
 		schedule();
 		System.setProperty(key, value);
-		if("on".equals(ConfigUtil.getString("is_test_evn"))){
+		if ("on".equals(ConfigUtil.getString("is_test_evn"))) {
 			driver = new ChromeDriver();
-		}else{
-		    driver = new FirefoxDriver();
+			jdDriver = new ChromeDriver();
+		} else {
+			driver = new FirefoxDriver();
+			jdDriver = new FirefoxDriver();
 		}
 		driver.get(baseUrl);
+		jdDriver.get(jdBaseUrl);
 		driver.manage().timeouts().implicitlyWait(1500, TimeUnit.MILLISECONDS);
+		jdDriver.manage().timeouts().implicitlyWait(1500, TimeUnit.MILLISECONDS);
 	}
 
 	public static void init() {
@@ -77,7 +84,14 @@ public class ProductUrlTrans {
 					try {
 						tkInfoTask = (TkInfoTask) queue.take();
 						logger.info("consumer..");
-						getTKUrl(tkInfoTask);
+						// 淘宝通过URl搜索商品
+						if (tkInfoTask.getProductUrl().contains("http")) {
+							getTKUrl(tkInfoTask);
+						}
+						// 京东通过商品ID搜索商品
+						else {
+							getJdTKUrl(tkInfoTask);
+						}
 					} catch (Exception e) {
 						logger.info(e.getMessage());
 						// e.printStackTrace();
@@ -112,19 +126,18 @@ public class ProductUrlTrans {
 		PageUtils.scrollToElementAndPick(element0, driver);
 
 		String productImgUrl = driver.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[1]/a/img"))
-				.getAttribute("src");		
+				.getAttribute("src");
 		String productName = driver.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[1]/p/a/span"))
 				.getText();
 		String price = "0";
 		String sales = "0";
 		String commision = "0";
 		String rate = "0";
-		String shopName="";
-		shopName=driver
-				.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[3]/div[1]/span/a/span"))
+		String shopName = "";
+		shopName = driver.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[3]/div[1]/span/a/span"))
 				.getText();
 		try {
-			//存在优惠券的处理方式
+			// 存在优惠券的处理方式
 			price = driver.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[3]/span[1]/span[2]"))
 					.getText() + "."
 					+ driver.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[3]/span[1]/span[4]"))
@@ -147,7 +160,7 @@ public class ProductUrlTrans {
 							By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[4]/span[1]/span[2]/span[3]"))
 							.getText();
 		} catch (Exception e) {
-			//不存在优惠券的处理方式
+			// 不存在优惠券的处理方式
 			price = driver.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[2]/span[1]/span[2]"))
 					.getText() + "."
 					+ driver.findElement(By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[2]/span[1]/span[4]"))
@@ -168,7 +181,7 @@ public class ProductUrlTrans {
 					+ "."
 					+ driver.findElement(
 							By.xpath("//*[@id='J_search_results']/div/div/div[2]/div[3]/span[1]/span[2]/span[3]"))
-							.getText();			
+							.getText();
 		}
 
 		tkInfoTask.setProductName(productName);
@@ -234,6 +247,104 @@ public class ProductUrlTrans {
 		tkInfoTask.setQuanCode(quancode);
 
 		tkInfoTaskService.insertTkInfoTask(tkInfoTask);
+	}
+
+	private static void getJdTKUrl(TkInfoTask tkInfoTask) throws Exception {
+		jdDriver.findElement(By.id("keyword")).clear();
+		jdDriver.findElement(By.id("keyword")).sendKeys(tkInfoTask.getProductUrl());
+		jdDriver.findElement(By.xpath("//*[@id='b_search']")).click();
+
+		// 点击搜索按钮后sleep
+		Thread.sleep(NumberUtil.getRandomNumber(sleepTimeBegin, sleepTimeEnd));
+
+		// 滚动到图片元素
+		WebElement element0 = jdDriver
+				.findElement(By.xpath("//*[@id='goodsQueryForm']/div[2]/div/div/div/div[2]/ul/li/div[1]/div[1]/a/img"));
+		PageUtils.scrollToElementAndPick(element0, jdDriver);
+
+		// 选择无线，无线佣金比例高
+		jdDriver.findElement(By
+				.xpath("//*[@id='goodsQueryForm']/div[2]/div/div/div/div[2]/ul/li/div[1]/div[2]/div[2]/select/option[2]"))
+				.click();
+
+		String productImgUrl = jdDriver
+				.findElement(By.xpath("//*[@id='goodsQueryForm']/div[2]/div/div/div/div[2]/ul/li/div[1]/div[1]/a/img"))
+				.getAttribute("src");
+		String productName = jdDriver
+				.findElement(By.xpath("//*[@id='goodsQueryForm']/div[2]/div/div/div/div[2]/ul/li/div[1]/div[2]/a"))
+				.getText();
+		String price = "0";
+		String sales = "0";
+		String commision = "0";
+		String rate = "0";
+		String shopName = "";
+		price = jdDriver
+				.findElement(By
+						.xpath("//*[@id='goodsQueryForm']/div[2]/div/div/div/div[2]/ul/li/div[1]/div[2]/div[2]/span[2]/span"))
+				.getText();
+		sales = jdDriver
+				.findElement(By
+						.xpath("//*[@id='goodsQueryForm']/div[2]/div/div/div/div[2]/ul/li/div[1]/div[2]/div[3]/div[5]/em"))
+				.getText();
+		commision = jdDriver
+				.findElement(By
+						.xpath("//*[@id='goodsQueryForm']/div[2]/div/div/div/div[2]/ul/li/div[1]/div[2]/div[3]/div[4]/em"))
+				.getText();
+		rate = jdDriver
+				.findElement(By
+						.xpath("//*[@id='goodsQueryForm']/div[2]/div/div/div/div[2]/ul/li/div[1]/div[2]/div[3]/div[2]/em"))
+				.getText();
+		shopName = jdDriver
+				.findElement(
+						By.xpath("//*[@id='goodsQueryForm']/div[2]/div/div/div/div[2]/ul/li/div[1]/div[2]/div[4]/a"))
+				.getText();
+		price = price.replace("￥", "");
+		commision = commision.replace("￥", "");
+		rate = rate.replace("%", "");
+
+		tkInfoTask.setProductName(productName);
+		tkInfoTask.setProductImgUrl(productImgUrl);
+		tkInfoTask.setPrice(Double.valueOf(price.replace(",", "")));
+		tkInfoTask.setSales(Integer.parseInt(sales));
+		tkInfoTask.setCommision(Double.valueOf(commision));
+		tkInfoTask.setRate(Double.valueOf(rate));
+		tkInfoTask.setShopName(shopName);
+
+		// 点击我要推广按钮
+		WebElement element1 = jdDriver
+				.findElement(By.xpath("//*[@id='goodsQueryForm']/div[2]/div/div/div/div[2]/ul/li/div[2]/a"));
+		PageUtils.scrollToElementAndClick(element1, jdDriver);
+
+		// 点击选择推广类型、推广位名称
+		Thread.sleep(NumberUtil.getRandomNumber(sleepTimeBegin, sleepTimeEnd));
+		jdDriver.findElement(By.xpath("//*[@id='adtTypeDiv']/div[2]/label[4]")).click();
+		jdDriver.findElement(By.xpath("//*[@id='spaceName']/option[2]")).click();
+
+		// 点击获取代码按钮
+		Thread.sleep(NumberUtil.getRandomNumber(sleepTimeBegin, sleepTimeEnd));
+		WebElement element2 = jdDriver.findElement(By.xpath("//*[@id='getcode-btn']"));
+		PageUtils.scrollToElementAndClick(element2, jdDriver);
+
+		Thread.sleep(NumberUtil.getRandomNumber(sleepTimeBegin * 2, sleepTimeEnd * 2));
+		String tkurl = "";
+		try {
+			tkurl = jdDriver.findElement(By.xpath("//*[@id='shotCodeHref']")).getAttribute("value");
+
+			// 点击关闭按钮
+			Thread.sleep(NumberUtil.getRandomNumber(sleepTimeBegin, sleepTimeEnd));
+			WebElement element4 = jdDriver.findElement(By.xpath("//*[@id='getSJBCode']/div/div/div[3]/a[2]"));
+			PageUtils.scrollToElementAndClick(element4, jdDriver);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		tkInfoTask.setTkurl(tkurl);
+		tkInfoTask.setQuanUrl("");
+		tkInfoTask.setTcode("");
+		tkInfoTask.setQuanCode("");
+
+		tkInfoTaskService.insertTkInfoTask(tkInfoTask);
+
 	}
 
 	private static void schedule() {
