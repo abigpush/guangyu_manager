@@ -10,7 +10,7 @@
 									<div class="item-inner">
 										<div class="item-input">
 											<input type="text" class="input_enter"
-												placeholder="请粘贴淘宝或京东复制的商品地址" name="product_url">
+												placeholder="请粘贴从淘宝或京东复制的商品地址" name="product_url">
 										</div>
 									</div>
 								</div>
@@ -150,7 +150,8 @@
 							timeout : 30000,
 							success : function(data) {
 								console.log('请求到的数据为：', data)
-								$('#waiting').remove();
+								//$('#waiting').remove();
+								$('#result').html("");
 								if (JSON.stringify(data) == "{}") {
 									$('#result')
 											.html(
