@@ -1111,7 +1111,7 @@ public class StringUtil {
 		strURL = strURL.trim().toLowerCase();
 		arrSplit = strURL.split("[?]");
 		if (strURL.length() > 1) {
-			if (arrSplit.length > 1) {
+			if (arrSplit.length > 0) {
 				strUri = arrSplit[0];
 			}
 		}
@@ -1151,7 +1151,8 @@ public class StringUtil {
 			}
 		}
 		return mapRequest;
-	}
+	}	
+	
 	
 	/**  
      * 自动生成32位的UUid，对应数据库的主键id进行插入用。  

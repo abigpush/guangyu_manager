@@ -355,6 +355,7 @@ public class ProductUrlTrans {
 				try {
 					logger.info("refresh...");
 					driver.navigate().refresh();
+					jdDriver.navigate().refresh();
 				} catch (Exception e) {
 					logger.error("refresh error:[{}]", e);
 				}
