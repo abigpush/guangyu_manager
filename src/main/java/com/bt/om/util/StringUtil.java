@@ -1099,6 +1099,24 @@ public class StringUtil {
 		}
 		return strAllParam;
 	}
+	/**
+	 * 
+	 * 去掉url后面的参数，留下?号前的地址
+	 * @param strURL
+	 * @return
+	 */
+	public static String getUri(String strURL) {
+		String strUri = null;
+		String[] arrSplit = null;
+		strURL = strURL.trim().toLowerCase();
+		arrSplit = strURL.split("[?]");
+		if (strURL.length() > 1) {
+			if (arrSplit.length > 0) {
+				strUri = arrSplit[0];
+			}
+		}
+		return strUri;
+	}
 
 	/**
 	 * 解析出url参数中的键值对 如 "index.jsp?Action=del&id=123"，解析出Action:del,id:123存入map中
@@ -1112,26 +1130,29 @@ public class StringUtil {
 		Map<String, String> mapRequest = new HashMap<String, String>();
 		String[] arrSplit = null;
 		String strUrlParam = TruncateUrlPage(URL);
-		if (strUrlParam == null) {
-			return mapRequest;
-		}
-		arrSplit = strUrlParam.split("[&]");
-		for (String strSplit : arrSplit) {
-			String[] arrSplitEqual = null;
-			arrSplitEqual = strSplit.split("[=]");
-			// 解析出键值
-			if (arrSplitEqual.length > 1) {
-				// 正确解析
-				mapRequest.put(arrSplitEqual[0], arrSplitEqual[1]);
-			} else {
-				if (arrSplitEqual[0] != "") {
-					// 只有参数没有值，不加入
-					mapRequest.put(arrSplitEqual[0], "");
+		String strUri = getUri(URL);
+		if (strUrlParam != null) {
+			arrSplit = strUrlParam.split("[&]");
+			for (String strSplit : arrSplit) {
+				String[] arrSplitEqual = null;
+				arrSplitEqual = strSplit.split("[=]");
+				// 解析出键值
+				if (arrSplitEqual.length > 1) {
+					// 正确解析
+					mapRequest.put(arrSplitEqual[0], arrSplitEqual[1]);
+				} else {
+					if (arrSplitEqual[0] != "") {
+						// 只有参数没有值，不加入
+						mapRequest.put(arrSplitEqual[0], "");
+					}
 				}
 			}
 		}
+		mapRequest.put("puri", strUri);
+		
 		return mapRequest;
-	}
+	}	
+	
 	
 	/**  
      * 自动生成32位的UUid，对应数据库的主键id进行插入用。  

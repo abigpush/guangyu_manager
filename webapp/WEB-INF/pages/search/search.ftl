@@ -10,7 +10,7 @@
 									<div class="item-inner">
 										<div class="item-input">
 											<input type="text" class="input_enter"
-												placeholder="请粘贴从手机淘宝复制的商品链接地址" name="product_url">
+												placeholder="请粘贴从淘宝或京东复制的商品地址" name="product_url">
 										</div>
 									</div>
 								</div>
@@ -44,8 +44,13 @@
 						<p class='text-center signup'>                               
 								<a href="/order.html"
 								class='pull-left external' style="font-size: 0.8rem;">我要录入订单号</a>
-								<a href="/help.html"
-								class='pull-center external' style="font-size: 0.8rem;color:red">使用帮助</a>
+								<!--
+								<a href="/api/invitation.html"
+								class='pull-center external' style="font-size: 0.8rem;color:red">我要邀请</a>
+								&nbsp;&nbsp;&nbsp;
+								-->
+								<a href="/helptbios.html"
+								class='pull-center external' style="font-size: 0.8rem;color:red">我要帮助</a>
 								<a href="/searchorder.html"
 								class='pull-right external' style="font-size: 0.8rem;">我要提现</a>
 								
@@ -156,11 +161,22 @@
 											.html(
 													"<div id='e-c' align=center><div style='font-size:12px;width:330px;top:10%;left:38%;background:#fff;border-radius:10px;box-shadow:5px 5px 10px #888;'><h2 style='padding:5px;font-size:18px;'>该商品无佣金</h2></div></div>");
 								} else {
-								    if(data.ret.result==null){
-								      alert("链接地址不正确");
+								    if(data.ret.code==101){
+								      alert("系统忙，请重新再试！");
 								    }else{
-									  $('#result').html(data.ret.result.msg);
-									}  
+								    if(data.ret.result.status=="1"){
+								      alert("系统繁忙，请稍后再试");
+								    }
+								    if(data.ret.result.status=="2"){
+								      alert("请输入商品链接地址");
+								    }
+								    if(data.ret.result.status=="3"){
+								      alert("商品链接地址不正确");
+								    }
+								    if(data.ret.result.status=="0"){
+								      $('#result').html(data.ret.result.msg);
+								    }	
+								    }							    
 								}
 								$(".input_enter").val("");
 								//暂时屏蔽掉

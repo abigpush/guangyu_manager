@@ -16,4 +16,5 @@ public interface IUserOrderService {
     
     int getAllListCount(Map<String, Object> searchMap);
     List<Map<String, Object>> getAllList(SearchDataVo vo);
+    public List<UserOrder> findByMobile(String mobile);
 }

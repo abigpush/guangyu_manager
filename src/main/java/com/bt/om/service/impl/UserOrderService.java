@@ -52,4 +52,9 @@ public class UserOrderService implements IUserOrderService {
 	public int getAllListCount(Map<String, Object> searchMap) {
 		return userOrderMapper.getAllListCount(searchMap);
 	}
+	
+	@Override
+	public List<UserOrder> findByMobile(String mobile) {
+		return userOrderMapper.findByMobile(mobile);
+	}
 }

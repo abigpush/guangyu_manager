@@ -54,4 +54,6 @@ public interface UserOrderMapper {
 	int getAllListCount(Map<String, Object> searchMap);
 	
 	List<Map<String, Object>> getAllList(Map<String, Object> searchMap, RowBounds rowBounds);
+	
+	List<UserOrder> findByMobile(String mobile);
 }

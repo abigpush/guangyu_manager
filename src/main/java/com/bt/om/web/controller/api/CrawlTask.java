@@ -3,6 +3,7 @@ package com.bt.om.web.controller.api;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.log4j.Logger;
@@ -18,6 +19,7 @@ public class CrawlTask {
 			+ ConfigUtil.getString("crawl.task.send.url");
 	private static String loadDataUrl = ConfigUtil.getString("crawl.task.send.domain")
 			+ ConfigUtil.getString("crawl.task.fetch.url");
+	// 间隔多长时间，查询爬虫任务是否完成
 	private static int sleepTime = 500;
 	static {
 		if ("on".equals(ConfigUtil.getString("is_test_evn"))) {
@@ -59,7 +61,12 @@ public class CrawlTask {
 
 	public TaskBean getProduct(String url) {
 		String params = sendTask(url);
-
+		if (StringUtils.isEmpty(params)) {
+			TaskBean taskBean = new TaskBean();
+			taskBean.setMsg("");
+			taskBean.setSucc(false);
+			return taskBean;
+		}
 		String productInfo = loadData(params);
 		TaskBeanRet taskBeanRet = GsonUtil.GsonToBean(productInfo, TaskBeanRet.class);
 		int i = 0;

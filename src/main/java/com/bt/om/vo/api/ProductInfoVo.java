@@ -9,12 +9,22 @@ public class ProductInfoVo implements Serializable {
 	private String couponName="";
 	private String couponLink="";
 	private String msg="";
+	private String status="";
 
-	public ProductInfoVo(String shortLinkUrl,String couponName,String couponLink,String msg) {
+	public ProductInfoVo(String shortLinkUrl,String couponName,String couponLink,String msg,String status) {
 		this.shortLinkUrl = shortLinkUrl;
 		this.couponName=couponName;
 		this.couponLink=couponLink;
 		this.msg=msg;
+		this.status=status;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public String getShortLinkUrl() {
