@@ -332,14 +332,14 @@
       <if test="mobile != null and mobile != ''">
         and  LOCATE(#{mobile, jdbcType=VARCHAR}, t1.`mobile`) > 0
       </if>
-     <if test="status1 != null and status1 != ''">
-        AND t1.`status1` = #{status1, jdbcTpye=INTEGER}
+     <if test="orderStatus != null">
+        AND t1.`status1` = #{orderStatus, jdbcType=INTEGER}
       </if>
-      <if test="status2 != null and status2 != ''">
-        AND t1.`status2` = #{status2, jdbcTpye=INTEGER}
+      <if test="putForwardStatus != null">
+        AND t1.`status2` = #{putForwardStatus, jdbcType=INTEGER}
       </if>
-      <if test="status3 != null and status3 != ''">
-        AND t1.`status3` = #{status3, jdbcTpye=INTEGER}
+      <if test="paymentStatus != null">
+        AND t1.`status3` = #{paymentStatus, jdbcType=INTEGER}
       </if>
       <if test="createTime != null and createTime != ''">
         AND DATE_FORMAT(t1.`create_time`,'%Y-%m-%d %T') &gt;=#{createTime, jdbcType=VARCHAR}
@@ -354,38 +354,39 @@
 
   <select id="getAllList" parameterType="map" resultType="map">
     SELECT
+    t1.id,
     t1.`order_id`,
     t1.`mobile`,
     t1.`create_time`,
     t1.`update_time`,
-    IFNULL(t1.`product_info`,''),
-    IFNULL(t1.`price`,''),
-    IFNULL(t1.`rate`,''),
-    IFNULL(t1.`commission1`,''),
-    IFNULL(t1.`commission3`,''),
-    (CASE t1.`status1` WHEN 1 THEN '未审核' WHEN 2 THEN '已审核' WHEN 3 THEN '无效订单'  END),
-    (CASE t1.`status2` WHEN 1 THEN '未提现' WHEN 2 THEN '提现申请中' WHEN 3 THEN '已提现'  END),
-    (CASE t1.`status3` WHEN 1 THEN '未支付' WHEN 2 THEN '已支付' END)
+    IFNULL(t1.`product_info`,'') product_info,
+    IFNULL(t1.`price`,'') price,
+    IFNULL(t1.`rate`,'') rate,
+    IFNULL(t1.`commission1`,'') commission1,
+    IFNULL(t1.`commission3`,'') commission3,
+    (CASE t1.`status1` WHEN 1 THEN '未审核' WHEN 2 THEN '已审核' WHEN 3 THEN '无效订单'  END) status1,
+    (CASE t1.`status2` WHEN 1 THEN '未提现' WHEN 2 THEN '提现申请中' WHEN 3 THEN '已提现'  END) status2,
+    (CASE t1.`status3` WHEN 1 THEN '未支付' WHEN 2 THEN '已支付' END) status3
   FROM
     user_order t1
     <where>
       <if test="mobile != null and mobile != ''">
         and  LOCATE(#{mobile, jdbcType=VARCHAR}, t1.`mobile`) > 0
       </if>
-     <if test="status1 != null and status1 != ''">
-        AND t1.`status1` = #{status1, jdbcTpye=INTEGER}
+     <if test="orderStatus != null">
+        AND t1.`status1` = #{orderStatus, jdbcType=INTEGER}
       </if>
-      <if test="status2 != null and status2 != ''">
-        AND t1.`status2` = #{status2, jdbcTpye=INTEGER}
+      <if test="putForwardStatus != null">
+        AND t1.`status2` = #{putForwardStatus, jdbcType=INTEGER}
       </if>
-      <if test="status3 != null and status3 != ''">
-        AND t1.`status3` = #{status3, jdbcTpye=INTEGER}
-      </if>
-      <if test="createTime != null and createTime != ''">
-        AND DATE_FORMAT(t1.`create_time`,'%Y-%m-%d %T') &gt;=#{createTime, jdbcType=VARCHAR}
+      <if test="paymentStatus != null">
+        AND t1.`status3` = #{paymentStatus, jdbcType=INTEGER}
       </if>
       <if test="createTime != null and createTime != ''">
-        AND DATE_FORMAT(t1.`create_time`,'%Y-%m-%d %T') &lt;=#{createTime, jdbcType=VARCHAR}
+        AND DATE_FORMAT(t1.`create_time`,'%Y/%m/%d %T') &gt;=#{createTime, jdbcType=VARCHAR}
+      </if>
+      <if test="createTime != null and createTime != ''">
+        AND DATE_FORMAT(t1.`create_time`,'%Y/%m/%d %T') &lt;=#{createTime, jdbcType=VARCHAR}
       </if>
     </where>
     ORDER by t1.create_time DESC
