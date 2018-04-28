@@ -1131,25 +1131,25 @@ public class StringUtil {
 		String[] arrSplit = null;
 		String strUrlParam = TruncateUrlPage(URL);
 		String strUri = getUri(URL);
-		if (strUrlParam == null) {
-			return mapRequest;
-		}
-		mapRequest.put("puri", strUri);
-		arrSplit = strUrlParam.split("[&]");
-		for (String strSplit : arrSplit) {
-			String[] arrSplitEqual = null;
-			arrSplitEqual = strSplit.split("[=]");
-			// 解析出键值
-			if (arrSplitEqual.length > 1) {
-				// 正确解析
-				mapRequest.put(arrSplitEqual[0], arrSplitEqual[1]);
-			} else {
-				if (arrSplitEqual[0] != "") {
-					// 只有参数没有值，不加入
-					mapRequest.put(arrSplitEqual[0], "");
+		if (strUrlParam != null) {
+			arrSplit = strUrlParam.split("[&]");
+			for (String strSplit : arrSplit) {
+				String[] arrSplitEqual = null;
+				arrSplitEqual = strSplit.split("[=]");
+				// 解析出键值
+				if (arrSplitEqual.length > 1) {
+					// 正确解析
+					mapRequest.put(arrSplitEqual[0], arrSplitEqual[1]);
+				} else {
+					if (arrSplitEqual[0] != "") {
+						// 只有参数没有值，不加入
+						mapRequest.put(arrSplitEqual[0], "");
+					}
 				}
 			}
 		}
+		mapRequest.put("puri", strUri);
+		
 		return mapRequest;
 	}	
 	
