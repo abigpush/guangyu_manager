@@ -15,13 +15,31 @@ import com.bt.om.web.BasicController;
 @Controller
 public class HelpController extends BasicController {
 
-	//使用帮助
-	@RequestMapping(value = "/help.html", method = RequestMethod.GET)
-	public String help(Model model, HttpServletRequest request) {
-		return "search/help";
+	// 苹果手机使用淘宝帮助
+	@RequestMapping(value = "/helptbios.html", method = RequestMethod.GET)
+	public String helpTbIos(Model model, HttpServletRequest request) {
+		return "search/helptbios";
 	}
-	
-	//提现帮助
+
+	// 安卓手机使用淘宝帮助
+	@RequestMapping(value = "/helptbandroid.html", method = RequestMethod.GET)
+	public String helpTbAndroid(Model model, HttpServletRequest request) {
+		return "search/helptbandroid";
+	}
+
+	// 苹果手机使用京东帮助
+	@RequestMapping(value = "/helpjdios.html", method = RequestMethod.GET)
+	public String helpJdIos(Model model, HttpServletRequest request) {
+		return "search/helpjdios";
+	}
+
+	// 安卓手机使用京东帮助
+	@RequestMapping(value = "/helpjdandroid.html", method = RequestMethod.GET)
+	public String helpJdAndroid(Model model, HttpServletRequest request) {
+		return "search/helpjdandroid";
+	}
+
+	// 提现帮助
 	@RequestMapping(value = "/helpdraw.html", method = RequestMethod.GET)
 	public String helpDraw(Model model, HttpServletRequest request) {
 		return "search/helpdraw";

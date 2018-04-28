@@ -3,6 +3,7 @@ package com.bt.om.web.controller.api;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -30,6 +31,7 @@ import com.bt.om.service.IDrawCashService;
 import com.bt.om.service.IUserOrderService;
 import com.bt.om.util.ConfigUtil;
 import com.bt.om.util.DateUtil;
+import com.bt.om.util.MailUtil;
 import com.bt.om.util.TaobaoSmsUtil;
 import com.bt.om.vo.api.OrderDrawVo;
 import com.bt.om.vo.web.ResultVo;
@@ -177,9 +179,20 @@ public class OrderDrawController extends BasicController {
 		userOrder.setUpdateTime(new Date());
 		userOrderService.updateStatus2(userOrder);
 
-		// 发送短通知有客户申请提现
-		if ("on".equals(ConfigUtil.getString("is.sms.send"))) {
-			TaobaoSmsUtil.sendSms("逛鱼返利", "SMS_133960015", "user", mobile, "13732203065");
+		// 发送短信通知有客户申请提现
+//		if ("on".equals(ConfigUtil.getString("is.sms.send"))) {
+//			TaobaoSmsUtil.sendSms("逛鱼返利", "SMS_133960015", "user", mobile, "13732203065");
+//		}
+
+		// 发送邮件通知有客户申请提现
+		if ("on".equals(ConfigUtil.getString("monitor.email.send.status"))) {
+			List<String> tos = new ArrayList<>();
+			String mailToStr = ConfigUtil.getString("monitor.email.to");
+			String[] mailTos = mailToStr.split(";");
+			for (int i = 0; i < mailTos.length; i++) {
+				tos.add(mailTos[i]);
+			}
+			MailUtil.sendEmail("逛鱼返利", "用户" + mobile + "发起提现申请，请及时处理", tos);
 		}
 
 		result.setResult(new OrderDrawVo(productNums, totalCommission, "0"));// 申请成功
