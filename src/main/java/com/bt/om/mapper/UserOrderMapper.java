@@ -51,7 +51,7 @@ public interface UserOrderMapper {
 	
 	List<UserOrder> selectUnCheckByMobile(UserOrder userOrder);
 	
-	List<Map<String, Object>> getAllListCount(Map<String, Object> searchMap);
+	int getAllListCount(Map<String, Object> searchMap);
 	
 	List<Map<String, Object>> getAllList(Map<String, Object> searchMap, RowBounds rowBounds);
 	
