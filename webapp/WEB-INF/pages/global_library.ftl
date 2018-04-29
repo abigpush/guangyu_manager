@@ -17,6 +17,16 @@
 <@include page="common/top.ftl" />
 </#macro>
 
+<#--插入页头 -->
+<#macro webheadTmp>
+<@include page="templates/common/commonCss.ftl" />
+</#macro>
+
+<#-- -->
+<#macro webendTmp>
+<@include page="templates/common/commonJs.ftl" />
+</#macro>
+
 <#--页面头部公用部分-->
 <#macro webMenu current child>
 <div class="wrapper clearfix">
@@ -72,6 +82,34 @@
 			</div>
 </header>
 <div class="top"></div>
+</#macro>
+
+
+<#--菜单新增-->
+<#macro webMenuTmp>
+             <ul class="sidebar-menu" data-widget="tree">
+            <#local menu = vm.getMenuList() />
+            <#if (menu?exists && menu?size > 0)>
+            <#list menu as res>
+            <li  class=" treeviewactive">
+               <a href="${res.url?if_exists}">
+                   <i class="fa fa-dashboard"></i> <span>${res.text?if_exists}</span>
+                   <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+               </a>
+               <ul class="treeview-menu">
+                   <#if (res.childList?exists && res.childList?size > 0)>
+                       <#list res.childList as l>
+                        <li>
+                            <a href="${l.url?if_exists}">${l.text?if_exists}</a> <i class="fa fa-circle-o"></i>
+                        </li>
+                       </#list>
+                   </#if>
+               </ul>
+           </li>
+           </#list>
+           </#if>
+            </ul>
 </#macro>
 
 <#--插入菜单左边 -->

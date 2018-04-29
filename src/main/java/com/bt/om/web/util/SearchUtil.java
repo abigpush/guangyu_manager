@@ -31,6 +31,19 @@ public class SearchUtil {
     }
 
     /**
+     * 得到搜索类
+     * 
+     * @return
+     */
+    public static SearchDataVo getVoForJqueryTab() {
+        HttpServletRequest request = ServletAttributes.getRequest();
+        return new SearchDataVo(RequestUtil.getParameter(request, "orderField"),
+            RequestUtil.getParameter(request, "orderBy"),
+            RequestUtil.getIntParameter(request, "start", 0),
+            RequestUtil.getIntParameter(request, "length", 20));
+    }
+    
+    /**
      * 把搜索结果放入页面中
      * 
      * @param model

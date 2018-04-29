@@ -341,16 +341,14 @@
       <if test="paymentStatus != null">
         AND t1.`status3` = #{paymentStatus, jdbcType=INTEGER}
       </if>
-      <if test="createTime != null and createTime != ''">
-        AND DATE_FORMAT(t1.`create_time`,'%Y-%m-%d %T') &gt;=#{createTime, jdbcType=VARCHAR}
+      <if test="startDate != null and startDate != ''">
+        AND DATE_FORMAT(t1.`create_time`,'%Y/%m/%d') &gt;=#{startDate, jdbcType=VARCHAR}
       </if>
-      <if test="createTime != null and createTime != ''">
-        AND DATE_FORMAT(t1.`create_time`,'%Y-%m-%d %T') &lt;=#{createTime, jdbcType=VARCHAR}
+      <if test="endDate != null and endDate != ''">
+        AND DATE_FORMAT(t1.`create_time`,'%Y/%m/%d') &lt;=#{endDate, jdbcType=VARCHAR}
       </if>
     </where>
-    ORDER by t1.create_time DESC
   </select>
-
 
   <select id="getAllList" parameterType="map" resultType="map">
     SELECT
@@ -364,9 +362,9 @@
     IFNULL(t1.`rate`,'') rate,
     IFNULL(t1.`commission1`,'') commission1,
     IFNULL(t1.`commission3`,'') commission3,
-    (CASE t1.`status1` WHEN 1 THEN '未审核' WHEN 2 THEN '已审核' WHEN 3 THEN '无效订单'  END) status1,
-    (CASE t1.`status2` WHEN 1 THEN '未提现' WHEN 2 THEN '提现申请中' WHEN 3 THEN '已提现'  END) status2,
-    (CASE t1.`status3` WHEN 1 THEN '未支付' WHEN 2 THEN '已支付' END) status3
+    t1.`status1`,
+    t1.`status2`,
+    t1.`status3`
   FROM
     user_order t1
     <where>
@@ -382,11 +380,11 @@
       <if test="paymentStatus != null">
         AND t1.`status3` = #{paymentStatus, jdbcType=INTEGER}
       </if>
-      <if test="createTime != null and createTime != ''">
-        AND DATE_FORMAT(t1.`create_time`,'%Y/%m/%d %T') &gt;=#{createTime, jdbcType=VARCHAR}
+      <if test="startDate != null and startDate != ''">
+        AND DATE_FORMAT(t1.`create_time`,'%Y/%m/%d') &gt;=#{startDate, jdbcType=VARCHAR}
       </if>
-      <if test="createTime != null and createTime != ''">
-        AND DATE_FORMAT(t1.`create_time`,'%Y/%m/%d %T') &lt;=#{createTime, jdbcType=VARCHAR}
+      <if test="endDate != null and endDate != ''">
+        AND DATE_FORMAT(t1.`create_time`,'%Y/%m/%d') &lt;=#{endDate, jdbcType=VARCHAR}
       </if>
     </where>
     ORDER by t1.create_time DESC
