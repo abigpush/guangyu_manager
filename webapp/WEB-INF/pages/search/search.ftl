@@ -139,7 +139,7 @@
 			//加载中
 			$('#result')
 					.html(
-							"<div id='waiting'><img src='/static/front/timg.gif'></div>");
+							"<div id='waiting'><img src='/static/front/timg.gif'><br/><br/><img width='80%' height='80%' src='/static/front/img/60298-317432.gif'></div>");
 			if (producturl) {
 				$
 						.ajax({
