@@ -57,4 +57,21 @@ public class UserOrderService implements IUserOrderService {
 	public List<UserOrder> findByMobile(String mobile) {
 		return userOrderMapper.findByMobile(mobile);
 	}
+
+	@Override
+	public int updateOrderStatus(Integer id, Integer orderStatus, Integer putForwardStatus, Integer paymentStatus) {
+		UserOrder order = userOrderMapper.selectByPrimaryKey(id);
+		if (order == null) {
+             return 0;			
+		}
+		order.setStatus1(orderStatus);
+		order.setStatus2(putForwardStatus);
+		order.setStatus3(paymentStatus);
+		return userOrderMapper.updateByPrimaryKeySelective(order);
+	}
+
+	@Override
+	public int deleteOrder(Integer id) {
+		return userOrderMapper.deleteByPrimaryKey(id);
+	}
 }
