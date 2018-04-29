@@ -42,4 +42,12 @@ public interface InvitationMapper {
 	int updateByPrimaryKey(Invitation record);
 
 	List<Invitation> findByMobileFriend(Invitation invitation);
+	
+	String haveInvitation(Invitation invitation);
+	
+	List<Invitation> selectInvitationList(Invitation invitation);
+	
+	List<Invitation> selectUnValidInvitationList();
+	
+	
 }

@@ -6,10 +6,10 @@ public class OrderDrawVo implements Serializable {
 
 	private static final long serialVersionUID = 3690982281582596226L;
 	private int productNums;
-	private double money;
+	private String money;
 	private String status;
 
-	public OrderDrawVo(int productNums, double money, String status) {
+	public OrderDrawVo(int productNums, String money, String status) {
 		this.productNums = productNums;
 		this.money = money;
 		this.status = status;
@@ -23,11 +23,11 @@ public class OrderDrawVo implements Serializable {
 		this.productNums = productNums;
 	}
 
-	public double getMoney() {
+	public String getMoney() {
 		return money;
 	}
 
-	public void setMoney(double money) {
+	public void setMoney(String money) {
 		this.money = money;
 	}
 

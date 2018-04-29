@@ -152,6 +152,7 @@
 	    }
 
 		function save(mobile,alipay,vcode,smscode) {
+		        $('#submitlogin').removeAttr('onclick');
 				$
 						.ajax({
 							type : "post",
@@ -175,10 +176,10 @@
 								    $("#vcode").val("");
 								    $("#smscode").val("");
 								    document.getElementById('num').src='/getCode?'+(new Date()).getTime();
-								    $('#result').html("<br/><br/><font color='red'>提现申请成功,提现商品"+data.ret.result.productNums+"件,提现金额"+data.ret.result.money+"元,请注意支付宝查收！</font>");
+								    $('#result').html("<br/><br/><font color='red'>提现申请成功了,提现商品"+data.ret.result.productNums+"件,提现金额"+data.ret.result.money+"元,请注意支付宝查收！</font>");
 								  }								  
 								  if(data.ret.result.status=="5"){
-								    alert("验证码验证失败!");
+								    alert("图形验证码验证失败!");
 								    document.getElementById('num').src='/getCode?'+(new Date()).getTime();
 								  }								  
 								  if(data.ret.result.status=="6"){
@@ -188,8 +189,17 @@
 								  if(data.ret.result.status=="7"){
 								    alert("短信验证码验证失败!");
 								    $("#smscode").val("");
-								  }								  
-								}															
+								  }
+								  if(data.ret.result.status=="8"){
+								    alert("亲，已经没有可提现的订单了，赶紧去看看是否没有录入已完成购买商品的订单号！");
+								    $("#mobile").val("");
+								    $("#alipay").val("");
+								    $("#vcode").val("");
+								    $("#smscode").val("");
+								    document.getElementById('num').src='/getCode?'+(new Date()).getTime();
+								  }
+								}
+								$('#submitlogin').attr('onclick','commit();');
 							},
 							error : function(XMLHttpRequest, textStatus,
 									errorThrown) {

@@ -260,6 +260,8 @@ public class ProductUrlTrans {
 			tkInfoTaskService.insertTkInfoTask(tkInfoTask);
 		} catch (Exception e) {
 			e.printStackTrace();
+			tkInfoTask.setStatus(1);
+			tkInfoTaskService.insertTkInfoTask(tkInfoTask);
 			driver.navigate().refresh();
 			return;
 		}
@@ -364,6 +366,8 @@ public class ProductUrlTrans {
 			tkInfoTaskService.insertTkInfoTask(tkInfoTask);
 		} catch (Exception e) {
 			e.printStackTrace();
+			tkInfoTask.setStatus(1);
+			tkInfoTaskService.insertTkInfoTask(tkInfoTask);
 			jdDriver.navigate().refresh();
 			return;
 		}
