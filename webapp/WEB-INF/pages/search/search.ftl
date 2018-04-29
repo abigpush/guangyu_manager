@@ -55,7 +55,7 @@
 						</p>
 					</div>
 			</form>
-		</div>
+		</div> 
 
 		<div id="result" align="center">
 		  <a href="/api/invitation.html"><img width="90%" height="90%" src="/static/front/img/invitation.png"></a>
