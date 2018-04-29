@@ -287,9 +287,11 @@ public class ApiController extends BasicController {
 						"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div><div style='height: 20px;'><span style='float: left;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价格：￥");
 				sb.append(price);
 				sb.append("</span><span style='float: right;'>预估返现：￥");
-				sb.append(((float) (Math.round(commission * ConfigUtil.getFloat("commission.rate", 1) * 100)) / 100));
+//				sb.append(((float) (Math.round(commission * ConfigUtil.getFloat("commission.rate", 1) * 100)) / 100));
+				sb.append(((float) (Math.round(commission * 1 * 100)) / 100));
 				sb.append("(");
-				sb.append(((float) (Math.round(incomeRate * ConfigUtil.getFloat("commission.rate", 1) * 100)) / 100));
+//				sb.append(((float) (Math.round(incomeRate * ConfigUtil.getFloat("commission.rate", 1) * 100)) / 100));
+				sb.append(((float) (Math.round(incomeRate * 1 * 100)) / 100));
 				sb.append("%)");
 				sb.append(
 						"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div><div id='btn-app'><a href='javascript;' onclick=drump('");
@@ -327,11 +329,15 @@ public class ApiController extends BasicController {
 					"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div><div style='height: 20px;'><span style='float: left;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价格：￥");
 			sb.append(productInfo.getPrice());
 			sb.append("</span><span style='float: right;'>预估返现：￥");
+//			sb.append(
+//					((float) (Math.round(productInfo.getCommission() * ConfigUtil.getFloat("commission.rate", 1) * 100))
+//							/ 100));
 			sb.append(
-					((float) (Math.round(productInfo.getCommission() * ConfigUtil.getFloat("commission.rate", 1) * 100))
+					((float) (Math.round(productInfo.getCommission() * 1 * 100))
 							/ 100));
 			sb.append("(");
-			sb.append(((float) (Math.round(productInfo.getIncomeRate() * ConfigUtil.getFloat("commission.rate", 1) * 100)) / 100));
+//			sb.append(((float) (Math.round(productInfo.getIncomeRate() * ConfigUtil.getFloat("commission.rate", 1) * 100)) / 100));
+			sb.append(((float) (Math.round(productInfo.getIncomeRate() * 1 * 100)) / 100));
 			sb.append("%)");
 			sb.append(
 					"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div><div id='btn-app'><a href='javascript;' onclick=drump('");

@@ -8,4 +8,10 @@ public interface IInvitationService {
 	public void insert(Invitation invitation);
 	
 	public List<Invitation> findByMobileFriend(Invitation invitation);
+	
+	public String haveInvitation(Invitation invitation);
+	
+	public List<Invitation> selectInvitationList(Invitation invitation);
+	
+	public int updateByPrimaryKeySelective(Invitation record);
 }

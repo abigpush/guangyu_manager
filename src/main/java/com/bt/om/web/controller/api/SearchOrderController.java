@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.adtime.common.lang.DateUtil;
 import com.bt.om.common.SysConst;
+import com.bt.om.entity.Invitation;
 import com.bt.om.entity.UserOrder;
 import com.bt.om.enums.ResultCode;
 import com.bt.om.enums.SessionKey;
+import com.bt.om.service.IInvitationService;
 import com.bt.om.service.IUserOrderService;
 import com.bt.om.util.ConfigUtil;
 import com.bt.om.util.StringUtil;
@@ -38,6 +40,8 @@ import com.google.gson.JsonObject;
 public class SearchOrderController extends BasicController {
 	@Autowired
 	private IUserOrderService userOrderService;
+	@Autowired
+	private IInvitationService invitationService;
 
 	@RequestMapping(value = "/searchorder.html", method = RequestMethod.GET)
 	public String search(Model model, HttpServletRequest request) {
@@ -97,6 +101,21 @@ public class SearchOrderController extends BasicController {
 		String canDraw="0";
 		try {
 			List<UserOrder> userOrderList = userOrderService.selectByMobile(mobile);
+			Invitation invitationVo= new Invitation();
+			invitationVo.setInviterMobile(mobile);
+			List<Invitation> invitationList = invitationService.selectInvitationList(invitationVo);
+			int friendNum = 0;
+			int friendNumValid = 0;
+			int reward = 0;
+			if (invitationList != null && invitationList.size() > 0) {
+				for(Invitation invitation:invitationList){
+					if(invitation.getStatus()==2){
+						friendNumValid = friendNumValid + 1;
+					}
+				}
+				friendNum = invitationList.size();
+				reward = 10 * friendNumValid;
+			}
 			StringBuffer sb = new StringBuffer();
 			sb.append("<br/><div class='table'>");
 			if (userOrderList != null && userOrderList.size() > 0) {
@@ -105,17 +124,19 @@ public class SearchOrderController extends BasicController {
 					totalCommission = totalCommission + userOrder.getCommission3();
 				}
 				sb.append("<h2 class='table-caption'>共<font color='red'>" + userOrderList.size()
-						+ "</font>条可提现订单，可提现金额<font color='red'>￥" + ((float) (Math.round(totalCommission * 100)) / 100) + "</font>：</h2>");
+						+ "</font>条可提现订单，可提现金额<font color='red'>￥" + ((float) (Math.round(totalCommission * 100)) / 100) + "</font></h2>");
+				sb.append("<h2 class='table-caption'>共邀请成功<font color='red'>" + friendNum
+				+ "</font>个好友，有效邀请<font color='red'>"+friendNumValid+"</font>个，获得奖励金额<font color='red'>￥" + reward + "</font></h2>");
 				if(totalCommission>0){
 					canDraw="1";
 				}
 			} else {
-				sb.append("<h2 class='table-caption'>无可提现订单或订单处于校验中：</h2>");
+				sb.append("<h2 class='table-caption'>无可提现订单或订单处于校验中</h2>");
 			}
 			sb.append(
 					"<div class='table-column-group'><div class='table-column'></div><div class='table-column'></div><div class='table-column'></div><div class='table-column'></div></div>");
 			sb.append(
-					"<div class='table-header-group'><ul class='table-row'><li class='table-cell' style='font-size: 0.6rem;'>商品</li><li class='table-cell' style='font-size: 0.6rem;'>返利(自己的)</li><li class='table-cell' style='font-size: 0.6rem;'>服务费(给淘宝的)</li><li class='table-cell' style='font-size: 0.6rem;'>创建时间</li></ul></div>");
+					"<div class='table-header-group'><ul class='table-row'><li class='table-cell' style='font-size: 0.6rem;'>商品</li><li class='table-cell' style='font-size: 0.6rem;'>自己的</li><li class='table-cell' style='font-size: 0.6rem;'>给淘宝的</li><li class='table-cell' style='font-size: 0.6rem;'>时间</li></ul></div>");
 			if (userOrderList != null && userOrderList.size() > 0) {
 				sb.append("<div class='table-row-group'>");
 				for (UserOrder userOrder : userOrderList) {

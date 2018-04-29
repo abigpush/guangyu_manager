@@ -49,7 +49,7 @@
 
 		<div id="result" align="center">
 		  <div style="color: red;font-size: 0.7rem;">
-             邀请朋友使用逛鱼搜索，并完成一单购买任务后即可得到5元奖励，奖励会在您申请提现时一起发放
+             邀请朋友使用逛鱼搜索，并完成一单购买任务后即可得到10元奖励，奖励会在您申请提现时一起发放
 		  </div>
 		</div>
 
@@ -100,6 +100,11 @@
             } 	        
 	      }
 	      
+	      if(mobile_me==mobile_friend){
+	        alert("不能自己邀请自己");
+            return;
+	      }
+	      
 	      save(mobile_me,mobile_friend);	      	      	      	      
 	    }
 
@@ -119,16 +124,10 @@
 								console.log('请求到的数据为：', data)
 								if(JSON.stringify(data) != "{}"){								  		  
                                    if(data.ret.result == "3"){
-                                     alert("不能重复邀请好友");
-                                   }
-                                   if(data.ret.result == "4"){
-                                     alert("您的好友已经邀请过您，您不能再次邀请他/她");
-                                   }
-                                   if(data.ret.result == "5"){
-                                     alert("您邀请的好友已经在使用逛鱼搜索了");
-                                   }
+                                     alert("邀请的用户已经在使用逛鱼搜索或已被邀请或已邀请过别人");
+                                   }                               
                                    if(data.ret.result == "0"){
-                                     alert("邀请好友成功，请细心教导好友使用逛鱼搜索，当好友通过逛鱼搜索完成购买任务时，您才可以得到奖励哦！");
+                                     alert("邀请好友成功，请细心帮助好友使用逛鱼搜索，当好友通过逛鱼搜索完成购买任务时，您才可以得到10元奖励哦！");
                                    }
 								}				
 							},

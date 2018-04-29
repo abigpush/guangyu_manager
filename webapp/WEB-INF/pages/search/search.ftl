@@ -44,11 +44,9 @@
 						<p class='text-center signup'>                               
 								<a href="/order.html"
 								class='pull-left external' style="font-size: 0.8rem;">我要录入订单号</a>
-								<!--
 								<a href="/api/invitation.html"
-								class='pull-center external' style="font-size: 0.8rem;color:red">我要邀请</a>
+								class='pull-center external' style="font-size: 0.8rem;color:red">邀请好友</a>
 								&nbsp;&nbsp;&nbsp;
-								-->
 								<a href="/helptbios.html"
 								class='pull-center external' style="font-size: 0.8rem;color:red">我要帮助</a>
 								<a href="/searchorder.html"

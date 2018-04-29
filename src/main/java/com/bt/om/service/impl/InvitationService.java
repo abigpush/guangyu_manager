@@ -23,4 +23,19 @@ public class InvitationService implements IInvitationService {
 	public List<Invitation> findByMobileFriend(Invitation invitation) {
 		return invitationMapper.findByMobileFriend(invitation);
 	}
+	
+	@Override
+	public String haveInvitation(Invitation invitation) {
+		return invitationMapper.haveInvitation(invitation);
+	}
+	
+	@Override
+	public List<Invitation> selectInvitationList(Invitation invitation) {
+		return invitationMapper.selectInvitationList(invitation);
+	}
+	
+	@Override
+	public int updateByPrimaryKeySelective(Invitation record){
+		return invitationMapper.updateByPrimaryKeySelective(record);
+	}
 }
