@@ -154,7 +154,7 @@
 							timeout : 30000, 
 							success : function(data) {
 								console.log('请求到的数据为：', data)
-								$('#waiting').remove();
+								$('#waiting').remove(); 
 								if (JSON.stringify(data) == "{}") {
 									$('#result')
 											.html(
