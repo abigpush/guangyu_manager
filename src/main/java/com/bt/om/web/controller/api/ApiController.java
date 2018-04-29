@@ -179,6 +179,12 @@ public class ApiController extends BasicController {
 			platform = "taobao";
 		} else if (urlMap.get("puri").contains("jd.com")) {
 			platform = "jd";
+		}else{
+			result.setCode(ResultCode.RESULT_FAILURE.getCode());
+			result.setResultDes("不支持的URL地址！");
+			result.setResult(new ProductInfoVo("","","","","4"));
+			model.addAttribute(SysConst.RESULT_KEY, result);
+			return model;
 		}
         
 		ProductInfo productInfo = null;
@@ -423,8 +429,11 @@ public class ApiController extends BasicController {
 				for (ProductInfo productInfo : productInfoList) {
 					if (productId.equals(productInfo.getProductId())) {
 						logger.info("实际佣金=" + productInfo.getCommission());
+//						commissionList.add(((float) (Math
+//								.round(productInfo.getCommission() * ConfigUtil.getFloat("commission.rate", 1) * 100))
+//								/ 100));
 						commissionList.add(((float) (Math
-								.round(productInfo.getCommission() * ConfigUtil.getFloat("commission.rate", 1) * 100))
+								.round(productInfo.getCommission() * 1 * 100))
 								/ 100));
 						break;
 					} else {

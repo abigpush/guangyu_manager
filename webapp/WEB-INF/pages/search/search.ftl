@@ -45,7 +45,7 @@
 								<a href="/order.html"
 								class='pull-left external' style="font-size: 0.8rem;">我要录入订单号</a>
 								<a href="/api/invitation.html"
-								class='pull-center external' style="font-size: 0.8rem;color:red">邀请好友</a>
+								class='pull-center external' style="font-size: 0.8rem;color:red">拿奖励</a>
 								&nbsp;&nbsp;&nbsp;
 								<a href="/helptbios.html"
 								class='pull-center external' style="font-size: 0.8rem;color:red">我要帮助</a>
@@ -58,6 +58,7 @@
 		</div>
 
 		<div id="result" align="center">
+		  <a href="/api/invitation.html"><img width="90%" height="90%" src="/static/front/img/invitation.png"></a>
 		  <br/><font style="color: red;">【花钱也能赚钱、让逛鱼带你飞】</font>
 		  <br/><font style="font-size: 0.6rem;color: red;">保存书签：请用手机浏览器打开本页面，请勿在微信中打开</font>
 		  <br/><img width="90%" src="/static/front/bookmark.png">
@@ -160,20 +161,25 @@
 													"<div id='e-c' align=center><div style='font-size:12px;width:330px;top:10%;left:38%;background:#fff;border-radius:10px;box-shadow:5px 5px 10px #888;'><h2 style='padding:5px;font-size:18px;'>该商品无佣金</h2></div></div>");
 								} else {
 								    if(data.ret.code==101){
-								      alert("系统忙，请重新再试！");
-								    }else{
-								    if(data.ret.result.status=="1"){
-								      alert("系统繁忙，请稍后再试");
-								    }
-								    if(data.ret.result.status=="2"){
-								      alert("请输入商品链接地址");
-								    }
-								    if(data.ret.result.status=="3"){
-								      alert("商品链接地址不正确");
-								    }
-								    if(data.ret.result.status=="0"){
-								      $('#result').html(data.ret.result.msg);
-								    }	
+								      if(data.ret.result.status=="4"){
+								        alert("系统只支持手机淘宝、京东的商品地址");
+								      }
+								      else if(data.ret.result.status=="1"){
+								        alert("系统繁忙，请稍后再试");
+								      }
+								      else if(data.ret.result.status=="2"){
+								        alert("请输入商品链接地址");
+								      }
+								      else if(data.ret.result.status=="3"){
+								        alert("商品链接地址不正确");
+								      }
+								      else{
+								        alert("系统忙，请重新再试！");
+								      }								      
+								    }else{								     
+								      if(data.ret.result.status=="0"){
+								        $('#result').html(data.ret.result.msg);
+								      }
 								    }							    
 								}
 								$(".input_enter").val("");
