@@ -151,7 +151,7 @@
 								"user_id" : "",
 								"product_url" : producturl
 							}),
-							timeout : 30000,
+							timeout : 30000, 
 							success : function(data) {
 								console.log('请求到的数据为：', data)
 								$('#waiting').remove();
