@@ -124,15 +124,15 @@ public class SearchOrderController extends BasicController {
 					totalCommission = totalCommission + userOrder.getCommission3();
 				}
 				sb.append("<h2 class='table-caption'>共<font color='red'>" + userOrderList.size()
-						+ "</font>条可提现订单，可提现金额<font color='red'>￥" + ((float) (Math.round(totalCommission * 100)) / 100) + "</font></h2>");
-				sb.append("<h2 class='table-caption'>共邀请成功<font color='red'>" + friendNum
-				+ "</font>个好友，有效邀请<font color='red'>"+friendNumValid+"</font>个，获得奖励金额<font color='red'>￥" + reward + "</font></h2>");
+						+ "</font>条可提现订单，可提现金额<font color='red'>￥" + ((float) (Math.round(totalCommission * 100)) / 100) + "</font></h2>");				
 				if(totalCommission>0){
 					canDraw="1";
 				}
 			} else {
 				sb.append("<h2 class='table-caption'>无可提现订单或订单处于校验中</h2>");
 			}
+			sb.append("<h2 class='table-caption'>共邀请成功<font color='red'>" + friendNum
+					+ "</font>个好友，有效邀请<font color='red'>"+friendNumValid+"</font>个，获得奖励金额<font color='red'>￥" + reward + "</font></h2>");
 			sb.append(
 					"<div class='table-column-group'><div class='table-column'></div><div class='table-column'></div><div class='table-column'></div><div class='table-column'></div></div>");
 			sb.append(

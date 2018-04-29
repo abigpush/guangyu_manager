@@ -46,4 +46,8 @@ public interface InvitationMapper {
 	String haveInvitation(Invitation invitation);
 	
 	List<Invitation> selectInvitationList(Invitation invitation);
+	
+	List<Invitation> selectUnValidInvitationList();
+	
+	
 }

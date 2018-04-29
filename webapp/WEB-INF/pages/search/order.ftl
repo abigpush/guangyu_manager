@@ -66,7 +66,7 @@
 		</div>
 
 		<div id="result" align="center">
-		  <font style="font-size: 0.8rem;color:red">提示：在淘宝完成交易后，为了不影响您的提现，请您尽快录入订单号</font><br/><br/>
+		  <font style="font-size: 0.8rem;color:red">提示：在淘宝或京东完成交易后，为了不影响<br/>您的提现，请您尽快录入订单号</font><br/><br/>
 		  <font style="font-size: 0.8rem;color:red">寻找订单号方法如下图所示</font><br/>
 		  <img width="90%" src="/static/front/getorderid.png">
 		</div>

@@ -14,4 +14,8 @@ public interface IInvitationService {
 	public List<Invitation> selectInvitationList(Invitation invitation);
 	
 	public int updateByPrimaryKeySelective(Invitation record);
+	
+	public List<Invitation> selectUnValidInvitationList();
+	
+	public int updateByPrimaryKey(Invitation record);
 }

@@ -38,4 +38,13 @@ public class InvitationService implements IInvitationService {
 	public int updateByPrimaryKeySelective(Invitation record){
 		return invitationMapper.updateByPrimaryKeySelective(record);
 	}
+	
+	@Override
+	public List<Invitation> selectUnValidInvitationList() {
+		return invitationMapper.selectUnValidInvitationList();
+	}
+	
+	public int updateByPrimaryKey(Invitation record){
+		return invitationMapper.updateByPrimaryKey(record);
+	}
 }

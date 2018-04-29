@@ -48,7 +48,7 @@
 								class='pull-center external' style="font-size: 0.8rem;color:red">拿奖励</a>
 								&nbsp;&nbsp;&nbsp;
 								<a href="/helptbios.html"
-								class='pull-center external' style="font-size: 0.8rem;color:red">我要帮助</a>
+								class='pull-center external' style="font-size: 0.8rem;color:red">操作指南</a>
 								<a href="/searchorder.html"
 								class='pull-right external' style="font-size: 0.8rem;">我要提现</a>
 								
@@ -197,5 +197,6 @@
 				alert("请输入商品地址后再查询");
 			}
 		}
+		
 	</script>
 <@model.webendsearch />
