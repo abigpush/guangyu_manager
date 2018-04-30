@@ -75,11 +75,17 @@
 	<script>	    	    
 		function drump(link) {
 			//location.href=link;
+		  if(isContains(link,"taobao.com")){
 			if(isWeiXin()){
 			  alert("您正在用微信打开淘宝商品页，因为微信封杀淘宝链接，所以不能直接打开，建议您在手机浏览器中打开本网址，并保存成书签。");
 			}
+		  }
 			window.open(link);
 		}
+		
+		function isContains(str, substr) {
+         return str.indexOf(substr) >= 0;
+        }
 		
 		//判断是否是微信浏览器的函数
         function isWeiXin(){
