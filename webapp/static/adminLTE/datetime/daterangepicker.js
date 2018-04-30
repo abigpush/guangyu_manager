@@ -1127,6 +1127,8 @@
                 target.closest('.calendar-table').length
                 ) return;
             this.hide();
+            this.element.val('');
+            this.element.trigger('hide.daterangepicker', this);
         },
 
         showCalendars: function() {

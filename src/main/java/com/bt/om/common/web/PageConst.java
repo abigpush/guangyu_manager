@@ -49,5 +49,8 @@ public class PageConst {
 	
 	/***订单管理***/
 	public static final String ORDER_LIST = "templates/order/list";
+	
+	/***返现管理***/
+	public static final String DRAW_CACHE_LIST = "templates/order/draw_list";
 
 }
