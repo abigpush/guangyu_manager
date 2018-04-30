@@ -78,9 +78,12 @@
 		  if(isContains(link,"taobao.com")){
 			if(isWeiXin()){
 			  alert("您正在用微信打开淘宝商品页，因为微信封杀淘宝链接，所以不能直接打开，建议您在手机浏览器中打开本网址，并保存成书签。");
+			}else{
+			  window.open(link);
 			}
-		  }
-			window.open(link);
+		  }else{
+		    window.open(link);
+		  }		
 		}
 		
 		function isContains(str, substr) {
