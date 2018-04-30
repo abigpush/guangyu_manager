@@ -75,8 +75,23 @@
 	<script>	    	    
 		function drump(link) {
 			//location.href=link;
+			if(isWeiXin()){
+			  alert("您正在用微信打开淘宝商品页，因为微信封杀淘宝链接，所以不能直接打开，建议您在手机浏览器中打开本网址，并保存成书签。");
+			}
 			window.open(link);
 		}
+		
+		//判断是否是微信浏览器的函数
+        function isWeiXin(){
+          //window.navigator.userAgent属性包含了浏览器类型、版本、操作系统类型、浏览器引擎类型等信息，这个属性可以用来判断浏览器类型
+          var ua = window.navigator.userAgent.toLowerCase();
+          //通过正则表达式匹配ua中是否含有MicroMessenger字符串
+          if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+            return true;
+          }else{
+            return false;
+          }
+        }
 		
 		function vcodevalid() {
 			var vcode = $('#vcode').val();
