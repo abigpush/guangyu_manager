@@ -10,11 +10,11 @@
 									<div class="item-inner">
 										<div class="item-input">
 											<input type="text" class="input_enter"
-												placeholder="请粘贴从淘宝或京东复制的商品地址" name="product_url">
-										</div>
+												placeholder="请粘贴从淘宝或京东复制的商品地址" name="product_url">											
+										</div>										
 									</div>
 								</div>
-							</li>
+							</li>							
 							<!-- 暂时屏蔽掉
 							<li>
 								<div class="item-content">
@@ -58,17 +58,21 @@
 		</div> 
 
 		<div id="result" align="center">
-		  <a href="/api/invitation.html"><img width="90%" height="90%" src="/static/front/img/invitation.png"></a>
+		  <a href="/api/invitation.html"><img id="search" width="90%" height="90%" src="http://help.guangfish.com/imgs/invitation.png"></a>
 		  <br/><font style="color: red;">【花钱也能赚钱、让逛鱼带你飞】</font>
+		  <br/><font style="font-size: 0.6rem;color: red;">往下拉查看书签保存、商品链接复制</font>
 		  <br/><font style="font-size: 0.6rem;color: red;">保存书签：请用手机浏览器打开本页面，请勿在微信中打开</font>
-		  <br/><img width="90%" src="/static/front/bookmark.png">
+		  <br/><img width="90%" src="http://help.guangfish.com/imgs/bookmark.png">
+		  <br/><img width="90%" src="http://help.guangfish.com/imgs/ios-taobao-jd.png">
+		  <br/><img width="90%" src="http://help.guangfish.com/imgs/andorid-taobao.png">
+		  <br/><img width="90%" src="http://help.guangfish.com/imgs/wx.png">
 		</div>	
 
 	</div>
 
 	<script type='text/javascript' src='/static/front/js/jquery.min.js' charset='utf-8'></script>
 	<script type='text/javascript' src='/static/front/js/light7.js' charset='utf-8'></script>
-	<script>
+	<script>	    	    
 		function drump(link) {
 			//location.href=link;
 			window.open(link);
@@ -136,10 +140,11 @@
 		      //}
 			}
             $('#submitlogin').removeAttr('onclick');
-			//加载中
+			//加载中						
 			$('#result')
 					.html(
-							"<div id='waiting'><img src='/static/front/timg.gif'><br/><br/><img width='80%' src='/static/front/img/60298-317432.gif'></div>");
+							"<div id='waiting'><img src='http://help.guangfish.com/imgs/timg.gif'><br/><br/><img width='80%' src='http://help.guangfish.com/imgs/search0"+Math.ceil(Math.random()*5)+".gif'></div>");			
+			
 			if (producturl) {
 				$
 						.ajax({

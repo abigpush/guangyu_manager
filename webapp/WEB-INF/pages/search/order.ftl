@@ -10,7 +10,7 @@
 									<div class="item-inner">
 										<div class="item-input">
 											<input id="orderid" maxlength="18" type="text" class="input_enter"
-												placeholder="请粘贴从手机淘宝复制的商品订单号" name="order_id">
+												placeholder="请粘贴从淘宝或京东复制的商品订单号" name="order_id">
 										</div>
 									</div>
 								</div>
@@ -66,9 +66,9 @@
 		</div>
 
 		<div id="result" align="center">
-		  <font style="font-size: 0.8rem;color:red">提示：在淘宝或京东完成交易后，为了不影响<br/>您的提现，请您尽快录入订单号</font><br/><br/>
-		  <font style="font-size: 0.8rem;color:red">寻找订单号方法如下图所示</font><br/>
-		  <img width="90%" src="/static/front/getorderid.png">
+		  <font style="font-size: 0.7rem;color:red">提示：在淘宝或京东完成交易后，为了不影响<br/>您的提现，请您尽快录入订单号</font><br/><br/>
+		  <font style="font-size: 0.7rem;color:red">寻找订单号方法如下图所示</font><br/>
+		  <img width="90%" src="http://help.guangfish.com/imgs/getorderid.png">
 		</div>
 
 	</div>
