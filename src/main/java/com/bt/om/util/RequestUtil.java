@@ -359,4 +359,31 @@ public class RequestUtil {
         }
         return date;
     }
+    
+    /**
+     * 分页工具，获取起始页
+     * @param req
+     * @return
+     */
+    public static int getOffset(HttpServletRequest req) {
+        String start = req.getParameter("start");
+        if (start != null) {
+            return Integer.parseInt(start);
+        }
+        return 0;
+    }
+
+    /**
+     * 分页工具，获取每页条数
+     * @param req
+     * @return
+     */
+    public static int getPageSize(HttpServletRequest req) {
+        String length = req.getParameter("length");
+        if (length != null) {
+            return Integer.parseInt(length);
+        }
+        return PAG_LIMIT;
+    }
+    public static final int PAG_LIMIT = 10;
 }

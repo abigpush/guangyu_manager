@@ -17,7 +17,7 @@ public class PageConst {
 	public static final String LOGIN_PAGE = "root/login";
 
 	/** 首页 ***/
-	public static final String INDEX_PAGE = "root/index";
+	public static final String INDEX_PAGE = "templates/index";
 
 	/** 修改密码 ***/
 	public static final String INDEX_PASSWD = "root/passwd";
@@ -47,8 +47,10 @@ public class PageConst {
 	/***资源管理***/
 	public static final String RESOURCE_ADD = "resource/add_ad_seat";
 	
-	
 	/***订单管理***/
-	public static final String ORDER_LIST = "order/list";
+	public static final String ORDER_LIST = "templates/order/list";
+	
+	/***返现管理***/
+	public static final String DRAW_CACHE_LIST = "templates/order/draw_list";
 
 }

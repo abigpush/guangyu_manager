@@ -178,4 +178,107 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+
+  <select id="getDrawListCount" parameterType="map" resultType="int">
+    SELECT
+     COUNT(1)
+    FROM
+      draw_cash t
+    <where>
+        <if test="mobile != null and mobile !=''">
+          AND LOCATE(#{mobile, jdbcType=VARCHAR}, t.`mobile`) > 0
+        </if>
+        <if test="applyTimeStart != null and applyTimeStart !=''">
+          AND  DATE_FORMAT(t.`create_time`, '%Y/%m/%d') &gt;= #{applyTimeStart, jdbcType=VARCHAR}
+        </if>
+        <if test="applyTimeEnd != null and applyTimeEnd !=''">
+          AND  DATE_FORMAT(t.`create_time`, '%Y/%m/%d') &lt;= #{applyTimeEnd, jdbcType=VARCHAR}
+        </if>
+        <if test="payTimeStart != null and payTimeStart !=''">
+          AND  DATE_FORMAT(t.`pay_time`, '%Y/%m/%d') &gt;= #{payTimeStart, jdbcType=VARCHAR}
+        </if>
+        <if test="payTimeEnd != null and payTimeEnd !=''">
+          AND  DATE_FORMAT(t.`pay_time`, '%Y/%m/%d') &lt;= #{payTimeEnd, jdbcType=VARCHAR}
+        </if>
+        <if test="alipayAccount != null and alipayAccount !=''">
+          AND LOCATE(#{alipayAccount, jdbcType=VARCHAR}, t.`alipay_account`) > 0
+        </if>
+        <if test="status != null and status !=''">
+          AND t.status = #{status, jdbcType=VARCHAR}
+        </if>
+    </where>
+  </select>
+
+  <select id="getDrawList" parameterType="map" resultMap="BaseResultMap">
+    SELECT
+      t.*
+    FROM
+      draw_cash t
+    <where>
+        <if test="mobile != null and mobile !=''">
+          AND LOCATE(#{mobile, jdbcType=VARCHAR}, t.`mobile`) > 0
+        </if>
+        <if test="applyTimeStart != null and applyTimeStart !=''">
+          AND  DATE_FORMAT(t.`create_time`, '%Y/%m/%d') &gt;= #{applyTimeStart, jdbcType=VARCHAR}
+        </if>
+        <if test="applyTimeEnd != null and applyTimeEnd !=''">
+          AND  DATE_FORMAT(t.`create_time`, '%Y/%m/%d') &lt;= #{applyTimeEnd, jdbcType=VARCHAR}
+        </if>
+        <if test="payTimeStart != null and payTimeStart !=''">
+          AND  DATE_FORMAT(t.`pay_time`, '%Y/%m/%d') &gt;= #{payTimeStart, jdbcType=VARCHAR}
+        </if>
+        <if test="payTimeEnd != null and payTimeEnd !=''">
+          AND  DATE_FORMAT(t.`pay_time`, '%Y/%m/%d') &lt;= #{payTimeEnd, jdbcType=VARCHAR}
+        </if>
+        <if test="alipayAccount != null and alipayAccount !=''">
+          AND LOCATE(#{alipayAccount, jdbcType=VARCHAR}, t.`alipay_account`) > 0
+        </if>
+        <if test="status != null and status !=''">
+          AND t.status = #{status, jdbcType=VARCHAR}
+        </if>
+    </where>
+    ORDER BY t.create_time  DESC
+  </select>
+
+  <select id="getUserOrderCountByDrawId" parameterType="map" resultType="int">
+    SELECT
+      COUNT(1)
+    FROM
+      user_order t1
+      INNER JOIN draw_cash_order t2
+        ON t1.`order_id` = t2.`order_id`
+      INNER JOIN draw_cash t3
+        ON t2.`draw_cach_id` = t3.`id`
+    WHERE t3.`id` = #{id, jdbcType=INTEGER}
+  </select>
+
+  <select id="getUserOrderByDrawId" parameterType="map" resultType="map">
+    SELECT
+      t1.*
+    FROM
+      user_order t1
+      INNER JOIN draw_cash_order t2
+        ON t1.`order_id` = t2.`order_id`
+      INNER JOIN draw_cash t3
+        ON t2.`draw_cach_id` = t3.`id`
+    WHERE t3.`id` = #{id, jdbcType=INTEGER}
+  </select>
+
+
+  <update id="updateUserOrderStatus2AndStatus3" parameterType="map">
+    UPDATE
+      user_order t1
+    SET
+      t1.`status2` = 3,
+      t1.`status3` = 2
+    WHERE t1.`order_id` IN
+      (SELECT
+        t3.`order_id`
+      FROM
+        draw_cash t2
+        INNER JOIN draw_cash_order t3
+          ON t2.`id` = t3.`draw_cach_id`
+      WHERE t2.id = #{id, jdbcType=INTEGER})
+  </update>
 </mapper>

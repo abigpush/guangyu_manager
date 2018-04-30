@@ -17,4 +17,8 @@ public interface IUserOrderService {
     int getAllListCount(Map<String, Object> searchMap);
     List<Map<String, Object>> getAllList(SearchDataVo vo);
     public List<UserOrder> findByMobile(String mobile);
+    
+    public int updateOrderStatus(Integer id, Integer orderStatus, Integer putForwardStatus, Integer paymentStatus);
+    
+    int deleteOrder(Integer id);
 }
