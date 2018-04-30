@@ -1,6 +1,13 @@
 package com.bt.om.mapper;
 
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.session.RowBounds;
+
 import com.bt.om.entity.DrawCash;
+import com.bt.om.entity.UserOrder;
 
 public interface DrawCashMapper {
 
@@ -39,4 +46,14 @@ public interface DrawCashMapper {
 	 * @mbg.generated  Sun Apr 29 11:11:54 CST 2018
 	 */
 	int updateByPrimaryKey(DrawCash record);
+	
+	int getDrawListCount(Map<String, Object> searchMap);
+	
+	List<DrawCash> getDrawList(Map<String, Object> searchMap, RowBounds rowBounds);
+	
+	int getUserOrderCountByDrawId(@Param("id") Integer id);
+	
+	List<Map<String,Object>> getUserOrderByDrawId(@Param("id") Integer id, RowBounds rowBounds);
+	
+	int updateUserOrderStatus2AndStatus3(@Param("id") Integer id);
 }

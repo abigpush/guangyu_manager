@@ -285,12 +285,12 @@ $('#reservationtime').val("");
             }
           }
     	 if(rowData!=null){
-            $("#adminForm input[name='id']").val(rowData.id);
-    		$("#adminForm input[name='orderStatus'][value=" +rowData.status1 +"]").attr("checked",true);
- 			$("#adminForm input[name='putForwardStatus'][value=" +rowData.status2 +"]").attr("checked",true);
-            $("#adminForm input[name='paymentStatus'][value=" +rowData.status3 +"]").attr("checked",true);
- 			$('#myModal').modal('show');
- 		}
+          $("#adminForm input[name='id']").val(rowData.id);
+          $("#adminForm input[name='orderStatus'][value=" +rowData.status1 +"]").attr("checked",true);
+          $("#adminForm input[name='putForwardStatus'][value=" +rowData.status2 +"]").attr("checked",true);
+          $("#adminForm input[name='paymentStatus'][value=" +rowData.status3 +"]").attr("checked",true);
+          $('#myModal').modal('show');
+ 		  }
      }
 
      function save(){
@@ -338,7 +338,6 @@ $('#reservationtime').val("");
               dt.ajax.reload(null,true);
           }
         });
-
     };
 	
     function getMyDate(str){

@@ -22,7 +22,7 @@
                </a>
                <ul class="treeview-menu">
                    <li><a href="/order/list"><i class="fa fa-circle-o"></i>订单查询</a></li>
-                   <li><a href="/order/reward"><i class="fa fa-circle-o"></i> 返现管理</a></li>
+                   <li><a href="/drawcache/list"><i class="fa fa-circle-o"></i> 返现管理</a></li>
                </ul>
            </li>
            
