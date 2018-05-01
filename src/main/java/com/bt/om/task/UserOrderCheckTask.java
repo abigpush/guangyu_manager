@@ -36,7 +36,7 @@ public class UserOrderCheckTask {
 				TkOrderInput tkOrderInput = tkOrderInputService.selectByOrderId(userOrder1.getOrderId());
 				if (tkOrderInput != null) {
 					logger.info("更新用户订单"+userOrder1.getOrderId()+"信息");
-					userOrder1.setPrice(tkOrderInput.getPrice());
+					userOrder1.setPrice(tkOrderInput.getPayMoney());
 					userOrder1.setRate(tkOrderInput.getCommissionRate());
 					userOrder1.setShopName(tkOrderInput.getShopName());
 					userOrder1.setProductInfo(tkOrderInput.getProductInfo());
