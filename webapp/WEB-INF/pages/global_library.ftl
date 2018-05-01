@@ -24,7 +24,7 @@
 
 <#-- -->
 <#macro webendTmp>
-<@include page="templates/common/commonJs.ftl" />
+<@include page="templates/common/commonJS.ftl" />
 </#macro>
 
 <#--页面头部公用部分-->
