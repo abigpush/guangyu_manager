@@ -19,7 +19,5 @@ public interface IDrawCashService {
 	
 	int deleteByPrimaryKey(Integer id);
 	
-	int updateUserOrderStatus2AndStatus3(Integer id);
-	
 	void confimPayment(Integer id) throws Exception;
 }

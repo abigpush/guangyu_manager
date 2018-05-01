@@ -19,7 +19,7 @@
 
     <!-- Main content -->
     <section class="content container-fluid">
-      <div class="row">
+      <div class="row pre-scrollable">
       
         <div class="col-md-12">
           <div class="box">
@@ -85,9 +85,9 @@
             </form>
             <hr>
             <br> <br>
-            <div class="table-responsive">
-              <table class="table table-striped table-bordered table-hover table-condensed" id="orderList">
-              </table>
+              <div class="table-responsive">
+               <table class="table table-striped table-bordered table-hover table-condensed" id="orderList">
+               </table>
               </div>
             </div>
           </div>
@@ -235,7 +235,9 @@ $('#reservationtime').val("");
 		            { title: "更新时间",render:function(d,t,r){
                        return getMyDate(r.update_time);
                     }},
-		            { title: "商品名称",data:'product_info' },
+		            { title: "商品名称",render:function(d,t,r){
+                  return '<div title="' +r.product_info+ '" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:200px;"> ' +r.product_info+ ' </div>';
+                }},
 		            { title: "商品价格",data:'price' },
 		            { title: "返现比例",data:'rate' },
 		            { title: "真实佣金",data:'commission1' },
@@ -315,7 +317,7 @@ $('#reservationtime').val("");
         });
      }
      
-     <#--  function deleteOrder(id) {
+     function deleteOrder(id) {
          var url = "/delete/order";
          var type = "是否删除？";
          fangs.confirm({
@@ -326,19 +328,7 @@ $('#reservationtime').val("");
                 });
             }
          });
-     }  -->
-
-    function deleteOrder(id) {
-        $.ajax({
-          url:"/delete/order",
-          type:"get",
-          dataType:"json",
-          data:{"id":id},
-          success:function(data){
-              dt.ajax.reload(null,true);
-          }
-        });
-    };
+     }
 	
     function getMyDate(str){
          var oDate = new Date(str),
