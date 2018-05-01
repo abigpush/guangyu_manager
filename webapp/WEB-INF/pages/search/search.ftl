@@ -60,8 +60,8 @@
 		<div id="result" align="center">
 		  <a href="/api/invitation.html"><img id="search" width="90%" height="90%" src="http://help.guangfish.com/imgs/invitation.png"></a>
 		  <br/><font style="color: red;">【花钱也能赚钱、让逛鱼带你飞】</font>
-		  <br/><font style="font-size: 0.6rem;color: red;">往下拉查看书签保存、商品链接复制</font>
-		  <br/><font style="font-size: 0.6rem;color: red;">保存书签：请用手机浏览器打开本页面，请勿在微信中打开</font>
+		  <br/><font style="font-size: 0.6rem;color: red;">往下拉查看保存书签、商品链接复制</font>
+		  <br/><font style="font-size: 0.6rem;color: red;">保存书签：请在手机浏览器打开本页面，并保存成书签</font>
 		  <br/><img width="90%" src="http://help.guangfish.com/imgs/bookmark.png">
 		  <br/><img width="90%" src="http://help.guangfish.com/imgs/ios-taobao-jd.png">
 		  <br/><img width="90%" src="http://help.guangfish.com/imgs/andorid-taobao.png">
@@ -77,7 +77,7 @@
 			//location.href=link;
 		  if(isContains(link,"taobao.com")){
 			if(isWeiXin()){
-			  alert("您正在用微信打开淘宝商品页，因为微信封杀淘宝链接，所以不能直接打开，建议您在手机浏览器中打开本网址，并保存成书签。操作步骤：按右上角'...' 苹果手机选择'在Safari中打开'，安卓手机选择'在浏览器打开'");
+			  alert("您正在用微信打开淘宝商品页，因为微信封杀淘宝链接，所以不能直接打开，建议您在手机浏览器中打开本网址，并保存成书签。操作步骤：按右上角'...' 苹果手机选择'在Safari中打开'，安卓手机选择'在浏览器打开'；也可以选择'复制链接'，在喜欢的浏览器打开；");
 			}else{
 			  window.open(link);
 			}
