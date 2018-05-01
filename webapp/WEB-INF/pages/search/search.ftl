@@ -10,11 +10,11 @@
 									<div class="item-inner">
 										<div class="item-input">
 											<input type="text" class="input_enter"
-												placeholder="请粘贴从淘宝或京东复制的商品地址" name="product_url">
-										</div>
+												placeholder="请粘贴从淘宝或京东复制的商品地址" name="product_url">											
+										</div>										
 									</div>
 								</div>
-							</li>
+							</li>							
 							<!-- 暂时屏蔽掉
 							<li>
 								<div class="item-content">
@@ -58,21 +58,49 @@
 		</div> 
 
 		<div id="result" align="center">
-		  <a href="/api/invitation.html"><img width="90%" height="90%" src="/static/front/img/invitation.png"></a>
+		  <a href="/api/invitation.html"><img id="search" width="90%" height="90%" src="http://help.guangfish.com/imgs/invitation.png"></a>
 		  <br/><font style="color: red;">【花钱也能赚钱、让逛鱼带你飞】</font>
-		  <br/><font style="font-size: 0.6rem;color: red;">保存书签：请用手机浏览器打开本页面，请勿在微信中打开</font>
-		  <br/><img width="90%" src="/static/front/bookmark.png">
+		  <br/><font style="font-size: 0.6rem;color: red;">往下拉查看保存书签、商品链接复制</font>
+		  <br/><font style="font-size: 0.6rem;color: red;">保存书签：请在手机浏览器打开本页面，并保存成书签</font>
+		  <br/><img width="90%" src="http://help.guangfish.com/imgs/bookmark.png">
+		  <br/><img width="90%" src="http://help.guangfish.com/imgs/ios-taobao-jd.png">
+		  <br/><img width="90%" src="http://help.guangfish.com/imgs/andorid-taobao.png">
+		  <br/><img width="90%" src="http://help.guangfish.com/imgs/wx.png">
 		</div>	
 
 	</div>
 
 	<script type='text/javascript' src='/static/front/js/jquery.min.js' charset='utf-8'></script>
 	<script type='text/javascript' src='/static/front/js/light7.js' charset='utf-8'></script>
-	<script>
+	<script>	    	    
 		function drump(link) {
 			//location.href=link;
-			window.open(link);
+		  if(isContains(link,"taobao.com")){
+			if(isWeiXin()){
+			  alert("无法用微信浏览器打开淘宝商品页，建议您在手机浏览器中打开本网址，并保存成书签。操作步骤：按右上角'...' 苹果手机选择'在Safari中打开'，安卓手机选择'在浏览器打开'；也可以选择'复制链接'，在喜欢的浏览器打开；");
+			}else{
+			  window.open(link);
+			}
+		  }else{
+		    window.open(link);
+		  }		
 		}
+		
+		function isContains(str, substr) {
+         return str.indexOf(substr) >= 0;
+        }
+		
+		//判断是否是微信浏览器的函数
+        function isWeiXin(){
+          //window.navigator.userAgent属性包含了浏览器类型、版本、操作系统类型、浏览器引擎类型等信息，这个属性可以用来判断浏览器类型
+          var ua = window.navigator.userAgent.toLowerCase();
+          //通过正则表达式匹配ua中是否含有MicroMessenger字符串
+          if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+            return true;
+          }else{
+            return false;
+          }
+        }
 		
 		function vcodevalid() {
 			var vcode = $('#vcode').val();
@@ -136,10 +164,11 @@
 		      //}
 			}
             $('#submitlogin').removeAttr('onclick');
-			//加载中
+			//加载中						
 			$('#result')
 					.html(
-							"<div id='waiting'><img src='/static/front/timg.gif'><br/><br/><img width='80%' src='/static/front/img/60298-317432.gif'></div>");
+							"<div id='waiting'><img src='http://help.guangfish.com/imgs/timg.gif'><br/><br/><img width='80%' src='http://help.guangfish.com/imgs/search0"+Math.ceil(Math.random()*5)+".gif'></div>");			
+			
 			if (producturl) {
 				$
 						.ajax({
