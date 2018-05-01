@@ -1,5 +1,6 @@
 package com.bt.om.mapper;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -55,5 +56,5 @@ public interface DrawCashMapper {
 	
 	List<Map<String,Object>> getUserOrderByDrawId(@Param("id") Integer id, RowBounds rowBounds);
 	
-	int updateUserOrderStatus2AndStatus3(@Param("id") Integer id);
+	int updateUserOrderStatus2AndStatus3(@Param("id") Integer id, @Param("sysDate") Date sysDate);
 }

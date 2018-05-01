@@ -207,13 +207,18 @@ $('#payTime').val("");
 		                return getMyDate(r.createTime);
 		            }},
 		            { title: "打款时间",render:function(d,t,r){
-                    return getMyDate(r.payTime);
+		                if(r.status == 1) {
+		                    return '';
+		                }
+                        return getMyDate(r.payTime);
                 }},
 		            {title:"操作",render:function(d,t,r){
                     var text = "";
                     text+='<div><a href="javascript:void(0)" onclick="showDrawOrderList(\''+r.id+'\')" >查看</a> | ';
                     text+='<div><a href="javascript:void(0)" onclick="deleteDrawOrder(\''+r.id+'\')" >删除</a> | ';
-                    text+='<a href="javascript:void(0)" onclick="confirmPayment(\''+r.id+'\')" >确认打款</a>';
+                    if (r.status == 1) {
+                      text+='<a href="javascript:void(0)" onclick="confirmPayment(\''+r.id+'\')" >确认打款</a>';
+                    }
                     return text+='</div>';
                 }}
 		        ]
@@ -273,7 +278,7 @@ $('#payTime').val("");
  			 $('#userOrderModal').modal('show');
  		}
 
-     <#--  function deleteDrawOrder(id) {
+     function deleteDrawOrder(id) {
          var url = "/delete/drwaorder";
          var msg = "是否删除？";
          fangs.confirm({
@@ -284,34 +289,20 @@ $('#payTime').val("");
                 });
             }
          });
-     }  -->
-
-    function deleteDrawOrder(id) {
-        $.ajax({
-          url:"/delete/drwaorder",
-          type:"get",
-          dataType:"json",
-          data:{"id":id},
-          success:function(data){
-              
-              dt.ajax.reload();
-          }
-        });
-    };
-
-    function confirmPayment(id){
-      $.ajax({
-        url:"/payment/confirm",
-        dataType:"json",
-        type:"get",
-        data:{
-          "id":id
-        },
-        success : function(data) {
-          dt.ajax.reload(null, false);
-        }
-      });
-    }
+     }
+    
+     function confirmPayment(id) {
+         var url = "/payment/confirm";
+         var msg = "是否确认打款？";
+         fangs.confirm({
+            text:msg,
+            ok:function(){
+                fangs.get(url,{id:id},function(data){
+                    dt.ajax.reload(null,false);
+                });
+            }
+         });
+     } 
 	
     function getMyDate(str){
          var oDate = new Date(str),

@@ -1,5 +1,6 @@
 package com.bt.om.service.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -50,25 +51,22 @@ public class DrawCashService implements IDrawCashService {
 	}
 
 	@Override
-	public int updateUserOrderStatus2AndStatus3(Integer id) {
-		return drawCashMapper.updateUserOrderStatus2AndStatus3(id);
-	}
-
-	@Override
 	@Transactional
 	public void confimPayment(Integer id) throws Exception {
+		Date sysDate = new Date();
 		DrawCash dc = drawCashMapper.selectByPrimaryKey(id);
 		if(dc == null) {
 			throw new Exception("drawcache dose not exist");
 		}
 		
 		dc.setStatus(2);
+		dc.setPayTime(sysDate);
 		int flag = drawCashMapper.updateByPrimaryKey(dc);
 		if(flag != 1) {
 			throw new Exception("uppate drawcache failed");
 		}
 		
-		flag = drawCashMapper.updateUserOrderStatus2AndStatus3(id);
+		flag = drawCashMapper.updateUserOrderStatus2AndStatus3(id, sysDate);
 		if (flag == 0) {
 			throw new Exception("update userorder failed");
 		}

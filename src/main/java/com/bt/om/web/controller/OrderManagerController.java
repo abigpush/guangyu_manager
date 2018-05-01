@@ -18,9 +18,11 @@ import com.bt.om.common.web.PageConst;
 import com.bt.om.entity.DrawCash;
 import com.bt.om.entity.UserOrder;
 import com.bt.om.entity.vo.JqueryDataTable;
+import com.bt.om.enums.CsbtConstants;
 import com.bt.om.enums.ResultCode;
 import com.bt.om.service.IDrawCashService;
 import com.bt.om.service.IUserOrderService;
+import com.bt.om.vo.web.Result;
 import com.bt.om.vo.web.ResultVo;
 import com.bt.om.vo.web.SearchDataVo;
 import com.bt.om.web.BasicController;
@@ -120,16 +122,14 @@ public class OrderManagerController extends BasicController{
 
 	@RequestMapping(value="/delete/order", method=RequestMethod.GET)
     @ResponseBody
-	public Model deleteOrder ( Model model,
+	public Result deleteOrder (
 			@RequestParam(value="id", required=false) Integer id) {
-		ResultVo<String> resultVo = new ResultVo<String>();
+		Result result = new Result();
 		userOrderService.deleteOrder(id);
-		resultVo.setCode(ResultCode.RESULT_SUCCESS.getCode());
-		resultVo.setResultDes("成功");
-		model.addAttribute(SysConst.RESULT_KEY, resultVo);
-		return model;
+		result.setCode(CsbtConstants.RESULT_CODE_SUCCESS);
+		result.setMsg("成功");
+		return result;
 	}
-
 
 	
 	/**
@@ -216,14 +216,13 @@ public class OrderManagerController extends BasicController{
 	 */
 	@RequestMapping(value="/delete/drwaorder", method=RequestMethod.GET)
     @ResponseBody
-	public Model deleteDrawOrder ( Model model,
+	public Result deleteDrawOrder (
 			@RequestParam(value="id", required=false) Integer id) {
-		ResultVo<String> resultVo = new ResultVo<String>();
+		Result result = new Result();
 		drawCacheServie.deleteByPrimaryKey(id);
-		resultVo.setCode(ResultCode.RESULT_SUCCESS.getCode());
-		resultVo.setResultDes("成功");
-		model.addAttribute(SysConst.RESULT_KEY, resultVo);
-		return model;
+		result.setCode(CsbtConstants.RESULT_CODE_SUCCESS);
+		result.setMsg("成功");
+		return result;
 	}
 
 	/**
@@ -231,19 +230,18 @@ public class OrderManagerController extends BasicController{
 	 */
 	@RequestMapping(value="/payment/confirm", method=RequestMethod.GET)
     @ResponseBody
-	public Model confirmPayMent ( Model model,
+	public Result confirmPayMent ( Model model,
 			@RequestParam(value="id", required=false) Integer id) {
-		ResultVo<String> resultVo = new ResultVo<String>();
+		Result result = new Result();
 		try {
 			drawCacheServie.confimPayment(id);
-			resultVo.setCode(ResultCode.RESULT_SUCCESS.getCode());
-			resultVo.setResultDes("成功");
+			result.setCode(CsbtConstants.RESULT_CODE_SUCCESS);
+			result.setMsg("成功");
 		} catch (Exception e) {
-			resultVo.setCode(ResultCode.RESULT_FAILURE.getCode());
-			resultVo.setResultDes("失败");
+			result.setCode(CsbtConstants.RESULT_CODE_FAIL);
+			result.setMsg("失败");
 			e.printStackTrace();
 		}
-		model.addAttribute(SysConst.RESULT_KEY, resultVo);
-		return model;
+		return result;
 	}
 }

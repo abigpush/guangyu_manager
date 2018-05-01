@@ -271,7 +271,8 @@
       user_order t1
     SET
       t1.`status2` = 3,
-      t1.`status3` = 2
+      t1.`status3` = 2,
+      t1.`update_time` = #{sysDate,jdbcType=TIMESTAMP}
     WHERE t1.`order_id` IN
       (SELECT
         t3.`order_id`
